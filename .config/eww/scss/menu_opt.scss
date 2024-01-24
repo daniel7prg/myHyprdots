@@ -11,7 +11,7 @@ $white_bone:#e5e5e5;
 
 /** Generic window ***********************************/
 .genwin {
-  	background-color: rgba(30, 34, 52, 0.92);
+	background-color: lighten($background, 4);
 	border-radius: 16px;
 }
 

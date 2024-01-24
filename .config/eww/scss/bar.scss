@@ -12,6 +12,7 @@ $white_bone:#e5e5e5;
 }
 
 .bx_workspace{
+    background-color: lighten($background, 4);
     padding: 0 8px 0 12px;
     border: 1.5px solid $color6;
     border-radius: 10px;
@@ -29,6 +30,7 @@ $white_bone:#e5e5e5;
 }
 
 .bx_appname{
+    background-color: lighten($background, 4);
     padding: 0 16px 0 14px;
     border: 1.5px solid $color6;
     border-radius: 10px;
@@ -56,6 +58,7 @@ $white_bone:#e5e5e5;
 }
 
 .bx_clock{
+    background-color: lighten($background, 4);
     padding-left: 8px;
     border: 1.5px solid $color6;
     border-radius: 10px;
@@ -63,6 +66,7 @@ $white_bone:#e5e5e5;
 }
 
 .bx_options{
+    background-color: lighten($background, 4);
     margin-left: 5px;
     padding: 0 10px 0 7.5px;
     border: 1.5px solid $color6;
