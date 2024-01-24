@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$(hyprctl monitors | grep -c Monitor)" -ge "2" ]; then
+    current_wal=$(echo "$(swww query)" | grep eDP-1 | grep -o 'image:.*' | awk '{print $2}')
+    swww img -o "HDMI-A-1" $current_wal
+	eww open status_bar1 
+else
+    swww init
+fi

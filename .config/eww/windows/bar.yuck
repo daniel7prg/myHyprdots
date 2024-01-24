@@ -1,0 +1,7 @@
+(defwindow status_bar
+   :monitor 0
+   :stacking "fg"
+   :exclusive "true"
+   :geometry (geometry :width "1530px" :height "1%" :anchor "top center")
+  (bar)
+)

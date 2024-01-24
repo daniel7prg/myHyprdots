@@ -1,0 +1,7 @@
+(defwindow menu_opt
+    :monitor 0
+    :stacking "fg"
+    :exclusive "false"
+	:geometry (geometry :x "13" :y "5" :anchor "top right")
+   (_menuopt)
+)

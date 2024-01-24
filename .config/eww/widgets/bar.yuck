@@ -1,0 +1,97 @@
+;; MENU_OPT
+(defwidget _menuIC []
+  (button :onclick "scripts/launch_menu"
+    (label :class "iconmenu" :text iconmenu)
+  )
+)
+
+(defwidget _clock []
+  (eventbox :onhover "${EWW_CMD} update time_rev=true" :onhoverlost "${EWW_CMD} update time_rev=false"
+    (box :orientation "h" :space-evenly "false" :class "clock"
+      (label :text "󰥔" :class "clock_icon")
+      (label :text "${current_time.hour}:${current_time.min} " :class "clock_text")
+      (revealer :transition "slideright" :reveal time_rev :duration "350ms"
+        (button :onclick "${EWW_CMD} open --toggle calendar"
+          (label :text "- ${current_time.day} ${current_time.mouth} ${current_time.week}" :class "clock_text")
+        )
+      )
+      (revealer :transition "slideright" :reveal time_rev :duration "350ms"
+        (label :text "  " :class "cal_icon")
+      )
+    )
+  )
+)
+
+(defwidget _appnames []
+  (eventbox
+    :onhover "${EWW_CMD} update control_reveal=true"
+	  :onhoverlost "${EWW_CMD} update control_reveal=false"
+    (box
+	    :orientation "h"
+	    :space-evenly "false"
+	    :vexpand "false"
+	    :hexpand "false" 
+        (literal 
+            :content appname)
+    )
+  )
+)
+
+(defwidget _workspaces []
+  (eventbox
+    :class "workspaces"
+    :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
+    (box
+      :orientation "h"
+      :spacing 6
+      (for ws in my-workspaces
+        (button :onclick "hyprctl dispatch workspace ${ws}"
+          (label
+            :class {
+              workspaces[ws - 1] == 1 ? "active" :
+              workspaces[ws - 1] == 2 ? "used" :
+              ""
+            }
+            :text {
+              workspaces[ws - 1] == 1 ? " 󰮯 " :
+              workspaces[ws - 1] == 2 ? " 󰊠 " :
+              "• "
+            }
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget bar []
+  (centerbox
+    :class "bar"
+    (box
+      :class "bx_workspace"
+      :space-evenly false
+      :halign "start"
+      (_workspaces)
+    )
+    (box
+      :class "bx_appname"
+      :space-evenly false
+      :halign "center"
+      (_appnames)
+    )
+    (box
+      :space-evenly false
+      :halign "end"
+      (box
+        :class "bx_clock"
+        :halign "start" 
+        (_clock)
+      )
+      (box
+        :class "bx_options"
+        :halign "end" 
+        (_menuIC)
+      )
+    )
+  )
+)

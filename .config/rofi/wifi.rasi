@@ -1,0 +1,171 @@
+/*****----- Configuration -----*****/
+configuration {
+	modi:                       "drun";
+    show-icons:                 true;
+    display-drun:               "";
+	drun-display-format:        "{name}";
+    font:                       "JetBrainsMono Nerd Font 12";
+}
+
+@theme "~/.cache/wal/colors-rofi.rasi"
+
+/*****----- Main Window -----*****/
+window {
+    transparency:                "real";
+    location:                    north;
+    fullscreen:                  false;
+    width:                       400px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    enabled:                     true;
+    margin:                      8px 0px 0px 0px;
+    padding:                     0px;
+    border:                      1px solid;
+    border-radius:               16px;
+    border-color:                @color6;
+    background-color:            #151720e6;
+    cursor:                      "default";
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    enabled:                     true;
+    spacing:                     5px;
+    margin:                      0px;
+    padding:                     15px;
+    border:                      0px solid;
+    border-radius:               0px 0px 0px 0px;
+    border-color:                @color6;
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview" ];
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               16px;
+    border-color:                @color6;
+    background-color:            @background;
+    text-color:                  #f5f5f5;
+    children:                    [ "prompt", "entry" ];
+}
+
+prompt {
+    enabled:                     true;
+    padding:                     12px;
+    border-radius:               16px;
+    background-color:            @color5;
+    text-color:                  @background;
+}
+textbox-prompt-colon {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "::";
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+entry {
+    enabled:                     true;
+    padding:                     12px;
+    background-color:            inherit;
+    text-color:                  inherit;
+    cursor:                      text;
+    placeholder:                 "Buscar...";
+    placeholder-color:           inherit;
+}
+
+/*****----- Listview -----*****/
+listview {
+    enabled:                     true;
+    columns:                     1;
+    lines:                       5;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @color6;
+    background-color:            transparent;
+    text-color:                  #f5f5f5;
+    cursor:                      "default";
+}
+scrollbar {
+    handle-width:                5px ;
+    handle-color:                @color6;
+    border-radius:               0px;
+    background-color:            @background;
+}
+
+/*****----- Elements -----*****/
+element {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     5px;
+    border:                      0px solid;
+    border-radius:               16px;
+    border-color:                @color6;
+    background-color:            @background;
+    text-color:                  #f5f5f5;
+    cursor:                      pointer;
+}
+element normal.normal {
+    background-color:            @background;
+    text-color:                  #f5f5f5;
+}
+element alternate.normal {
+    background-color:            @background;
+    text-color:                  #f5f5f5;
+}
+element selected.normal {
+    border:                      0px 5px 0px 5px;
+    border-radius:               16px;
+    border-color:                @color6;
+    background-color:            @background;
+    text-color:                  #f5f5f5;
+}
+element-icon {
+    padding:                     0px 0px 0px 10px;
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        24px;
+    cursor:                      inherit;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+/*****----- Message -----*****/
+error-message {
+    padding:                     15px;
+    border:                      2px solid;
+    border-radius:               16px;
+    border-color:                @color6;
+    background-color:            @background;
+    text-color:                  #f5f5f5;
+}
+textbox {
+    background-color:            @background;
+    text-color:                  #f5f5f5;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+    highlight:                   none;
+}

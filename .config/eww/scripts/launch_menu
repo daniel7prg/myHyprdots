@@ -1,0 +1,27 @@
+#!/bin/bash
+
+## Files and cmd
+ 
+pop_up(){
+	if [[ ! -f "$HOME/.cache/eww_launch.menu_opt" ]]; then
+		touch "$HOME/.cache/eww_launch.menu_opt"
+		eww open menu_opt
+	else
+		eww close menu_opt
+		rm "$HOME/.cache/eww_launch.menu_opt"
+	fi
+}
+
+get_icon(){
+	if [[ ! -f "$HOME/.cache/eww_launch.menu_opt" ]]; then
+		echo ""
+	else
+		echo ""
+	fi
+}
+
+if [ "$1" = "--icon" ]; then
+  	get_icon
+else #default
+  	pop_up
+fi

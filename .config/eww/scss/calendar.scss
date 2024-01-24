@@ -1,0 +1,30 @@
+@import "./colors.scss";
+
+.cal{
+    background-color: $background;
+    border: 1.5px solid $color6;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.cal .header{
+    color: $foreground;
+}
+
+.cal .highlight{
+    color: $color6;
+}
+
+.cal .button{
+    color: $foreground;
+}
+
+.cal :selected{
+    color: $background;
+    background-color: $foreground;
+    border-radius: 10px;
+}
+
+.cal :indeterminate{
+    color: rgb(140, 140, 140);
+}

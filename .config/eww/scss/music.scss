@@ -1,0 +1,39 @@
+@import "./colors.scss";
+
+$white_bone:#e5e5e5;
+
+.album_art {
+	background-size: 180px;
+	min-height: 180px;
+	min-width: 180px;
+	margin: 4px;
+	border-radius: 14px;
+}
+
+.song {
+	color: $color7;
+	font-size : 20px;
+	font-weight : bold;
+	margin : 30px 0px 0px 0px;
+}
+
+.artist {
+	color: $white_bone;
+	font-size : 18px;
+	font-weight : normal;
+	margin : 0px 0px 15px 0px;
+}
+
+.prev, .stat, .nxt{
+	font-size: 30px;
+}
+
+.btn_prev, .btn_play, .btn_prev{
+	padding: 5px;
+}
+
+.btn_prev, .btn_play, .btn_next{
+	&:hover{
+		color: $color3;
+	}
+}

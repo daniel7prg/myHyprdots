@@ -1,0 +1,74 @@
+@import "./calendar.scss";
+@import "./menu_opt.scss";
+
+$white_bone:#e5e5e5;
+
+.bar{
+    padding: 10px 11px;
+    border: 2.5px solid $color6;
+    background-color: rgba($background, 0.92);
+    border-radius: 10px;
+    margin: 4px 4px 0px 4px;
+}
+
+.bx_workspace{
+    padding: 0 8px 0 12px;
+    border: 1.5px solid $color6;
+    border-radius: 10px;
+    color: $foreground;
+}
+
+//-----IF you want change color icons------
+//Note: recommend delete/comment color at workspaces class 
+/*.active{
+    color: yellow;
+}*/
+
+.used{
+    color: $color3;
+}
+
+.bx_appname{
+    padding: 0 16px 0 14px;
+    border: 1.5px solid $color6;
+    border-radius: 10px;
+    color: $white_bone;
+}
+
+.app-icon{
+    padding-right: 5px;
+    padding-left: 0px;
+}
+
+.app-name{
+    padding-left: 5px;
+}
+
+.clock_icon{
+    padding-right: 8px;
+    color: $color3;
+}
+
+.cal_icon{
+    padding-left: 8px;
+    padding-right: 6px;
+    color: $color3;
+}
+
+.bx_clock{
+    padding-left: 8px;
+    border: 1.5px solid $color6;
+    border-radius: 10px;
+    color: $white_bone;
+}
+
+.bx_options{
+    margin-left: 5px;
+    padding: 0 10px 0 7.5px;
+    border: 1.5px solid $color6;
+    border-radius: 10px;
+}
+
+.iconmenu{
+    color: $white_bone;
+}

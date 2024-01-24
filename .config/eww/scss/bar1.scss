@@ -1,0 +1,35 @@
+@import "./calendar.scss";
+@import "./menu_opt.scss";
+
+.bar1{
+    padding: 1px;
+    background-color: rgba($background, 0.6);
+    border: 2px solid rgba($background, 0.6);
+    margin: 0px;
+}
+
+.time{
+    background-color: rgba($background, 0.93);
+    padding-left: 8px;
+    border: 1.5px solid $color6;
+    border-radius: 10px;
+    color: $white_bone;
+    margin-right: 2px;
+}
+
+.wrkspaces{
+    padding: 0 11.5px 0 16px;
+    background-color: rgba($background, 0.93);
+    border: 1.5px solid $color6;
+    border-radius: 10px;
+    color: $white_bone;
+}
+
+.info{
+    padding: 0 14px 0 14px;
+    background-color: rgba($background, 0.93);
+    border: 1.5px solid $color6;
+    border-radius: 10px;
+    color: $white_bone;
+    margin-left: 2px;
+}

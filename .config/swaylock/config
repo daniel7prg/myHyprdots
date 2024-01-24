@@ -1,0 +1,38 @@
+show-failed-attempts
+clock
+screenshot
+hide-keyboard-layout
+fade-in=1
+effect-blur=9x5
+effect-vignette=0.5:0.5
+color=1f1d2e80
+font=JetBrainsMono Nerd Font
+indicator
+indicator-radius=125
+indicator-thickness=10
+line-color=1f1d2e
+ring-color=191724
+inside-color=1f1d2e
+key-hl-color=f5f5f5
+separator-color=00000000
+text-color=f5f5f5
+line-ver-color=eb6f92
+ring-ver-color=318F53
+inside-ver-color=1f1d2e
+text-ver-color=f5f5f5
+ring-wrong-color=8F3131
+text-wrong-color=f5f5f5
+inside-wrong-color=1f1d2e
+inside-clear-color=1f1d2e
+text-clear-color=f5f5f5
+ring-clear-color=9ccfd8
+line-clear-color=1f1d2e
+line-wrong-color=1f1d2e
+bs-hl-color=31748f
+grace=2
+grace-no-mouse
+grace-no-touch
+datestr=%a, %e %B
+timestr=%I:%M %p
+fade-in=0.2
+ignore-empty-password

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+## Toggle state
+
+toggle() {
+  if [ "$(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')" != "Conexión cableada 1" ]; then
+    if [ "$(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')" = "lo" ];then
+      nmcli radio wifi on
+    else
+      nmcli radio wifi off
+    fi
+  fi
+}
+
+## Get Status
+get_status() {  
+  while true; do
+    if [ "$(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')" != "Conexión cableada 1" ]; then
+      if [ "$(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')" = "lo" ];then
+        echo "󰤭   Offline"
+      else 
+        echo "󰤨  $(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')"
+      fi
+    else
+      echo "󰈀 Ethernet"
+    fi
+    sleep 1
+  done
+}
+
+if [ "$1" = "--toggle" ]; then
+  toggle
+else #default
+  get_status
+fi
+   

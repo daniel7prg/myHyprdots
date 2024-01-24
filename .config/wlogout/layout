@@ -1,0 +1,35 @@
+{
+    "label" : "lock",
+    "action" : "$HOME/.config/swaylock/scripts/launch_swaylock.sh",
+    "text" : "Bloquear"
+}
+
+{
+    "label" : "hibernate",
+    "action" : "dunstify 'Hibernar Desactivado'",
+    "text" : "Hibernar"
+}
+
+{
+    "label" : "logout",
+    "action" : "$HOME/.config/wlogout/scripts/power -l",
+    "text" : "Salir"
+}
+
+{
+    "label" : "shutdown",
+    "action" : "$HOME/.config/wlogout/scripts/power",
+    "text" : "Apagar"
+}
+
+{
+    "label" : "suspend",
+    "action" : "dunstify 'Suspender Desactivado'",
+    "text" : "Suspender"
+}
+
+{
+    "label" : "reboot",
+    "action" : "$HOME/.config/wlogout/scripts/power -r",
+    "text" : "Reiniciar"
+}

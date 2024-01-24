@@ -1,0 +1,9 @@
+package vcs
+theme chain
+theme coffeeandcode
+theme default
+theme lavender
+theme nai
+theme neolambda
+theme pie
+theme slacker

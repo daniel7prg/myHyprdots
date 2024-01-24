@@ -1,0 +1,102 @@
+@import "./music.scss";
+
+$white_bone:#e5e5e5;
+
+.background_mn{
+	background-color: $background;
+    border: 1.5px solid $color6;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/** Generic window ***********************************/
+.genwin {
+  	background-color: rgba(30, 34, 52, 0.92);
+	border-radius: 16px;
+}
+
+/* ------ Modules ------- */
+/* Network & Bluetooth ********************************************/
+.btn_net, .btn_bluet{
+	color: $white_bone;
+}
+
+.network {
+	font-size: 22px;
+}
+
+.btn_net, .btn_bluet, .btn_poweroff{
+	&:hover{
+		background-color: $color3;
+		color: $background;
+		border-radius: 16px;
+	}
+}
+
+.bluetic{
+	font-size: 20px;
+}
+
+/* Battery **********************************************/
+.battery {
+	padding-top: 30px;
+}
+
+.baticon{
+	font-size: 30px;
+}
+
+/* Microphone *****************************************/
+.btn_mic {
+  	font-size: 32px;
+}
+
+/** System Sliders ********************************************/
+.slidersbox {
+  	padding: 4px;
+}
+
+.iconbright {
+	font-size : 24px;
+	color: $white_bone;
+}
+
+.bright_bar scale trough, .volume_bar scale trough, .mic_bar scale trough {
+	all: unset;
+	background-color: $color6;
+	border-radius: 16px;
+	min-height: 20px;
+	min-width: 240px;
+ 	margin-right: 10px;
+}
+
+.bright_bar scale trough highlight, .volume_bar scale trough highlight, .mic_bar scale trough highlight {
+	all: unset;
+	border-radius: 16px;
+  	background-color: $color7;
+}
+
+.iconvolume {
+	font-size : 28px;
+  	margin-left: 6px;
+	color: $white_bone;
+}
+
+.iconmic {
+	font-size : 28px;
+  	margin-left: 5px;
+	color: $white_bone;
+}
+
+/** Power buttons ***************************************/
+.btn_poweroff{
+	padding-right: 4px;
+	color: $white_bone;
+}
+
+.poweric{
+	font-size: 19px;
+}
+
+/** EOF *************************************************/
+

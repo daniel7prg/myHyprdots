@@ -1,0 +1,40 @@
+#!/bin/bash
+
+toggle(){
+    if [ "$(systemctl is-active bluetooth.service)" = "inactive" ]; then
+        systemctl start bluetooth
+    else
+        systemctl stop bluetooth
+    fi
+}
+
+get_icon(){
+    if [ "$(systemctl is-active bluetooth.service)" = "inactive" ]; then
+        echo "󰂲"
+    else
+        if [ -z "$(bluetoothctl info | grep 'Name' | cut -d ' ' -f 2-)"]; then
+            echo "󰂯"
+        else
+            echo "󰂱"
+        fi
+    fi
+}
+
+get_gui(){
+    if [ "$(systemctl is-active bluetooth.service)" = "inactive" ]; then
+        notify-send -i $HOME/.config/eww/icons/bluetooth.png "GUI: Bluetooth desactivado"
+    else
+        eww close menu_opt
+		rm "$HOME/.cache/eww_launch.menu_opt"
+        blueman-manager
+    fi
+}
+
+if [ "$1" = "--toggle" ]; then
+    toggle
+elif [ "$1" = "--gui" ]; then
+    get_gui
+else #default
+    get_icon
+fi
+   

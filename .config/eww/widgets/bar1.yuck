@@ -1,0 +1,65 @@
+(defwidget _workspaces1 []
+  (eventbox
+    :class "workspaces"
+    :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
+    (box
+      :orientation "h"
+      :spacing 6
+      (for ws in my-workspaces
+        (button :onclick "hyprctl dispatch workspace ${ws}"
+          (label
+            :class {
+              workspaces[ws - 1] == 1 ? "active" :
+              workspaces[ws - 1] == 2 ? "used" :
+              ""
+            }
+            :text {
+              workspaces[ws - 1] == 1 ? " 󰮯 " :
+              workspaces[ws - 1] == 2 ? " 󰊠 " :
+              "• "
+            }
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget _clock1 []
+	(eventbox :onhover "${EWW_CMD} update time_rev1=true" :onhoverlost "${EWW_CMD} update time_rev1=false"
+    (box :orientation "h" :space-evenly "false" :class "time"
+      (label :text "󰥔" :class "clock_icon")
+      (label :text "${current_time1.hour}:${current_time1.min} ")
+      (revealer :transition "slideright" :reveal time_rev1 :duration "350ms"
+        (label :text "- ${current_time1.day} ${current_time1.mouth} ${current_time1.week}")
+      )
+      (revealer :transition "slideright" :reveal time_rev1 :duration "350ms"
+        (label :text " " :class "cal_icon")
+      )
+    )
+  )
+)
+
+(defwidget bar1 []
+  (box
+    :class "bar1"
+    :orientation "h"
+    (box
+      :class "info"
+      :space-evenly false
+      :halign "start"
+      (label :class "bx_center" :text "Screen Sharing 󱒃 ")
+    )
+    (box
+      :class "wrkspaces"
+      :space-evenly false
+      :halign "center"
+      (_workspaces1)
+    )
+    (box
+      :space-evenly false
+      :halign "end"
+      (_clock1)
+    )
+  )
+)

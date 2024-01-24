@@ -1,0 +1,33 @@
+#!/bin/bash
+
+_poweroff(){
+    if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
+        systemctl poweroff
+    else
+        dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de apagar el equipo"
+    fi
+}
+
+_reboot(){
+    if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
+        systemctl reboot
+    else
+        dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de reiniciar el equipo"
+    fi
+}
+
+_logout(){
+    if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
+        hyprctl dispatch exit 0
+    else
+        dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de cerrar sesión"
+    fi
+}
+
+if [ "$1" = "-r" ]; then
+  	_reboot
+elif [ "$1" = "-l" ]; then
+    _logout
+else #default
+  	_poweroff
+fi
