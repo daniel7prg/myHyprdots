@@ -32,6 +32,7 @@ if [ ! -z "${RofiSel}" ] ; then
 		eww reload
 		ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
 		killall xdg-desktop-portal-gtk
+		killall polkit-gnome-authentication-agent-1
 		killall dunst
 		ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
 		dunstify "t1" -a "${RofiSel}" -i "${wallPath}/${RofiSel}" -r 91190 -t 2200
