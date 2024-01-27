@@ -73,7 +73,7 @@ INSTLOG="install.log"
 show_progress() {
     while ps | grep $1 &> /dev/null;
     do
-        echo -n "."
+        echo -n "#"
         sleep 2
     done
     echo -en "Done!\n"
