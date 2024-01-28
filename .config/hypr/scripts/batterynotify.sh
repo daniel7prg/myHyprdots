@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# Config with cronie
+
 get_status(){
   BAT=$(/usr/bin/ls /sys/class/power_supply | grep BAT | head -n 1)
   BATSTATUS="$(/usr/bin/cat /sys/class/power_supply/${BAT}/status)"
