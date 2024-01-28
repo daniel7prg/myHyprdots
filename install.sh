@@ -3,7 +3,7 @@
 # Define the software that would be inbstalled 
 #Need some prep work
 prep_stage=(
-    
+    zsh
 )
 
 #software for nvidia GPU only
