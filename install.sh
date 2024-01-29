@@ -14,6 +14,9 @@ prep_stage=(
     qt5ct
     qt6-wayland
     qt6ct
+    qt5-graphicaleffects
+    qt5-svg
+    qt5-quickcontrols2
     jq
     jaq
     gojq
