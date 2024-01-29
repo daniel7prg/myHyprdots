@@ -298,14 +298,13 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     CONFDIR=~/.config
     if [ -d "$CONFDIR" ]; then
         echo -e "$COK - $CONFDIR found"
-        wal -i ~/.config/swww/wallpapers/MarioDev.gif.png
-        cp -R .config/ ~/.config
     else
         echo -e "$CWR - $CONFDIR NOT found, creating..."
         mkdir $CONFDIR
-        wal -i ~/.config/swww/wallpapers/MarioDev.gif.png
-        cp -R .config/ ~/.config
-    fi 
+    fi
+    
+    wal -i .config/swww/wallpapers/MarioDev.gif.png
+    cp -R .config/ ~/.config 
 
     # Setup each appliaction
     # check for existing config folders and backup 
