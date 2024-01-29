@@ -3,54 +3,95 @@
 # Define the software that would be inbstalled 
 #Need some prep work
 prep_stage=(
-    zsh
+    kitty
+    pipewire
+    wireplumber
+    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gtk
+    polkit-gnome
+    qt5-wayland
+    qt5ct
+    qt6-wayland
+    qt6ct
+    jq
+    jaq
+    gojq
+    cliphist
 )
 
 #software for nvidia GPU only
 nvidia_stage=(
     linux-headers 
     nvidia-dkms 
-    nvidia-settings 
+    nvidia-utils 
     libva 
-    libva-nvidia-driver-git
+    libva-nvidia-driver
 )
 
 #the main packages
 install_stage=(
-    kitty 
-    mako 
-    waybar
-    swww 
-    swaylock-effects 
-    wofi 
-    wlogout 
-    xdg-desktop-portal-hyprland 
-    swappy 
-    grim 
-    slurp 
-    thunar 
-    btop
-    firefox
-    thunderbird
-    mpv
-    pamixer 
-    pavucontrol 
-    brightnessctl 
-    bluez 
-    bluez-utils 
-    blueman 
-    network-manager-applet 
-    gvfs 
-    thunar-archive-plugin 
+    kvantum
+    gtk3
+    nwg-look
+    python
+    python-pywal
+    dunst
+    eww-wayland
+    swww
+    swaylock-effects
+    rofi-lbonn-wayland-git
+    wlogout
+    swappy
+    grim
+    slurp
+    thunar
+    thunar-archive-plugin
+    gvfs
+    ntfs-3g
     file-roller
-    starship 
-    papirus-icon-theme 
-    ttf-jetbrains-mono-nerd 
-    noto-fonts-emoji 
-    lxappearance 
-    xfce4-settings
-    nwg-look-bin
-    sddm
+    firefox
+    google-chrome
+    pamixer
+    pavucontrol
+    brightnessctl
+    bluez
+    bluez-libs
+    bluez-utils
+    blueman
+    playerctl
+    gedit
+    geticons
+    papirus-icon-theme
+    papirus-folders-catpuccin-git
+    ttf-cascadia-code-nerd
+    ttf-firacode-nerd
+    ttf-jetbrains-mono-nerd
+    sddm-git
+)
+
+backup_files=(
+    dunst
+    eww
+    fish
+    fontforge
+    gedit
+    gtk-3.0
+    hypr
+    kitty
+    Kvantum
+    menus
+    neofetch
+    nwg-look
+    omf
+    pulse
+    qt5ct
+    qt6ct
+    rofi
+    swappy
+    swaylock
+    swww
+    wal
+    wlogout
 )
 
 for str in ${myArray[@]}; do
@@ -206,8 +247,13 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     
         # update config
         sudo sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
-        sudo mkinitcpio --config /etc/mkinitcpio.conf --generate /boot/initramfs-custom.img
-        echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
+        sudo mkinitcpio -P
+        
+        if [[ -z "$(yay -Ss grub)" ]]; then
+            echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
+        else
+            sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 nvidia_drm.modeset=1"/' /etc/default/grub
+        fi
     fi
 
     # Install the correct hyprland version
@@ -232,7 +278,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     
     # Clean out other portals
     echo -e "$CNT - Cleaning out conflicting xdg portals..."
-    yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
+    yay -R --noconfirm xdg-desktop-portal-gnome &>> $INSTLOG
 fi
 
 ### Copy Config Files ###
@@ -240,24 +286,22 @@ read -rep $'[\e[1;33mACTION\e[0m] - Would you like to copy config files? (y,n) '
 if [[ $CFG == "Y" || $CFG == "y" ]]; then
     echo -e "$CNT - Copying config files..."
 
-    # copy the HyprV directory
-    cp -R HyprV ~/.config/
-
-    #set the measuring unit
-    echo -e "$CNT - Attempring to set mesuring unit..."
-    if locale -a | grep -q ^en_US; then
-        echo -e "$COK - Setting mesuring system to imperial..."
-        ln -sf ~/.config/HyprV/waybar/conf/mesu-imp.jsonc ~/.config/HyprV/waybar/conf/mesu.jsonc
-        sed -i 's/SET_MESU=""/SET_MESU="I"/' ~/.config/HyprV/hyprv.conf
+    # copy .config directory
+    CONFDIR=~/.config
+    if [ -d "$CONFDIR" ]; then
+        echo -e "$COK - $CONFDIR found"
+        wal -i .config/swww/wallpapers/MarioDev.gif.png
+        cp -R .config $CONFDIR
     else
-        echo -e "$COK - Setting mesuring system to metric..."
-        sed -i 's/SET_MESU=""/SET_MESU="M"/' ~/.config/HyprV/hyprv.conf
-        ln -sf ~/.config/HyprV/waybar/conf/mesu-met.jsonc ~/.config/HyprV/waybar/conf/mesu.jsonc
-    fi
+        echo -e "$CWR - $WLDIR NOT found, creating..."
+        mkdir $CONFDIR
+        wal -i .config/swww/wallpapers/MarioDev.gif.png
+        cp -R .config $CONFDIR
+    fi 
 
     # Setup each appliaction
     # check for existing config folders and backup 
-    for DIR in hypr kitty mako swaylock waybar wlogout wofi 
+    for DIR in ${backup_files[@]};
     do 
         DIRPATH=~/.config/$DIR
         if [ -d "$DIRPATH" ]; then 
@@ -272,28 +316,19 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 
     # link up the config files
     echo -e "$CNT - Setting up the new config..." 
-    cp ~/.config/HyprV/hypr/* ~/.config/hypr/
-    ln -sf ~/.config/HyprV/kitty/kitty.conf ~/.config/kitty/kitty.conf
-    ln -sf ~/.config/HyprV/mako/conf/config-dark ~/.config/mako/config
-    ln -sf ~/.config/HyprV/swaylock/config ~/.config/swaylock/config
-    ln -sf ~/.config/HyprV/waybar/conf/v4-config.jsonc ~/.config/waybar/config.jsonc
-    ln -sf ~/.config/HyprV/waybar/style/v4-style-dark.css ~/.config/waybar/style.css
-    ln -sf ~/.config/HyprV/wlogout/layout ~/.config/wlogout/layout
-    ln -sf ~/.config/HyprV/wofi/config ~/.config/wofi/config
-    ln -sf ~/.config/HyprV/wofi/style/v4-style-dark.css ~/.config/wofi/style.css
-
+    ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
+    ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
 
     # add the Nvidia env file to the config (if needed)
-    if [[ "$ISNVIDIA" == true ]]; then
-        echo -e "\nsource = ~/.config/hypr/env_var_nvidia.conf" >> ~/.config/hypr/hyprland.conf
+    if [[ "$ISNVIDIA" == false ]]; then
+        sed -i 's/env = LIBVA_DRIVER_NAME,nvidia/#env=LIBVA/' ~/.config/hypr/env.conf
+        sed -i 's/env = WLR_NO_HARDWARE_CURSORS,1/#env=WLRCursors/' ~/.config/hypr/env.conf
     fi
 
     # Copy the SDDM theme
     echo -e "$CNT - Setting up the login screen."
-    sudo cp -R Extras/sdt /usr/share/sddm/themes/
-    sudo chown -R $USER:$USER /usr/share/sddm/themes/sdt
-    sudo mkdir /etc/sddm.conf.d
-    echo -e "[Theme]\nCurrent=sdt" | sudo tee -a /etc/sddm.conf.d/10-theme.conf &>> $INSTLOG
+    sudo cp -R sddm-theme/corners /usr/share/sddm/themes/
+    sudo cp sddm-theme/sddm.conf /etc/
     WLDIR=/usr/share/wayland-sessions
     if [ -d "$WLDIR" ]; then
         echo -e "$COK - $WLDIR found"
@@ -303,55 +338,45 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi 
     
     # stage the .desktop file
-    sudo cp Extras/hyprland.desktop /usr/share/wayland-sessions/
+    sudo cp hyprland.desktop /usr/share/wayland-sessions/
 
     # setup the first look and feel as dark
-    xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
-    xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
-    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-    gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
-    cp -f ~/.config/HyprV/backgrounds/v4-background-dark.jpg /usr/share/sddm/themes/sdt/wallpaper.jpg
+    sudo cp -R gtk-pywal/Decay-Green /usr/share/themes
+    sudo cp -R gtk-pywal/Qogir-cursors /usr/share/icons
+    sudo cp -R gtk-pywal/Qogir-whiet-cursors /usr/share/icons
+    gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
+    gsettings set org.gnome.desktop.interface icon-theme Papirus
+    gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
+    papirus-folders -C cat-mocha-blue
+    echo "@import '${HOME}/.cache/wal/colors-waybar.css';" | cat - ~/gtk-dark.css > ~/gtk-dark2.css && sudo mv ~/gtk-dark2.css ~/gtk-dark.css
+    sudo chown root:root /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
+    chmod -R +x ~/.config/eww/scripts
+    chmod -R +x ~/.config/hypr/scripts
+    chmod -R +x ~/.config/rofi/scripts
+    chmod -R +x ~/.config/swaylock/scripts
+    chmod -R +x ~/.config/swww/scripts
+    chmod -R +x ~/.config/wlogout/scripts
 fi
 
-### Install the starship shell ###
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to activate the starship shell? (y,n) ' STAR
-if [[ $STAR == "Y" || $STAR == "y" ]]; then
+### Install the fish shell ###
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install the fish shell? (y,n) ' FISH
+if [[ $FISH == "Y" || $FISH == "y" ]]; then
     # install the starship shell
-    echo -e "$CNT - Hansen Crusher, Engage!"
-    echo -e "$CNT - Updating .bashrc..."
-    echo -e '\neval "$(starship init bash)"' >> ~/.bashrc
-    echo -e "$CNT - copying starship config file to ~/.config ..."
-    cp Extras/starship.toml ~/.config/
+    echo -e "$CAC - Installing fish..."
+    sudo pacman -S --noconfirm fish
+    echo -e "$COK - Complete!!"
+    echo -e "$CNT - 1) You can install themes with omf into fish!!"
+    echo -e "$CNT - 2) You can put fish shell using 'usermod -s' into the ${USER} or root!!"  
 fi
 
-### Install software for Asus ROG laptops ###
-read -rep $'[\e[1;33mACTION\e[0m] - For ASUS ROG Laptops - Would you like to install Asus ROG software support? (y,n) ' ROG
-if [[ $ROG == "Y" || $ROG == "y" ]]; then
-    echo -e "$CNT - Adding Keys..."
-    sudo pacman-key --recv-keys 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 &>> $INSTLOG
-    sudo pacman-key --finger 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 &>> $INSTLOG
-    sudo pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 &>> $INSTLOG
-    sudo pacman-key --finger 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 &>> $INSTLOG
-
-    LOC="/etc/pacman.conf"
-    echo -e "$CNT - Updating $LOC with g14 repo."
-    echo -e "\n[g14]\nServer = https://arch.asus-linux.org" | sudo tee -a $LOC &>> $INSTLOG
-    echo -e "$CNT - Update the system..."
-    sudo pacman -Suy --noconfirm &>> $INSTLOG
-
-    echo -e "$CNT - Installing ROG pacakges..."
-    install_software asusctl
-    install_software supergfxctl
-    install_software rog-control-center
-
-    echo -e "$CNT - Activating ROG services..."
-    sudo systemctl enable --now power-profiles-daemon.service &>> $INSTLOG
-    sleep 2
-    sudo systemctl enable --now supergfxd &>> $INSTLOG
-    sleep 2
-
-    # add the ROG keybinding file to the config
-    echo -e "\nsource = ~/.config/hypr/rog-g15-strix-2021-binds.conf" >> ~/.config/hypr/hyprland.conf
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install the zsh shell? (y,n) ' ZSH
+if [[ $ZSH == "Y" || $ZSH == "y" ]]; then
+    # install the starship shell
+    echo -e "$CAC - Installing fish..."
+    sudo pacman -S --noconfirm zsh zsh-syntax-highlighting zsh-autosuggestions
+    echo -e "$COK - Complete!!"
+    echo -e "$CNT - 1) You can install themes with omz & p10k into zsh!!"
+    echo -e "$CNT - 2) You can put zsh shell using 'usermod -s' into the ${USER} or root!!"   
 fi
 
 ### Script is done ###

@@ -30,12 +30,10 @@ if [ ! -z "${RofiSel}" ] ; then
         swww img ${wallPath}/${RofiSel}
 		wal -q -i "$wallPath/$RofiSel"
 		eww reload
-		ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
 		killall xdg-desktop-portal-gtk
 		killall polkit-gnome-authentication-agent-1
 		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 		killall dunst
-		ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
 		dunstify "t1" -a "${RofiSel}" -i "${wallPath}/${RofiSel}" -r 91190 -t 2200
     else
         dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de cambiar de tema"
