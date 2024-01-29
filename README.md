@@ -7,7 +7,7 @@ place my settings automatically. Sorry for my english, I'm still learning.
 
 > **NOTE:** This configuration was done in Arch Linux (Install first) !!
 
-<h2 style="text-decoration-line: underline;">Installation</h2>
+<h3>Installation</h3>
 
 ```
 git clone https://github.com/daniel7prg/myHyprdots.git
