@@ -295,13 +295,13 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     CONFDIR=~/.config
     if [ -d "$CONFDIR" ]; then
         echo -e "$COK - $CONFDIR found"
-        wal -i $CONFDIR/swww/wallpapers/MarioDev.gif.png
-        cp -R ./.config $CONFDIR
+        wal -i ~/.config/swww/wallpapers/MarioDev.gif.png
+        cp -R .config/ ~/.config
     else
-        echo -e "$CWR - $WLDIR NOT found, creating..."
+        echo -e "$CWR - $CONFDIR NOT found, creating..."
         mkdir $CONFDIR
-        wal -i $CONFDIR/swww/wallpapers/MarioDev.gif.png
-        cp -R ./.config $CONFDIR
+        wal -i ~/.config/swww/wallpapers/MarioDev.gif.png
+        cp -R .config/ ~/.config
     fi 
 
     # Setup each appliaction
@@ -348,7 +348,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     # setup the first look and feel as dark
     sudo cp -R gtk-pywal/Decay-Green /usr/share/themes
     sudo cp -R gtk-pywal/Qogir-cursors /usr/share/icons
-    sudo cp -R gtk-pywal/Qogir-whiet-cursors /usr/share/icons
+    sudo cp -R gtk-pywal/Qogir-white-cursors /usr/share/icons
     gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
