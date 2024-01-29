@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Define the software that would be inbstalled 
+# Define the software that would be inbstalled
+# Original script by SolDoesTech (search github profile)
 #Need some prep work
 prep_stage=(
     kitty
@@ -147,6 +148,9 @@ install_software() {
 clear
 
 # set some expectations for the user
+echo -e "-------------------------------------------"
+echo -e "$CNT - ORIGINAL SCRIPT BY SOLDOESTECH -"
+echo -e "-------------------------------------------"
 echo -e "$CNT - You are about to execute a script that would attempt to setup Hyprland.
 Please note that Hyprland is still in Beta."
 sleep 1
@@ -291,13 +295,13 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     CONFDIR=~/.config
     if [ -d "$CONFDIR" ]; then
         echo -e "$COK - $CONFDIR found"
-        wal -i .config/swww/wallpapers/MarioDev.gif.png
-        cp -R .config $CONFDIR
+        wal -i $CONFDIR/swww/wallpapers/MarioDev.gif.png
+        cp -R ./.config $CONFDIR
     else
         echo -e "$CWR - $WLDIR NOT found, creating..."
         mkdir $CONFDIR
-        wal -i .config/swww/wallpapers/MarioDev.gif.png
-        cp -R .config $CONFDIR
+        wal -i $CONFDIR/swww/wallpapers/MarioDev.gif.png
+        cp -R ./.config $CONFDIR
     fi 
 
     # Setup each appliaction
@@ -349,7 +353,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
     papirus-folders -C cat-mocha-blue
-    echo "@import '${HOME}/.cache/wal/colors-waybar.css';" | cat - ~/gtk-dark.css > ~/gtk-dark2.css && sudo mv ~/gtk-dark2.css ~/gtk-dark.css
+    echo "@import '${HOME}/.cache/wal/colors-waybar.css';" | cat - /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css > ~/gtk-dark2.css && sudo mv ~/gtk-dark2.css /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     sudo chown root:root /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     chmod -R +x ~/.config/eww/scripts
     chmod -R +x ~/.config/hypr/scripts
