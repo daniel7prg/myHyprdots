@@ -63,7 +63,7 @@ install_stage=(
     gedit
     geticons
     papirus-icon-theme
-    papirus-folders-catpuccin-git
+    papirus-folders-catppuccin-git
     ttf-cascadia-code-nerd
     ttf-firacode-nerd
     ttf-jetbrains-mono-nerd
