@@ -304,7 +304,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi
     
     wal -i .config/swww/wallpapers/MarioDev.gif.png
-    cp -R .config/ ~/.config 
+    cp -R .config/* ~/.config
 
     # Setup each appliaction
     # check for existing config folders and backup 
