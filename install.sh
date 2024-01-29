@@ -21,11 +21,11 @@ prep_stage=(
 
 #software for nvidia GPU only
 nvidia_stage=(
-    linux-headers 
-    nvidia-dkms 
-    nvidia-utils 
-    libva 
-    libva-nvidia-driver
+    linux-headers
+    nvidia-dkms
+    nvidia-utils
+    libva
+    libva-nvidia-drive
 )
 
 #the main packages
