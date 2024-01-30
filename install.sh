@@ -115,7 +115,7 @@ show_progress() {
         echo -n "#"
         sleep 2
     done
-    echo -en "Done!\n"
+    echo -en " - Done!\n"
     sleep 2
 }
 
@@ -206,7 +206,7 @@ fi
 
 #### Check for package manager ####
 if [ ! -f /sbin/yay ]; then  
-    echo -en "$CNT - Configuering yay."
+    echo -en "$CNT - Configuering yay "
     git clone https://aur.archlinux.org/yay.git &>> $INSTLOG
     cd yay
     makepkg -si --noconfirm &>> ../$INSTLOG &
@@ -291,6 +291,17 @@ fi
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like to copy config files? (y,n) ' CFG
 if [[ $CFG == "Y" || $CFG == "y" ]]; then
     echo -e "$CNT - Copying config files..."
+
+    # check for existing config folders and backup 
+    # for DIR in ${backup_files[@]};
+    # do 
+    #    DIRPATH=~/.config/$DIR
+    #    if [ -d "$DIRPATH" ]; then 
+    #        echo -e "$CAT - Config for $DIR located, backing up."
+    #        mv $DIRPATH $DIRPATH-back &>> $INSTLOG
+    #        echo -e "$COK - Backed up $DIR to $DIRPATH-back."
+    #    fi
+    # done
 
     # copy .config directory
     CONFDIR=~/.config
