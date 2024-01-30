@@ -21,7 +21,7 @@ prep_stage=(
     jaq
     gojq
     cliphist
-    rust
+    rustup
 )
 
 #software for nvidia GPU only
