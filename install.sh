@@ -308,8 +308,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
         mkdir $CONFDIR
     fi
     
-    wal -i -q .config/swww/wallpapers/MarioDev.gif.png
-    sleep 1
+    wal -i .config/swww/wallpapers/MarioDev.gif.png
     cp -r .config/ ~/.config/
 
     # link up the config files
