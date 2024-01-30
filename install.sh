@@ -309,7 +309,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi
     
     wal -i .config/swww/wallpapers/MarioDev.gif.png
-    cp -R .config/ ~/.config/
+    cp -R .config/ ~/
 
     # link up the config files
     echo -e "$CNT - Setting up the new config..."
@@ -322,7 +322,6 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 
     # Copy the SDDM theme
     echo -e "$CNT - Setting up the login screen."
-    sudo mkdir -p /usr/share/sddm/themes/corners/
     sudo cp -R sddm-theme/corners/ /usr/share/sddm/themes/corners/
     sudo cp sddm-theme/sddm.conf /etc/
     WLDIR=/usr/share/wayland-sessions
@@ -337,9 +336,6 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo cp hyprland.desktop /usr/share/wayland-sessions/
 
     # setup the first look and feel as dark
-    sudo mkdir -p /usr/share/themes/Decay-Green/
-    sudo mkdir -p /usr/share/icons/Qogir-cursors/
-    sudo mkdir -p /usr/share/icons/Qogir-white-cursors/
     sudo cp -R gtk-pywal/Decay-Green/ /usr/share/themes/Decay-Green/
     sudo cp -R gtk-pywal/Qogir-cursors/ /usr/share/icons/Qogir-cursors/
     sudo cp -R gtk-pywal/Qogir-white-cursors/ /usr/share/icons/Qogir-white-cursors/
