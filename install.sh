@@ -152,7 +152,7 @@ clear
 
 # set some expectations for the user
 echo -e "-------------------------------------------"
-echo -e "$CNT - ORIGINAL SCRIPT BY SOLDOESTECH -"
+echo -e "|   - ORIGINAL SCRIPT BY SOLDOESTECH -    |"
 echo -e "-------------------------------------------"
 echo -e "$CNT - You are about to execute a script that would attempt to setup Hyprland.
 Please note that Hyprland is still in Beta."
