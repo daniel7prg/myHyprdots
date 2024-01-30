@@ -309,7 +309,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi
     
     wal -i .config/swww/wallpapers/MarioDev.gif.png
-    cp -r .config/ ~/.config/
+    cp -R .config/ ~/.config/
 
     # link up the config files
     echo -e "$CNT - Setting up the new config..."
