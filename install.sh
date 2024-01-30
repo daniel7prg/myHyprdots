@@ -53,8 +53,6 @@ install_stage=(
     gvfs
     ntfs-3g
     file-roller
-    firefox
-    google-chrome
     pamixer
     pavucontrol
     brightnessctl
@@ -77,18 +75,13 @@ install_stage=(
 backup_files=(
     dunst
     eww
-    fish
-    fontforge
     gedit
     gtk-3.0
     hypr
     kitty
     Kvantum
-    menus
     neofetch
     nwg-look
-    omf
-    pulse
     qt5ct
     qt6ct
     rofi
@@ -323,6 +316,8 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     # Copy the SDDM theme
     echo -e "$CNT - Setting up the login screen."
     sudo cp -R sddm-theme/corners/ /usr/share/sddm/themes/corners/
+    mv sddm-theme/user.face.icon sddm-theme/$USER.face.icon
+    sudo cp sddm-theme/$USER.face.icon /usr/share/sddm/faces/
     sudo cp sddm-theme/sddm.conf /etc/
     WLDIR=/usr/share/wayland-sessions
     if [ -d "$WLDIR" ]; then
@@ -359,24 +354,51 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 fi
 
 ### Install the fish shell ###
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like install the fish shell? (y,n) ' FISH
-if [[ $FISH == "Y" || $FISH == "y" ]]; then
-    # install the starship shell
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these fish(f)/zsh(z) shells? (f,z,n) ' FIZSH
+if [[ $FIZSH == "F" || $FIZSH == "f" ]]; then
+    # install the fish shell
     echo -e "$CAC - Installing fish..."
     sudo pacman -S --noconfirm fish
-    echo -e "$COK - Complete!!"
+    echo -e "$COK - Done!!"
     echo -e "$CNT - 1) You can install themes with omf into fish!!"
-    echo -e "$CNT - 2) You can put fish shell using 'usermod -s' into the ${USER} or root!!"  
-fi
-
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like install the zsh shell? (y,n) ' ZSH
-if [[ $ZSH == "Y" || $ZSH == "y" ]]; then
-    # install the starship shell
-    echo -e "$CAC - Installing fish..."
+    echo -e "$CNT - 2) You can put fish shell using 'usermod -s' into the ${USER} or root!!"
+elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
+    # install the zsh shell
+    echo -e "$CAC - Installing zsh..."
     sudo pacman -S --noconfirm zsh zsh-syntax-highlighting zsh-autosuggestions
-    echo -e "$COK - Complete!!"
+    echo -e "$COK - Done!!"
     echo -e "$CNT - 1) You can install themes with omz & p10k into zsh!!"
     echo -e "$CNT - 2) You can put zsh shell using 'usermod -s' into the ${USER} or root!!"   
+fi
+
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these Firefox(f)/Chrome(g)/Chromium(c)/Brave(b) browsers? (f,g,c,b,n) ' BROWSER
+if [[ $BROWSER == "F" || $BROWSER == "f" ]]; then
+    # install firefox
+    echo -e "$CAC - Installing Firefox..."
+    sudo pacman -S --noconfirm firefox
+    echo -e "$COK - Done!!"
+    echo -e "$CNT - Remember to set the theme to gtk"
+elif [[ $BROWSER == "G" || $BROWSER == "g" ]]; then
+    # install Chrome
+    echo -e "$CAC - Installing Chrome..."
+    yay -S --noconfirm google-chrome
+    echo -e "$COK - Done!!"
+    echo -e "$CNT - 1) Remember to set the theme to gtk"
+    echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'chrome://flags/'"
+elif [[ $BROWSER == "C" || $BROWSER == "C" ]]; then
+    # install Chromium
+    echo -e "$CAC - Installing Chromium..."
+    sudo pacman -S --noconfirm chromium
+    echo -e "$COK - Done!!"
+    echo -e "$CNT - 1) Remember to set the theme to gtk"
+    echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'chrome://flags/'"
+elif [[ $BROWSER == "B" || $BROWSER == "b" ]]; then
+    # install Brave
+    echo -e "$CAC - Installing Brave..."
+    yay -S --noconfirm brave-bin
+    echo -e "$COK - Done!!"
+    echo -e "$CNT - 1) Remember to set the theme to gtk"
+    echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'brave://flags/'"
 fi
 
 ### Script is done ###
