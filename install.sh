@@ -304,7 +304,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi
     
     wal -i .config/swww/wallpapers/MarioDev.gif.png
-    cp -R .config/* ~/.config
+    cp -R .config/* ~/.config/
 
     # Setup each appliaction
     # check for existing config folders and backup 
@@ -322,7 +322,9 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     done
 
     # link up the config files
-    echo -e "$CNT - Setting up the new config..." 
+    echo -e "$CNT - Setting up the new config..."
+    kvantummanager --set Dracula-purple-solid
+    kvantummanager --assign Dracula-purple-solid qt5ct qt6ct
     ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
     ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
 
@@ -334,7 +336,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 
     # Copy the SDDM theme
     echo -e "$CNT - Setting up the login screen."
-    sudo cp -R sddm-theme/corners /usr/share/sddm/themes/
+    sudo cp -R sddm-theme/corners/* /usr/share/sddm/themes/
     sudo cp sddm-theme/sddm.conf /etc/
     WLDIR=/usr/share/wayland-sessions
     if [ -d "$WLDIR" ]; then
@@ -348,21 +350,21 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo cp hyprland.desktop /usr/share/wayland-sessions/
 
     # setup the first look and feel as dark
-    sudo cp -R gtk-pywal/Decay-Green /usr/share/themes
-    sudo cp -R gtk-pywal/Qogir-cursors /usr/share/icons
-    sudo cp -R gtk-pywal/Qogir-white-cursors /usr/share/icons
+    sudo cp -R gtk-pywal/Decay-Green/* /usr/share/themes/
+    sudo cp -R gtk-pywal/Qogir-cursors/* /usr/share/icons/
+    sudo cp -R gtk-pywal/Qogir-white-cursors/* /usr/share/icons/
     gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
     papirus-folders -C cat-mocha-blue
     echo "@import '${HOME}/.cache/wal/colors-waybar.css';" | cat - /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css > ~/gtk-dark2.css && sudo mv ~/gtk-dark2.css /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     sudo chown root:root /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
-    chmod -R +x ~/.config/eww/scripts
-    chmod -R +x ~/.config/hypr/scripts
-    chmod -R +x ~/.config/rofi/scripts
-    chmod -R +x ~/.config/swaylock/scripts
-    chmod -R +x ~/.config/swww/scripts
-    chmod -R +x ~/.config/wlogout/scripts
+    chmod -R +x ~/.config/eww/scripts/
+    chmod -R +x ~/.config/hypr/scripts/
+    chmod -R +x ~/.config/rofi/scripts/
+    chmod -R +x ~/.config/swaylock/scripts/
+    chmod -R +x ~/.config/swww/scripts/
+    chmod -R +x ~/.config/wlogout/scripts/
 fi
 
 ### Install the fish shell ###
