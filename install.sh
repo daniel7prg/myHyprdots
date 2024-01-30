@@ -134,7 +134,6 @@ install_software() {
     else
         # no package found so installing
         echo -en "$CNT - Now installing $1 #"
-        sleep 0.1
         yay -S --noconfirm $1 &>> $INSTLOG &
         show_progress $!
         # test to make sure package installed
@@ -311,22 +310,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     
     wal -i .config/swww/wallpapers/MarioDev.gif.png
     sleep 1
-    cp -r .config/* ~/.config/
-
-    # Setup each appliaction
-    # check for existing config folders and backup 
-    for DIR in ${backup_files[@]};
-    do 
-        DIRPATH=~/.config/$DIR
-        if [ -d "$DIRPATH" ]; then 
-            echo -e "$CAT - Config for $DIR located, backing up."
-            mv $DIRPATH $DIRPATH-back &>> $INSTLOG
-            echo -e "$COK - Backed up $DIR to $DIRPATH-back."
-        fi
-
-        # make new empty folders
-        mkdir -p $DIRPATH &>> $INSTLOG
-    done
+    cp -r .config/ ~/.config/
 
     # link up the config files
     echo -e "$CNT - Setting up the new config..."
@@ -339,7 +323,8 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 
     # Copy the SDDM theme
     echo -e "$CNT - Setting up the login screen."
-    sudo cp -R sddm-theme/corners/* /usr/share/sddm/themes/
+    sudo mkdir -p /usr/share/sddm/themes/corners/
+    sudo cp -R sddm-theme/corners/ /usr/share/sddm/themes/corners/
     sudo cp sddm-theme/sddm.conf /etc/
     WLDIR=/usr/share/wayland-sessions
     if [ -d "$WLDIR" ]; then
@@ -353,14 +338,18 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo cp hyprland.desktop /usr/share/wayland-sessions/
 
     # setup the first look and feel as dark
-    sudo cp -r gtk-pywal/Decay-Green/* /usr/share/themes/
-    sudo cp -r gtk-pywal/Qogir-cursors/* /usr/share/icons/
-    sudo cp -r gtk-pywal/Qogir-white-cursors/* /usr/share/icons/
+    sudo mkdir -p /usr/share/themes/Decay-Green/
+    sudo mkdir -p /usr/share/icons/Qogir-cursors/
+    sudo mkdir -p /usr/share/icons/Qogir-white-cursors/
+    sudo cp -R gtk-pywal/Decay-Green/ /usr/share/themes/Decay-Green/
+    sudo cp -R gtk-pywal/Qogir-cursors/ /usr/share/icons/Qogir-cursors/
+    sudo cp -R gtk-pywal/Qogir-white-cursors/ /usr/share/icons/Qogir-white-cursors/
     gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
-    kvantummanager --set Dracula-purple-solid
-    kvantummanager --assign Dracula-purple-solid qt5ct qt6ct
+    #kvantum bug
+    #kvantummanager --set Dracula-purple-solid
+    #kvantummanager --assign Dracula-purple-solid qt5ct qt6ct
     ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
     ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
     papirus-folders -C cat-mocha-blue
