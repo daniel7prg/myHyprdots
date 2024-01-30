@@ -69,6 +69,8 @@ install_stage=(
     ttf-cascadia-code-nerd
     ttf-firacode-nerd
     ttf-jetbrains-mono-nerd
+    eww-wayland
+    geticons
     sddm-git
 )
 
@@ -266,6 +268,9 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     echo -e "$CNT - Installing Hyprland, this may take a while..."   
     install_software hyprland
 
+    # Config rustup
+    rustup default stable
+
     # Stage 1 - main components
     echo -e "$CNT - Installing main components, this may take a while..."
     for SOFTWR in ${install_stage[@]}; do
@@ -286,11 +291,6 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     echo -e "$CNT - Cleaning out conflicting xdg portals..."
     yay -R --noconfirm xdg-desktop-portal-gnome &>> $INSTLOG
 
-    #Install eww
-    echo -e "$CNT - Installing components for status bar..."
-    rustup default stable
-    yay -S --noconfirm eww-wayland &>> $INSTLOG
-    yay -S --noconfirm geticons &>> $INSTLOG
 fi
 
 ### Copy Config Files ###
@@ -327,10 +327,6 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 
     # link up the config files
     echo -e "$CNT - Setting up the new config..."
-    kvantummanager --set Dracula-purple-solid
-    kvantummanager --assign Dracula-purple-solid qt5ct qt6ct
-    ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
-    ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
 
     # add the Nvidia env file to the config (if needed)
     if [[ "$ISNVIDIA" == false ]]; then
@@ -360,6 +356,10 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
+    kvantummanager --set Dracula-purple-solid
+    kvantummanager --assign Dracula-purple-solid qt5ct qt6ct
+    ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
+    ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
     papirus-folders -C cat-mocha-blue
     echo "@import '${HOME}/.cache/wal/colors-waybar.css';" | cat - /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css > ~/gtk-dark2.css && sudo mv ~/gtk-dark2.css /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     sudo chown root:root /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
