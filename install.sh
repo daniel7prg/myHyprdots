@@ -289,8 +289,8 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     #Install eww
     echo -e "$CNT - Installing components for status bar..."
     rustup default stable
-    yay -S --noconfirm eww-wayland
-    yay -S --noconfirm geticons
+    yay -S --noconfirm eww-wayland &>> $INSTLOG
+    yay -S --noconfirm geticons &>> $INSTLOG
 fi
 
 ### Copy Config Files ###
