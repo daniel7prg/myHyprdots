@@ -64,7 +64,6 @@ install_stage=(
     blueman
     playerctl
     gedit
-    geticons
     papirus-icon-theme
     papirus-folders-catppuccin-git
     ttf-cascadia-code-nerd
@@ -286,6 +285,12 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     # Clean out other portals
     echo -e "$CNT - Cleaning out conflicting xdg portals..."
     yay -R --noconfirm xdg-desktop-portal-gnome &>> $INSTLOG
+
+    #Install eww
+    echo -e "$CNT - Installing components for status bar..."
+    rustup default stable
+    yay -S --noconfirm eww-wayland
+    yay -S --noconfirm geticons
 fi
 
 ### Copy Config Files ###
@@ -388,7 +393,6 @@ if [[ $ZSH == "Y" || $ZSH == "y" ]]; then
 fi
 
 ### Script is done ###
-yay -S --noconfirm eww-wayland
 echo -e "$CNT - Script had completed!"
 if [[ "$ISNVIDIA" == true ]]; then 
     echo -e "$CAT - Since we attempted to setup an Nvidia GPU the script will now end and you should reboot.
