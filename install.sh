@@ -134,6 +134,7 @@ install_software() {
     else
         # no package found so installing
         echo -en "$CNT - Now installing $1 #"
+        sleep 0.1
         yay -S --noconfirm $1 &>> $INSTLOG &
         show_progress $!
         # test to make sure package installed
