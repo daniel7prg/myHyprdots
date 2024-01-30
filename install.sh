@@ -269,6 +269,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
     install_software hyprland
 
     # Config rustup
+    sleep 1
     rustup default stable
 
     # Stage 1 - main components
@@ -308,7 +309,8 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi
     
     wal -i .config/swww/wallpapers/MarioDev.gif.png
-    cp -R .config/* ~/.config/
+    sleep 1
+    cp -r .config/* ~/.config/
 
     # Setup each appliaction
     # check for existing config folders and backup 
@@ -350,9 +352,9 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo cp hyprland.desktop /usr/share/wayland-sessions/
 
     # setup the first look and feel as dark
-    sudo cp -R gtk-pywal/Decay-Green/* /usr/share/themes/
-    sudo cp -R gtk-pywal/Qogir-cursors/* /usr/share/icons/
-    sudo cp -R gtk-pywal/Qogir-white-cursors/* /usr/share/icons/
+    sudo cp -r gtk-pywal/Decay-Green/* /usr/share/themes/
+    sudo cp -r gtk-pywal/Qogir-cursors/* /usr/share/icons/
+    sudo cp -r gtk-pywal/Qogir-white-cursors/* /usr/share/icons/
     gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
