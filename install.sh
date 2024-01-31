@@ -355,6 +355,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
     papirus-folders -C cat-mocha-blue
     echo "@import '${HOME}/.cache/wal/colors-waybar.css';" | cat - /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css > ~/gtk-dark2.css && sudo mv ~/gtk-dark2.css /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
+    echo "@import '${HOME}/.cache/wal/colors-waybar.css';" > ~/.config/eww/scss/colors.scss
     sudo chown root:root /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     chmod -R +x ~/.config/eww/scripts/
     chmod -R +x ~/.config/hypr/scripts/
