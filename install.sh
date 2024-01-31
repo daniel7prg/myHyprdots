@@ -321,7 +321,6 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     # add the Nvidia env file to the config (if needed)
     if [[ "$ISNVIDIA" == false ]]; then
         sed -i 's/env = LIBVA_DRIVER_NAME,nvidia/#env=LIBVA/' ~/.config/hypr/env.conf
-        sed -i 's/env = WLR_NO_HARDWARE_CURSORS,1/#env=WLRCursors/' ~/.config/hypr/env.conf
     fi
 
     # Copy the SDDM theme
