@@ -33,7 +33,8 @@ done | rofi -dmenu -theme-str "${r_override}" -config "${RofiConf}")
 # apply wallpaper
 if [ ! -z "${RofiSel}" ] ; then
 	if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
-        swww img ${wallPath}/${RofiSel}
+        # swww img ${wallPath}/${RofiSel}
+		swww img ${wallPath}/${RofiSel} --transition-type wipe --transition-duration 2
 		wal -q -i "$wallPath/$RofiSel"
 		eww reload
 		killall xdg-desktop-portal-gtk
