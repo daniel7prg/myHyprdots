@@ -6,7 +6,7 @@ bar=$(seq -s "." $(($vol / 15)) | sed 's/[0-9]//g')
 
 # Brightness control variables
 brightness=`brightnessctl info | grep -oP "(?<=\()\d+(?=%)" | cat`
-brightinfo=$(brightnessctl info | awk -F "'" '/Device/ {print $2}')
+bar=$(seq -s "." $(($brightness / 15)) | sed 's/[0-9]//g')
 
 if [[ $1 == "$vol$bar" || $1 == "$brightness$bar" ]]; then
     paplay ~/.config/dunst/sounds/control.ogg
