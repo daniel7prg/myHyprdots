@@ -67,6 +67,7 @@ install_stage=(
     ttf-cascadia-code-nerd
     ttf-firacode-nerd
     ttf-jetbrains-mono-nerd
+    noto-fonts-emoji
     eww-wayland
     geticons
     sddm-git
