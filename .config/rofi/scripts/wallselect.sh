@@ -3,9 +3,9 @@
 # set variables
 
 source ${HOME}/.config/rofi/scripts/globalcontrol.sh
-RofiConf="${HOME}/.config/rofi/themeselect.rasi"
-# wallPath="${HOME}/.config/swww/wallpapers/"
-wallPath="${HOME}/.config/rofi/PICs/"
+RofiConf=~/.config/rofi/themeselect.rasi
+# wallPath=~/.config/swww/wallpapers
+wallPath=~/.config/rofi/PICs
 
 # scale for monitor x res
 x_monres=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .width')
@@ -39,9 +39,9 @@ if [ ! -z "${RofiSel}" ] ; then
 		eww reload
 		killall xdg-desktop-portal-gtk
 		killall polkit-gnome-authentication-agent-1
-		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 		killall dunst
 		dunstify "t1" -a "${RofiSel}" -i "${wallPath}/${RofiSel}" -r 91190 -t 2200
+		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
     else
         dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de cambiar de tema"
     fi
