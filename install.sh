@@ -460,6 +460,8 @@ fi
 ### Install termial kitty/foot
 if [[ $ISVM == *"vm"* ]]; then
     echo -e "$CNT - Please note that VMs are not fully supported kitty, I recommend installing foot instead"
+    sed -i 's/blurls=gtk-layer-shell/#blurls=gtk-layer-shell/' ~/.config/hypr/hyprland.conf
+    sed -i 's/layerrule=ignorezero,gtk-layer-shell/#layerrule=ignorezero,gtk-layer-shell/' ~/.config/hypr/hyprland.conf
     sleep 1
 fi
 
