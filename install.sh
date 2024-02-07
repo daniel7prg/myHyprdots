@@ -79,7 +79,6 @@ backup_files=(
     gedit
     gtk-3.0
     hypr
-    kitty
     Kvantum
     neofetch
     nwg-look
@@ -313,9 +312,9 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
         mkdir $CONFDIR
     fi
     
-    wal -i .config/swww/wallpapers/MarioDev.gif.png
+    wal -q -i .config/swww/wallpapers/MarioDev.gif.png
     cp -R .config/ ~/
-    wal -i .config/swww/wallpapers/MarioDev.gif.png
+    wal -q -i .config/swww/wallpapers/MarioDev.gif.png
     # link up the config files
     echo -e "$CNT - Setting up the new config..."
 
@@ -354,7 +353,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
     ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
     papirus-folders -C cat-mocha-blue
-    echo "@import '${HOME}/.cache/wal/colors-waybar.css';" | cat - /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css > ~/gtk-dark2.css && sudo mv ~/gtk-dark2.css /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
+    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     echo "@import '${HOME}/.cache/wal/colors-waybar.css';" > ~/.config/eww/scss/colors.scss
     sudo chown root:root /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     chmod -R +x ~/.config/eww/scripts/
@@ -370,44 +369,157 @@ read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these fish(f)/zsh
 if [[ $FIZSH == "F" || $FIZSH == "f" ]]; then
     # install the fish shell
     echo -e "$CAC - Installing fish..."
-    sudo pacman -S --noconfirm fish
+    sudo pacman -Sq --noconfirm fish lsd bat &>> $INSTLOG
     echo -e "$COK - Done!!"
-    echo -e "$CNT - 1) You can install themes with omf into fish!!"
-    echo -e "$CNT - 2) You can put fish shell using 'usermod -s' into the ${USER} or root!!"
+    echo -e "$CAC - Set fish by default..."
+    sleep 1
+    sudo usermod -s /usr/share/fish $USER
+    echo -e "$COK - Done!!"
 elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
     # install the zsh shell
     echo -e "$CAC - Installing zsh..."
-    sudo pacman -S --noconfirm zsh zsh-syntax-highlighting zsh-autosuggestions
+    sudo pacman -Sq --noconfirm zsh zsh-syntax-highlighting zsh-autosuggestions lsd bat &>> $INSTLOG
     echo -e "$COK - Done!!"
-    echo -e "$CNT - 1) You can install themes with omz & p10k into zsh!!"
-    echo -e "$CNT - 2) You can put zsh shell using 'usermod -s' into the ${USER} or root!!"   
+    echo -e "$CAC - Set zsh by default..."
+    sleep 1
+    echo "#Create .zshrc file" > ~/.zshrc
+    sudo usermod -s /usr/share/zsh $USER
+    echo -e "$COK - Done!!"
 fi
+
+# Install themes shells
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install theme to shell? (y,n) ' THEME
+if [[ $THEME == "Y" || $THEME == "y" ]]; then
+    # install theme zsh
+    if [[ "$(basename $SHELL)" == "zsh" ]]; then
+        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)? (o,s,n) ' TZSH
+        if [[ $TZSH == "O" || $TZSH == "o" ]]; then
+            echo -e "$CAC - Installing om-my-zsh..."
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+            sed -i '76isource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ~/.zshrc
+            sed -i '77isource /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' ~/.zshrc
+            echo -e "\n" >> ~/.zshrc
+            echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"' >> ~/.zshrc
+            echo -e "$CNT - You can customize theme with p10k"
+            echo -e "$CNT - See more searching power-level-10k on web"
+            echo -e "$COK - Done!!"
+        elif [[ $TZSH == "S" || $TZSH == "s" ]]; then
+            echo -e "$CAC - Installing starship..."
+            curl -sS https://starship.rs/install.sh | sh
+            echo -e 'eval "$(starship init zsh)"\n' >> ~/.zshrc
+            echo -e "#Plugins\nsource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+            echo -e "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> ~/.zshrc
+            echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"' >> ~/.zshrc
+            echo -e "$CNT - You can change theme with presets"
+            echo -e "$CNT - See more searching starship presets on web"
+            echo -e "$COK - Done!!"
+        fi
+    fi
+    elif [[ "$(basename $SHELL)" == "fish" ]]; then
+        # install theme fish
+        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)? (o,s,n) ' TFSH
+        if [[ $TFSH == "O" || $TFSH == "o" ]]; then
+            echo -e "$CAC - Installing om-my-fish..."
+            curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+            cp shells/fish/config.fish ~/.config/fish/
+            echo -e "$CNT - You can change theme with command omf"
+            echo -e "$CNT - See more searching oh-my-fish on web"
+            echo -e "$COK - Done!!"
+        elif [[ $TFSH == "S" || $TFSH == "s" ]]; then
+            echo -e "$CAC - Installing starship..."
+            curl -sS https://starship.rs/install.sh | sh
+            cp shells/fish/configS.fish ~/.config/fish/
+            rm ~/.config/fish/config.fish
+            mv ~/.config/fish/configS.fish ~/.config/fish/config.fish
+            echo -e "$CNT - You can change theme with presets"
+            echo -e "$CNT - See more searching starship presets on web"
+            echo -e "$COK - Done!!"
+        fi
+    elif [[ "$(basename $SHELL)" == "bash" ]]; then
+        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)? (o,s,n) ' TBSH
+        if [[ $TBSH == "O" || $TBSH == "o" ]]; then
+            echo -e "$CAC - Installing om-my-posh..."
+            mkdir ~/.oh-my-posh
+            curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.oh-my-posh
+            echo -e 'eval "$(oh-my-posh init bash --config ~/.oh-my-posh/themes/amro.omp.json)"\n'
+            echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"\nalias grep="grep --color=auto"'
+            echo -e "$CNT - You can customize theme"
+            echo -e "$CNT - See more searching oh-my-posh (bash) on web"
+            echo -e "$COK - Done!!"
+        elif [[ $TBSH == "S" || $TBSH == "s" ]]; then
+            echo -e "$CAC - Installing starship..."
+            curl -sS https://starship.rs/install.sh | sh
+            cp shells/bash/.bashrc ~/
+            echo -e "$CNT - You can change theme with presets"
+            echo -e "$CNT - See more searching starship presets on web"
+            echo -e "$COK - Done!!"
+        fi
+    fi
+fi
+
+### Install termial kitty/foot
+if [[ $ISVM == *"vm"* ]]; then
+    echo -e "$CNT - Please note that VMs are not fully supported kitty, I recommend installing foot instead"
+    sleep 1
+fi
+
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these kitty(k)/foot(f) terminals? (k,f,n) ' TERM
+if [[ $TERM == "K" || $TERM == "k" ]]; then
+    # install kitty
+    echo -e "$CAC - Installing kitty..."
+    sudo pacman -Sq --noconfirm kitty &>> $INSTLOG
+    
+    if [[ -e ~/.zshrc ]]; then
+        echo 'alias icat="kitten icat"' >> ~/.zshrc
+    elif [[ -e ~/.config/fish/config.fish ]]; then
+        sed -i '3ialias icat="kitten icat"' ~/.config/fish/config.fish
+    else
+        echo 'alias icat="kitten icat"' >> ~/.bashrc
+    fi
+
+    echo -e "$COK - Done!!"
+elif [[ $TERM == "F" || $TERM == "f" ]]; then
+    # install foot
+    echo -e "$CAC - Installing foot..."
+    rm -R ~/.config/kitty/
+    sudo pacman -Sq --noconfirm foot &>> $INSTLOG
+    mkdir -p ~/.config/foot
+    cp shells/bash/foot.ini ~/.config/wal/templates/
+    wal -q -i .config/swww/wallpapers/MarioDev.gif.png
+    cp ~/.cache/wal/foot.ini ~/.config/foot/
+    sed -i 's/#/ /g' ~/.config/foot/foot.ini
+    sed -i 's/image_backend=kitty/image_backend=ascii/' ~/.config/neofetch/config.conf
+    sed -i 's/bind = $mainMod, Q, exec, kitty/bind = $mainMod, Q, exec, foot/' ~/.config/hypr/hyprland.conf
+    echo -e "$COK - Done!!"
+fi
+
+## Install browser
 
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these Firefox(f)/Chrome(g)/Chromium(c)/Brave(b) browsers? (f,g,c,b,n) ' BROWSER
 if [[ $BROWSER == "F" || $BROWSER == "f" ]]; then
     # install firefox
     echo -e "$CAC - Installing Firefox..."
-    sudo pacman -S --noconfirm firefox
+    sudo pacman -Sq --noconfirm firefox &>> $INSTLOG
     echo -e "$COK - Done!!"
     echo -e "$CNT - Remember to set the theme to gtk"
 elif [[ $BROWSER == "G" || $BROWSER == "g" ]]; then
     # install Chrome
     echo -e "$CAC - Installing Chrome..."
-    yay -S --noconfirm google-chrome
+    yay -Sq --noconfirm google-chrome &>> $INSTLOG
     echo -e "$COK - Done!!"
     echo -e "$CNT - 1) Remember to set the theme to gtk"
     echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'chrome://flags/'"
 elif [[ $BROWSER == "C" || $BROWSER == "C" ]]; then
     # install Chromium
     echo -e "$CAC - Installing Chromium..."
-    sudo pacman -S --noconfirm chromium
+    sudo pacman -Sq --noconfirm chromium &>> $INSTLOG
     echo -e "$COK - Done!!"
     echo -e "$CNT - 1) Remember to set the theme to gtk"
     echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'chrome://flags/'"
 elif [[ $BROWSER == "B" || $BROWSER == "b" ]]; then
     # install Brave
     echo -e "$CAC - Installing Brave..."
-    yay -S --noconfirm brave-bin
+    yay -Sq --noconfirm brave-bin &>> $INSTLOG
     echo -e "$COK - Done!!"
     echo -e "$CNT - 1) Remember to set the theme to gtk"
     echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'brave://flags/'"
