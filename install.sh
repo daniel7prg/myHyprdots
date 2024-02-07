@@ -4,7 +4,6 @@
 # Original script by SolDoesTech (search github profile)
 #Need some prep work
 prep_stage=(
-    kitty
     pipewire
     wireplumber
     xdg-desktop-portal-hyprland
