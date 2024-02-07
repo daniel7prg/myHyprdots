@@ -1,7 +1,7 @@
 @import "./colors.scss";
 
 .cal{
-    background-color: $background;
+    background-color: rgba($background, 0.7);
     border: 1.5px solid $color6;
     border-radius: 12px;
     padding: 10px;
@@ -21,7 +21,7 @@
 
 .cal :selected{
     color: $background;
-    background-color: $foreground;
+    background-color: $color6;
     border-radius: 10px;
 }
 

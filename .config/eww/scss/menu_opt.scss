@@ -1,9 +1,10 @@
 @import "./music.scss";
 
+$ncolor6:darken($color6,10);
 $white_bone:#e5e5e5;
 
 .background_mn{
-	background-color: $background;
+	background-color: rgba($background, 0.55);
     border: 1.5px solid $color6;
     border-radius: 12px;
     padding: 10px;
@@ -11,7 +12,7 @@ $white_bone:#e5e5e5;
 
 /** Generic window ***********************************/
 .genwin {
-	background-color: lighten($background, 4);
+	background-color: rgba($background, 0.55);
 	border-radius: 16px;
 }
 
@@ -63,7 +64,7 @@ $white_bone:#e5e5e5;
 
 .bright_bar scale trough, .volume_bar scale trough, .mic_bar scale trough {
 	all: unset;
-	background-color: $color6;
+	background-color: darken($ncolor6, 25);
 	border-radius: 16px;
 	min-height: 20px;
 	min-width: 240px;
@@ -73,7 +74,7 @@ $white_bone:#e5e5e5;
 .bright_bar scale trough highlight, .volume_bar scale trough highlight, .mic_bar scale trough highlight {
 	all: unset;
 	border-radius: 16px;
-  	background-color: $color7;
+  	background-image: linear-gradient(to right, $ncolor6 30%, $color6 100%);
 }
 
 .iconvolume {
