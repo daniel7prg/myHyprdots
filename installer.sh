@@ -394,7 +394,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)? (o,s,n) ' TZSH
         if [[ $TZSH == "O" || $TZSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-zsh..."
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
             sed -i '76isource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ~/.zshrc
             sed -i '77isource /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' ~/.zshrc
             echo -e "\n" >> ~/.zshrc
@@ -404,7 +404,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$COK - Done!!"
         elif [[ $TZSH == "S" || $TZSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            curl -sS https://starship.rs/install.sh | sh
+            sudo pacman -Sq --noconfirm starship
             echo -e 'eval "$(starship init zsh)"\n' >> ~/.zshrc
             echo -e "#Plugins\nsource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
             echo -e "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> ~/.zshrc
@@ -418,14 +418,15 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)? (o,s,n) ' TFSH
         if [[ $TFSH == "O" || $TFSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-fish..."
-            curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+            curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install
+            fish install --path=~/.local/share/omf --config=~/.config/omf --noninteractive --yes
             cp shells/fish/config.fish ~/.config/fish/
             echo -e "$CNT - You can change theme with command omf"
             echo -e "$CNT - See more searching oh-my-fish on web"
             echo -e "$COK - Done!!"
         elif [[ $TFSH == "S" || $TFSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            curl -sS https://starship.rs/install.sh | sh
+            sudo pacman -Sq --noconfirm starship
             cp shells/fish/configS.fish ~/.config/fish/
             rm ~/.config/fish/config.fish
             mv ~/.config/fish/configS.fish ~/.config/fish/config.fish
@@ -446,7 +447,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$COK - Done!!"
         elif [[ $TBSH == "S" || $TBSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            curl -sS https://starship.rs/install.sh | sh
+            sudo pacman -Sq --noconfirm starship
             cp shells/bash/.bashrc ~/
             echo -e "$CNT - You can change theme with presets"
             echo -e "$CNT - See more searching starship presets on web"
