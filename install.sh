@@ -390,7 +390,7 @@ fi
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like install theme to shell? (y,n) ' THEME
 if [[ $THEME == "Y" || $THEME == "y" ]]; then
     # install theme zsh
-    if [[ "$(basename $SHELL)" == "zsh" ]]; then
+    if [[ -e ~/.zshrc ]]; then
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)? (o,s,n) ' TZSH
         if [[ $TZSH == "O" || $TZSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-zsh..."
@@ -413,7 +413,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$CNT - See more searching starship presets on web"
             echo -e "$COK - Done!!"
         fi
-    elif [[ "$(basename $SHELL)" == "fish" ]]; then
+    elif [[ -e ~/.config/fish/config.fish ]]; then
         # install theme fish
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)? (o,s,n) ' TFSH
         if [[ $TFSH == "O" || $TFSH == "o" ]]; then
@@ -433,7 +433,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$CNT - See more searching starship presets on web"
             echo -e "$COK - Done!!"
         fi
-    elif [[ "$(basename $SHELL)" == "bash" ]]; then
+    elif [[ -e ~/.bashrc ]]; then
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)? (o,s,n) ' TBSH
         if [[ $TBSH == "O" || $TBSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-posh..."
