@@ -372,7 +372,7 @@ if [[ $FIZSH == "F" || $FIZSH == "f" ]]; then
     echo -e "$COK - Done!!"
     echo -e "$CAC - Set fish by default..."
     sleep 1
-    sudo usermod -s /usr/share/fish $USER
+    sudo usermod -s /usr/bin/fish $USER
     echo -e "$COK - Done!!"
 elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
     # install the zsh shell
@@ -382,7 +382,7 @@ elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
     echo -e "$CAC - Set zsh by default..."
     sleep 1
     echo "#Create .zshrc file" > ~/.zshrc
-    sudo usermod -s /usr/share/zsh $USER
+    sudo usermod -s /usr/bin/zsh $USER
     echo -e "$COK - Done!!"
 fi
 
