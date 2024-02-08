@@ -389,8 +389,9 @@ fi
 # Install themes shells
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like install theme to shell? (y,n) ' THEME
 if [[ $THEME == "Y" || $THEME == "y" ]]; then
-    # install theme zsh
     if [[ -e ~/.zshrc ]]; then
+        # install theme zsh
+        echo -e "$CNT Installing theme for zsh"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)? (o,s,n) ' TZSH
         if [[ $TZSH == "O" || $TZSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-zsh..."
@@ -415,6 +416,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         fi
     if [[ -e ~/.config/fish/config.fish ]]; then
         # install theme fish
+        echo -e "$CNT Installing theme for zsh"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)? (o,s,n) ' TFSH
         if [[ $TFSH == "O" || $TFSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-fish..."
@@ -435,6 +437,8 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$COK - Done!!"
         fi
     if [[ -e ~/.bashrc ]]; then
+        # Install theme bash
+        echo -e "$CNT Installing theme for zsh"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)? (o,s,n) ' TBSH
         if [[ $TBSH == "O" || $TBSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-posh..."
