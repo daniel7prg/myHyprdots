@@ -413,7 +413,6 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$CNT - See more searching starship presets on web"
             echo -e "$COK - Done!!"
         fi
-    fi
     elif [[ "$(basename $SHELL)" == "fish" ]]; then
         # install theme fish
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)? (o,s,n) ' TFSH
