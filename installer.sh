@@ -448,7 +448,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.oh-my-posh
             sed -i '7ieval "$(oh-my-posh init bash --config ~/.oh-my-posh/themes/amro.omp.json)"' ~/.bashrc
             sed -i '10ialias cat="bat"' ~/.bashrc
-            sed -i "s/alias ls='ls --color='auto'/alias ls='lsd'/" ~/.bashrc
+            sed -i "s/alias ls='ls --color=auto'/alias ls='lsd'/" ~/.bashrc
             echo -e "$CNT - You can customize theme"
             echo -e "$CNT - See more searching oh-my-posh (bash) on web"
             echo -e "$COK - Done!!"
