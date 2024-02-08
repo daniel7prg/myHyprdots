@@ -41,7 +41,7 @@ if [ ! -z "${RofiSel}" ] ; then
 		killall polkit-gnome-authentication-agent-1
 		killall dunst
 		dunstify "t1" -a "${RofiSel}" -i "${wallPath}/${RofiSel}" -r 91190 -t 2200
-		if [ -e ~/.config/foot/foot.ini]; then
+		if [[ -e ~/.config/foot/foot.ini ]]; then
 			cp ~/.cache/wal/foot.ini ~/.config/foot/
 			sed -i 's/#/ /g' ~/.config/foot/foot.ini
 		fi
