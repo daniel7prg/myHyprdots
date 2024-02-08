@@ -414,6 +414,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$CNT - See more searching starship presets on web"
             echo -e "$COK - Done!!"
         fi
+    fi
     if [[ -e ~/.config/fish/config.fish ]]; then
         # install theme fish
         echo -e "$CNT Installing theme for zsh"
@@ -436,6 +437,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$CNT - See more searching starship presets on web"
             echo -e "$COK - Done!!"
         fi
+    fi
     if [[ -e ~/.bashrc ]]; then
         # Install theme bash
         echo -e "$CNT Installing theme for zsh"
