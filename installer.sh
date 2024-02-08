@@ -417,7 +417,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
     fi
     if [[ -e ~/.config/fish/config.fish ]]; then
         # install theme fish
-        echo -e "$CNT Installing theme for zsh"
+        echo -e "$CNT Installing theme for fish"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)? (o,s,n) ' TFSH
         if [[ $TFSH == "O" || $TFSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-fish..."
@@ -440,7 +440,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
     fi
     if [[ -e ~/.bashrc ]]; then
         # Install theme bash
-        echo -e "$CNT Installing theme for zsh"
+        echo -e "$CNT Installing theme for bash"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)? (o,s,n) ' TBSH
         if [[ $TBSH == "O" || $TBSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-posh..."
