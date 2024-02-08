@@ -446,8 +446,9 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$CAC - Installing om-my-posh..."
             mkdir ~/.oh-my-posh
             curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.oh-my-posh
-            echo -e 'eval "$(oh-my-posh init bash --config ~/.oh-my-posh/themes/amro.omp.json)"\n'
-            echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"\nalias grep="grep --color=auto"'
+            sed -i '7ieval "$(oh-my-posh init bash --config ~/.oh-my-posh/themes/amro.omp.json)"'
+            sed -i '10ialias cat="bat"' ~/.bashrc
+            sed -i "s/alias ls='ls --color='auto'/alias ls='lsd'/" ~/.bashrc
             echo -e "$CNT - You can customize theme"
             echo -e "$CNT - See more searching oh-my-posh (bash) on web"
             echo -e "$COK - Done!!"
