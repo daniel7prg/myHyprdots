@@ -74,6 +74,10 @@ install_stage=(
 )
 
 backup_files=(
+    kitty
+    foot
+    fish
+    omf
     dunst
     eww
     gedit
@@ -293,29 +297,28 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     echo -e "$CNT - Copying config files..."
 
     # check for existing config folders and backup 
-    # for DIR in ${backup_files[@]};
-    # do 
-    #    DIRPATH=~/.config/$DIR
-    #    if [ -d "$DIRPATH" ]; then 
-    #        echo -e "$CAT - Config for $DIR located, backing up."
-    #        mv $DIRPATH $DIRPATH-back &>> $INSTLOG
-    #        echo -e "$COK - Backed up $DIR to $DIRPATH-back."
-    #    fi
-    # done
-
-    # copy .config directory
     CONFDIR=~/.config
     if [ -d "$CONFDIR" ]; then
         echo -e "$COK - $CONFDIR found"
+        for DIR in ${backup_files[@]}; do 
+            DIRPATH=~/.config/$DIR
+            if [ -d "$DIRPATH" ]; then 
+                echo -e "$CAT - Config for $DIR located, backing up."
+                mv $DIRPATH $DIRPATH-back &>> $INSTLOG
+                echo -e "$COK - Backed up $DIR to $DIRPATH-back."
+            fi
+        done
     else
         echo -e "$CWR - $CONFDIR NOT found, creating..."
         mkdir $CONFDIR
     fi
     
+    # copy .config directory
     wal -q -i .config/swww/wallpapers/MarioDev.gif.png
     cp -R .config/ ~/
     wal -q -i .config/swww/wallpapers/MarioDev.gif.png
-    # link up the config files
+    
+    # setting config files
     echo -e "$CNT - Setting up the new config..."
 
     # add the Nvidia env file to the config (if needed)
@@ -348,7 +351,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
     ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
-    ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
+    ln -sf ~/.cache/wal/MateriaDark.kvconfig ~/.config/Kvantum/MateriaDark/MateriaDark.kvconfig
     papirus-folders -C cat-mocha-blue
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     echo "@import '${HOME}/.cache/wal/colors.scss';" > ~/.config/eww/scss/colors.scss
