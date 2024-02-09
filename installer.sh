@@ -4,7 +4,6 @@
 # Original script by SolDoesTech (search github profile)
 #Need some prep work
 prep_stage=(
-    kitty
     pipewire
     wireplumber
     xdg-desktop-portal-hyprland
@@ -67,6 +66,7 @@ install_stage=(
     ttf-cascadia-code-nerd
     ttf-firacode-nerd
     ttf-jetbrains-mono-nerd
+    ttf-noto-nerd
     noto-fonts-emoji
     eww-wayland
     geticons
@@ -347,15 +347,12 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
-    #kvantum bug
-    #kvantummanager --set Dracula-purple-solid
-    #kvantummanager --assign Dracula-purple-solid qt5ct qt6ct
     ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
     ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
     papirus-folders -C cat-mocha-blue
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
-    echo "@import '${HOME}/.cache/wal/colors-waybar.css';" > ~/.config/eww/scss/colors.scss
-    sudo chown root:root /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
+    echo "@import '${HOME}/.cache/wal/colors.scss';" > ~/.config/eww/scss/colors.scss
+    sudo sed -i 's/Inherits=Adwaita/Inherits=Qogir-cursors/' /usr/share/icons/default/index.theme
     chmod -R +x ~/.config/eww/scripts/
     chmod -R +x ~/.config/hypr/scripts/
     chmod -R +x ~/.config/rofi/scripts/
@@ -373,7 +370,7 @@ if [[ $FIZSH == "F" || $FIZSH == "f" ]]; then
     echo -e "$COK - Done!!"
     echo -e "$CAC - Set fish by default..."
     sleep 1
-    sudo usermod -s /usr/share/fish $USER
+    sudo usermod -s /usr/bin/fish $USER
     echo -e "$COK - Done!!"
 elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
     # install the zsh shell
@@ -383,19 +380,22 @@ elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
     echo -e "$CAC - Set zsh by default..."
     sleep 1
     echo "#Create .zshrc file" > ~/.zshrc
-    sudo usermod -s /usr/share/zsh $USER
+    sudo usermod -s /usr/bin/zsh $USER
     echo -e "$COK - Done!!"
 fi
 
 # Install themes shells
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like install theme to shell? (y,n) ' THEME
 if [[ $THEME == "Y" || $THEME == "y" ]]; then
-    # install theme zsh
-    if [[ "$(basename $SHELL)" == "zsh" ]]; then
+    if [[ -e ~/.zshrc ]]; then
+        # install theme zsh
+        echo "----------------------------------"
+        echo -e "$CNT Installing theme for zsh"
+        echo "----------------------------------"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)? (o,s,n) ' TZSH
         if [[ $TZSH == "O" || $TZSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-zsh..."
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
             sed -i '76isource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ~/.zshrc
             sed -i '77isource /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' ~/.zshrc
             echo -e "\n" >> ~/.zshrc
@@ -405,7 +405,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$COK - Done!!"
         elif [[ $TZSH == "S" || $TZSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            curl -sS https://starship.rs/install.sh | sh
+            sudo pacman -Sq --noconfirm starship
             echo -e 'eval "$(starship init zsh)"\n' >> ~/.zshrc
             echo -e "#Plugins\nsource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
             echo -e "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> ~/.zshrc
@@ -415,19 +415,23 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$COK - Done!!"
         fi
     fi
-    elif [[ "$(basename $SHELL)" == "fish" ]]; then
+    if [[ -e ~/.config/fish/config.fish ]]; then
         # install theme fish
+        echo "----------------------------------"
+        echo -e "$CNT Installing theme for fish"
+        echo "----------------------------------"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)? (o,s,n) ' TFSH
         if [[ $TFSH == "O" || $TFSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-fish..."
-            curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+            curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install
+            fish install --path=~/.local/share/omf --config=~/.config/omf --noninteractive --yes
             cp shells/fish/config.fish ~/.config/fish/
             echo -e "$CNT - You can change theme with command omf"
             echo -e "$CNT - See more searching oh-my-fish on web"
             echo -e "$COK - Done!!"
         elif [[ $TFSH == "S" || $TFSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            curl -sS https://starship.rs/install.sh | sh
+            sudo pacman -Sq --noconfirm starship
             cp shells/fish/configS.fish ~/.config/fish/
             rm ~/.config/fish/config.fish
             mv ~/.config/fish/configS.fish ~/.config/fish/config.fish
@@ -435,20 +439,26 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$CNT - See more searching starship presets on web"
             echo -e "$COK - Done!!"
         fi
-    elif [[ "$(basename $SHELL)" == "bash" ]]; then
+    fi
+    if [[ -e ~/.bashrc ]]; then
+        # Install theme bash
+        echo "----------------------------------"
+        echo -e "$CNT Installing theme for bash"
+        echo "----------------------------------"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)? (o,s,n) ' TBSH
         if [[ $TBSH == "O" || $TBSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-posh..."
             mkdir ~/.oh-my-posh
-            curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.oh-my-posh
-            echo -e 'eval "$(oh-my-posh init bash --config ~/.oh-my-posh/themes/amro.omp.json)"\n'
-            echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"\nalias grep="grep --color=auto"'
+            curl -s https://ohmyposh.dev/install.sh | bash -s
+            sed -i '7ieval "$(oh-my-posh init bash --config ~/.cache/oh-my-posh/themes/amro.omp.json)"' ~/.bashrc
+            sed -i '10ialias cat="bat"' ~/.bashrc
+            sed -i "s/alias ls='ls --color=auto'/alias ls='lsd'/" ~/.bashrc
             echo -e "$CNT - You can customize theme"
             echo -e "$CNT - See more searching oh-my-posh (bash) on web"
             echo -e "$COK - Done!!"
         elif [[ $TBSH == "S" || $TBSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            curl -sS https://starship.rs/install.sh | sh
+            sudo pacman -Sq --noconfirm starship
             cp shells/bash/.bashrc ~/
             echo -e "$CNT - You can change theme with presets"
             echo -e "$CNT - See more searching starship presets on web"
@@ -460,6 +470,8 @@ fi
 ### Install termial kitty/foot
 if [[ $ISVM == *"vm"* ]]; then
     echo -e "$CNT - Please note that VMs are not fully supported kitty, I recommend installing foot instead"
+    sed -i 's/blurls=gtk-layer-shell/#blurls=gtk-layer-shell/' ~/.config/hypr/hyprland.conf
+    sed -i 's/layerrule=ignorezero,gtk-layer-shell/#layerrule=ignorezero,gtk-layer-shell/' ~/.config/hypr/hyprland.conf
     sleep 1
 fi
 
@@ -468,6 +480,7 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
     # install kitty
     echo -e "$CAC - Installing kitty..."
     sudo pacman -Sq --noconfirm kitty &>> $INSTLOG
+    cp -R shells/kitty ~/.config/
     
     if [[ -e ~/.zshrc ]]; then
         echo 'alias icat="kitten icat"' >> ~/.zshrc
@@ -481,7 +494,6 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
 elif [[ $TERM == "F" || $TERM == "f" ]]; then
     # install foot
     echo -e "$CAC - Installing foot..."
-    rm -R ~/.config/kitty/
     sudo pacman -Sq --noconfirm foot &>> $INSTLOG
     mkdir -p ~/.config/foot
     cp shells/bash/foot.ini ~/.config/wal/templates/
