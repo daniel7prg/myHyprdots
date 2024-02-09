@@ -66,6 +66,7 @@ install_stage=(
     ttf-cascadia-code-nerd
     ttf-firacode-nerd
     ttf-jetbrains-mono-nerd
+    ttf-noto-nerd
     noto-fonts-emoji
     eww-wayland
     geticons
@@ -346,15 +347,12 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
-    #kvantum bug
-    #kvantummanager --set Dracula-purple-solid
-    #kvantummanager --assign Dracula-purple-solid qt5ct qt6ct
     ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
     ln -sf ~/.cache/wal/Dracula-purple-solid.kvconfig ~/.config/Kvantum/Dracula-purple-solid/Dracula-purple-solid.kvconfig
     papirus-folders -C cat-mocha-blue
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     echo "@import '${HOME}/.cache/wal/colors.scss';" > ~/.config/eww/scss/colors.scss
-    sudo chown root:root /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
+    sudo sed -i 's/Inherits=Adwaita/Inherits=Qogir-cursors/' /usr/share/icons/default/index.theme
     chmod -R +x ~/.config/eww/scripts/
     chmod -R +x ~/.config/hypr/scripts/
     chmod -R +x ~/.config/rofi/scripts/
@@ -482,6 +480,7 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
     # install kitty
     echo -e "$CAC - Installing kitty..."
     sudo pacman -Sq --noconfirm kitty &>> $INSTLOG
+    cp -R shells/kitty ~/.config/
     
     if [[ -e ~/.zshrc ]]; then
         echo 'alias icat="kitten icat"' >> ~/.zshrc
@@ -495,7 +494,6 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
 elif [[ $TERM == "F" || $TERM == "f" ]]; then
     # install foot
     echo -e "$CAC - Installing foot..."
-    rm -R ~/.config/kitty/
     sudo pacman -Sq --noconfirm foot &>> $INSTLOG
     mkdir -p ~/.config/foot
     cp shells/bash/foot.ini ~/.config/wal/templates/
