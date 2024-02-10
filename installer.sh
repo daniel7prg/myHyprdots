@@ -347,6 +347,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo cp -R gtk-pywal/Decay-Green/ /usr/share/themes/Decay-Green/
     sudo cp -R gtk-pywal/Qogir-cursors/ /usr/share/icons/Qogir-cursors/
     sudo cp -R gtk-pywal/Qogir-white-cursors/ /usr/share/icons/Qogir-white-cursors/
+    mkdir -p ~/.local/share/gedit/styles
     cp .config/gedit/themes/ayu-dark.xml ~/.local/share/gedit/styles/
     gsettings set org.gnome.gedit.preferences.editor scheme 'ayu'
     ln -sf ~/.cache/wal/ayu-dark.xml ~/.local/share/gedit/styles/ayu-dark.xml
