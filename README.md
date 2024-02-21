@@ -19,6 +19,7 @@ chmod +x ./install.sh
 <h3>Update files</h3>
 
 ```
-cd dir-repo/myHyprdots
+# "repo_dir" is the directory where you've cloned the repository 
+cd repo_dir/myHyprdots
 git stash; git clone
 ```
