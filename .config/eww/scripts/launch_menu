@@ -12,16 +12,51 @@ pop_up(){
 	fi
 }
 
+get_icon_wifi(){
+	SIGNAL=$(nmcli -t -f in-use,signal dev wifi | grep "*:*" | sed "s/*://")
+	TYPE=$(nmcli -t -f type con show --active | grep -o "wireless")
+
+	if [[ "$TYPE" == "wireless" ]]; then
+		if [[ "$SIGNAL" -gt 80 ]]; then
+			echo "󰤨"
+		elif [[ "$SIGNAL" -gt 60 ]]; then
+			echo "󰤥"
+		elif [[ "$SIGNAL" -gt 40 ]]; then
+			echo "󰤢"
+		elif [[ "$SIGNAL" -gt 20 ]]; then
+			echo "󰤟"
+		elif [[ "$SIGNAL" -eq 0 ]]; then
+			echo "󰤫"
+		fi
+	elif [[ "$TYPE" == "ethernet" ]]; then
+		echo "󰈀"
+	else
+		echo "󰤭"
+	fi
+}
+
+get_icon_music() {
+	if [ "$(playerctl status)" = "Playing" ]; then
+		echo "󰎈"
+	else
+		echo "󰎊"
+	fi
+}
+
 get_icon(){
 	if [[ ! -f "$HOME/.cache/eww_launch.menu_opt" ]]; then
-		echo ""
+		echo ""
 	else
-		echo ""
+		echo ""
 	fi
 }
 
 if [ "$1" = "--icon" ]; then
   	get_icon
+elif [ "$1" = "--icon-wifi" ]; then
+  	get_icon_wifi
+elif [ "$1" = "--icon-music" ]; then
+  	get_icon_music
 else #default
   	pop_up
 fi

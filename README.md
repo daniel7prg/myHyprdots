@@ -15,3 +15,10 @@ cd myHyprdots
 chmod +x ./install.sh
 ./install.sh
 ```
+
+<h3>Update files</h3>
+
+```
+cd dir-repo/myHyprdots
+git stash; git clone
+```

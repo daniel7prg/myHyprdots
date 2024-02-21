@@ -18,7 +18,7 @@ _reboot(){
 
 _logout(){
     if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
-        hyprctl dispatch exit 0
+        hyprctl dispatch exit
     else
         dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de cerrar sesión"
     fi

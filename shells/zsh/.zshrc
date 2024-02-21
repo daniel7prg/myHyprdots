@@ -124,7 +124,8 @@ alias ls="lsd"
 alias icat="kitten icat"
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias update-arch="yay -Syu --noconfirm"
-alias screen-share="~/.config/swww/scripts/wal-init"
+alias update-mirror="sudo reflector --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
+alias update-cursor="~/.config/hypr/scripts/up_cursor.sh"
 alias neofetch="neofetch --source '${current_wal}.png'"
 
 #Theme zsh

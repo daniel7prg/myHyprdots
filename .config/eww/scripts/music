@@ -5,53 +5,41 @@ STATUS="$(playerctl status)"
 
 ## Get status
 get_status() {
-	while true; do
-		if [ "$(playerctl status)" = "Playing" ]; then
-			echo "󱖒 "
-		else
-			echo "󱖑 "
-		fi
-		sleep 1
-	done
+	if [ "$(playerctl status)" = "Playing" ]; then
+		echo "󱖒"
+	else
+		echo "󱖑"
+	fi
 }
 
 ## Get song
 get_song() {
-	while true; do
-	  song="$(playerctl metadata xesam:title)"
-		if [[ -z "$song" ]]; then
-			echo "Offline"
-		else
-			echo "$song"
-		fi
-		sleep 1
-	done		
+	song="$(playerctl metadata xesam:title)"
+	if [[ -z "$song" ]]; then
+		echo "Offline"
+	else
+		echo "$song"
+	fi	
 }
 
 ## Get artist
 get_artist() {
-	while true; do
-		artist="$(playerctl metadata xesam:artist)"
-		if [[ -z "$artist" ]]; then
-			echo "Play any song 󰎆"
-		else
-			echo "$artist"
-		fi
-		sleep 1
-	done	
+	artist="$(playerctl metadata xesam:artist)"
+	if [[ -z "$artist" ]]; then
+		echo "Play any song 󰎆"
+	else
+		echo "$artist"
+	fi	
 }
 
 
 ## Get cover
 get_cover() {
-	while true; do
-	  if [ "$STATUS" = "Playing" ] || [ "$STATUS" == "Paused" ];then
-	    echo "$(playerctl metadata mpris:artUrl)"
-	  else
+	if [ "$STATUS" = "Playing" ] || [ "$STATUS" == "Paused" ];then
+		echo "$(playerctl metadata mpris:artUrl)"
+	else
 	    echo "$HOME/.config/eww/icons/music.png"
-	  fi
-		sleep 1
-	done
+	fi
 }
 
 ## Toggle status

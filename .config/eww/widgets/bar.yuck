@@ -1,7 +1,13 @@
 ;; MENU_OPT
 (defwidget _menuIC []
   (button :onclick "scripts/launch_menu"
-    (label :class "iconmenu" :text iconmenu)
+    (box :orientation "h" :space-evenly "true"
+      (label :class "iconmenu_vol" :text "${VOLUMEICON}")
+      (label :class "iconmenu_msc" :text "${iconmusic}")
+      (label :class "iconmenu_bth" :text "${iconbth}")
+      (label :class "iconmenu_wf" :text "${iconwifi} ")
+      (label :class "iconmenu" :text "${iconmenu}")
+    )
   )
 )
 
@@ -19,6 +25,13 @@
         (label :text "  " :class "cal_icon")
       )
     )
+  )
+)
+
+(defwidget _wallpaper []
+  (button :onclick "sh -c '(sleep 1.5s; '$HOME/.config/rofi/scripts/wallselect.sh')' & disown \
+                    && dunstify '(ESC) to close' -t 1450"
+    (label :class "wal" :text "󰋹 wal")
   )
 )
 
@@ -50,12 +63,12 @@
             :class {
               workspaces[ws - 1] == 1 ? "active" :
               workspaces[ws - 1] == 2 ? "used" :
-              ""
+              "empty"
             }
             :text {
               workspaces[ws - 1] == 1 ? " 󰮯 " :
               workspaces[ws - 1] == 2 ? " 󰊠 " :
-              "• "
+              " "
             }
           )
         )
@@ -77,19 +90,28 @@
       :class "bx_appname"
       :space-evenly false
       :halign "center"
+      :tooltip "Appname 󰈍"
       (_appnames)
     )
     (box
       :space-evenly false
       :halign "end"
       (box
+        :class "bx_wal"
+        :halign "start"
+        :tooltip "Change wal"
+        (_wallpaper)
+      )
+      (box
         :class "bx_clock"
-        :halign "start" 
+        :halign "center"
+        :tooltip "Clock "
         (_clock)
       )
       (box
         :class "bx_options"
-        :halign "end" 
+        :halign "end"
+        :tooltip "Menu 󰮫" 
         (_menuIC)
       )
     )

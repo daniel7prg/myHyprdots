@@ -1,11 +1,8 @@
 #!/bin/bash
 
 ## Get Brightness
-get_blight() {
-	while true; do
-  	echo "$(brightnessctl get)"
-		sleep 1
-	done
+get_blight(){
+	echo $(brightnessctl get)
 }
 
 ## Set Brightness

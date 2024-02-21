@@ -14,18 +14,27 @@ toggle() {
 
 ## Get Status
 get_status() {  
-  while true; do
-    if [ "$(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')" != "Conexión cableada 1" ]; then
-      if [ "$(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')" = "lo" ];then
-        echo "󰤭   Offline"
-      else 
-        echo "󰤨  $(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')"
-      fi
-    else
-      echo "󰈀 Ethernet"
-    fi
-    sleep 1
-  done
+  SIGNAL=$(nmcli -t -f in-use,signal dev wifi | grep "*:*" | sed "s/*://")
+	TYPE=$(nmcli -t -f type con show --active | grep -o "wireless")
+  NET=$(nmcli -t -f name con show --active | head -n1 | sed 's/\"/\\"/g')
+
+	if [[ "$TYPE" == "wireless" ]]; then
+		if [[ "$SIGNAL" -gt 80 ]]; then
+			echo "󰤨  $NET"
+		elif [[ "$SIGNAL" -gt 60 ]]; then
+			echo "󰤥  $NET"
+		elif [[ "$SIGNAL" -gt 40 ]]; then
+			echo "󰤢  $NET"
+		elif [[ "$SIGNAL" -gt 20 ]]; then
+			echo "󰤟  $NET"
+		elif [[ "$SIGNAL" -eq 0 ]]; then
+			echo "󰤫  $NET"
+		fi
+	elif [[ "$TYPE" == "ethernet" ]]; then
+		echo "󰈀 $NET"
+	else
+		echo "󰤭   Offline"
+	fi
 }
 
 if [ "$1" = "--toggle" ]; then

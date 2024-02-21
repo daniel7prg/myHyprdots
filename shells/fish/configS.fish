@@ -1,5 +1,6 @@
 alias cat="bat"
 alias ls="lsd"
+alias update-cursor="~/.config/hypr/scripts/up_cursor.sh"
 
 
 function fish_greeting

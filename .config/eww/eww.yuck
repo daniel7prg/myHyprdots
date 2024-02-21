@@ -7,6 +7,8 @@
 (include "widgets/menu_opt.yuck")
 (include "windows/menu_opt.yuck")
 
+;;;;;;;;;   BARS         ;;;;;;;;;
+
 ;;;;;;;;;   WORKSPACES   ;;;;;;;;;     
 (defpoll workspaces :interval "0.5s" `scripts/workspaces`)
 (defvar my-workspaces "[1,2,3,4,5,6,7,8,9,10]")
@@ -30,27 +32,36 @@
 (defpoll calendar_day :interval "20h" "date '+%d'")
 (defpoll calendar_year :interval "20h" "date '+%Y'")
 
-;;;;;;;;;   MENU_OPT    ;;;;;;;;;;
 ;; Icon menu
 (defpoll iconmenu :interval "0.2s" `scripts/launch_menu --icon`)
 
-;; System vars
-(deflisten BLIGHT `scripts/brightness --get`)
-(deflisten BATTERY `scripts/battery --perc`)
-(deflisten BATTERYICON `scripts/battery --icon`)
-(deflisten VOLUME `scripts/audio --get-vol`)
-(deflisten VOLUMEICON `scripts/audio --get-volicon`)
-(deflisten MIC `scripts/audio --get-mic`)
-(deflisten MICICON `scripts/audio --get-micicon`)
-(deflisten NET `scripts/network`)
-
-;; Music vars
-(deflisten SONG `scripts/music --song`)
-(deflisten ARTIST `scripts/music --artist`)
-(deflisten STATUS `scripts/music --status`)
-(deflisten COVER `scripts/music --cover`)
+;; WIFI
+(defpoll iconwifi :interval "0.2s" `scripts/launch_menu --icon-wifi`)
 
 ;; Bluetooth
 (defpoll iconbth :interval "0.2s" `scripts/bluetooth`)
+
+;; Music
+(defpoll iconmusic :interval "0.2s" `scripts/launch_menu --icon-music`)
+
+;;;;;;;;;   MENU_OPT    ;;;;;;;;;;
+
+;; System vars
+(defpoll BLIGHT :interval "0.2s" `scripts/brightness --get`)
+(defpoll BATTERY :interval "0.2s" `scripts/battery --perc`)
+(defpoll BATTERYICON :interval "0.2s" `scripts/battery --icon`)
+(defpoll VOLUME :interval "0.2s" `scripts/audio --get-vol`)
+(defpoll VOLUMEICON :interval "0.2s" `scripts/audio --get-volicon`)
+(defpoll MIC :interval "0.2s" `scripts/audio --get-mic`)
+(defpoll MICICON :interval "0.2s" `scripts/audio --get-micicon`)
+(defpoll NET :interval "0.2s" `scripts/network`)
+
+;; Music vars
+(defpoll SONG :interval "0.2s" `scripts/music --song`)
+(defpoll ARTIST :interval "0.2s" `scripts/music --artist`)
+(defpoll STATUS :interval "0.2s" `scripts/music --status`)
+(defpoll COVER :interval "0.2s" `scripts/music --cover`)
+
+
 
 

@@ -407,6 +407,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             sed -i '77isource /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' ~/.zshrc
             echo -e "\n" >> ~/.zshrc
             echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"' >> ~/.zshrc
+            echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.zshrc
             echo -e "$CNT - You can customize theme with p10k"
             echo -e "$CNT - See more searching power-level-10k on web"
             echo -e "$COK - Done!!"
@@ -417,6 +418,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "#Plugins\nsource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
             echo -e "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> ~/.zshrc
             echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"' >> ~/.zshrc
+            echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.zshrc
             echo -e "$CNT - You can change theme with presets"
             echo -e "$CNT - See more searching starship presets on web"
             echo -e "$COK - Done!!"
@@ -492,7 +494,7 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
     if [[ -e ~/.zshrc ]]; then
         echo 'alias icat="kitten icat"' >> ~/.zshrc
     elif [[ -e ~/.config/fish/config.fish ]]; then
-        sed -i '3ialias icat="kitten icat"' ~/.config/fish/config.fish
+        sed -i '4ialias icat="kitten icat"' ~/.config/fish/config.fish
     else
         echo 'alias icat="kitten icat"' >> ~/.bashrc
     fi

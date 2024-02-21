@@ -1,11 +1,10 @@
 @import "./music.scss";
 
 $ncolor6:darken($color6,10);
-$white_bone:#e5e5e5;
 
 .background_mn{
-	background-color: rgba($background, 0.55);
-    border: 1.5px solid $color6;
+    background-color: rgba($background, 0.55);
+	border: 2px solid $color6;
     border-radius: 12px;
     padding: 10px;
 }
@@ -19,7 +18,7 @@ $white_bone:#e5e5e5;
 /* ------ Modules ------- */
 /* Network & Bluetooth ********************************************/
 .btn_net, .btn_bluet{
-	color: $white_bone;
+	color: lighten($foreground, 10);
 }
 
 .network {
@@ -45,11 +44,27 @@ $white_bone:#e5e5e5;
 
 .baticon{
 	font-size: 30px;
+	color: lighten($foreground, 10);
+}
+
+.batinfo{
+	font-size: 15px;
+	font-weight: 500;
+	color: lighten($foreground, 10);
 }
 
 /* Microphone *****************************************/
-.btn_mic {
-  	font-size: 32px;
+.iconmic {
+	font-size : 28px;
+  	margin-left: 5px;
+	color: lighten($foreground, 10);
+}
+
+/** Volume ***********************************************/
+.iconvolume {
+	font-size : 28px;
+  	margin-left: 6px;
+	color: lighten($foreground, 10);
 }
 
 /** System Sliders ********************************************/
@@ -59,44 +74,68 @@ $white_bone:#e5e5e5;
 
 .iconbright {
 	font-size : 24px;
-	color: $white_bone;
+	color: lighten($foreground, 10);
 }
 
 .bright_bar scale trough, .volume_bar scale trough, .mic_bar scale trough {
 	all: unset;
 	background-color: darken($ncolor6, 25);
+	border: 2px solid $color6;
 	border-radius: 16px;
+	padding: 3px;
 	min-height: 20px;
-	min-width: 240px;
- 	margin-right: 10px;
+	min-width: 220px;
 }
 
 .bright_bar scale trough highlight, .volume_bar scale trough highlight, .mic_bar scale trough highlight {
 	all: unset;
 	border-radius: 16px;
-  	background-image: linear-gradient(to right, $ncolor6 30%, $color6 100%);
-}
-
-.iconvolume {
-	font-size : 28px;
-  	margin-left: 6px;
-	color: $white_bone;
-}
-
-.iconmic {
-	font-size : 28px;
-  	margin-left: 5px;
-	color: $white_bone;
+	background-image: linear-gradient(to right, $ncolor6 30%, $color6 100%);
 }
 
 /** Power buttons ***************************************/
 .btn_poweroff{
 	padding-right: 4px;
-	color: $white_bone;
+	color: lighten($foreground, 10);
 }
 
 .poweric{
 	font-size: 19px;
+}
+
+.percent{
+	font-size: 13px;
+	font-weight: 500;
+	margin-right: 8px;
+	color: lighten($foreground, 10);
+}
+
+/*Sysinfo*/
+
+.bx_sys {
+	color: darken($color7, 13);
+	font-size : 10px;
+	font-weight : bold;
+	margin-left: 10px;
+}
+
+.bx_sys_per {
+	background-size: 180px;
+	min-height: 60px;
+	min-width: 60px;
+	margin: 10px;
+	border-radius: 14px;
+}
+
+.sysbar {
+	color: $color7;
+	background-color: $ncolor6;
+	border-radius: 10px;
+}
+
+.txt_sys{
+	font-size: 7.5pt;
+	color: lighten($foreground, 10);
 }
 
 /** EOF *************************************************/

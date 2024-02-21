@@ -13,7 +13,7 @@
     padding-left: 8px;
     border: 1.5px solid $color6;
     border-radius: 10px;
-    color: $white_bone;
+    color: lighten($foreground, 10);
     margin-right: 2px;
 }
 
@@ -22,7 +22,7 @@
     background-color: rgba($background, 0.93);
     border: 1.5px solid $color6;
     border-radius: 10px;
-    color: $white_bone;
+    color: lighten($foreground, 10);
 }
 
 .info{
@@ -30,6 +30,6 @@
     background-color: rgba($background, 0.93);
     border: 1.5px solid $color6;
     border-radius: 10px;
-    color: $white_bone;
+    color: lighten($foreground, 10);
     margin-left: 2px;
 }
