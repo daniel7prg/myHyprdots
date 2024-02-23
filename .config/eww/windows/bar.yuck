@@ -2,6 +2,6 @@
    :monitor 0
    :stacking "fg"
    :exclusive "true"
-   :geometry (geometry :width "1530px" :height "1%" :anchor "top center")
+   :geometry (geometry :width "1912px" :height "1%" :anchor "top center")
   (bar)
 )

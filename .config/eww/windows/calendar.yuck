@@ -4,7 +4,7 @@
     :screen 1
     :monitor 0
 	:geometry (geometry
-        :x "124" 
+        :x "148" 
 	    :y "5" 
         :anchor "top right"
 	    :width "280px" 

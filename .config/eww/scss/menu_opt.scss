@@ -22,7 +22,7 @@ $ncolor6:darken($color6,10);
 }
 
 .network {
-	font-size: 22px;
+	font-size: 24px;
 }
 
 .btn_net, .btn_bluet, .btn_poweroff{
@@ -34,7 +34,7 @@ $ncolor6:darken($color6,10);
 }
 
 .bluetic{
-	font-size: 20px;
+	font-size: 22px;
 }
 
 /* Battery **********************************************/
@@ -43,27 +43,27 @@ $ncolor6:darken($color6,10);
 }
 
 .baticon{
-	font-size: 30px;
+	font-size: 32px;
 	color: lighten($foreground, 10);
 }
 
 .batinfo{
-	font-size: 15px;
+	font-size: 17px;
 	font-weight: 500;
 	color: lighten($foreground, 10);
 }
 
 /* Microphone *****************************************/
 .iconmic {
-	font-size : 28px;
-  	margin-left: 5px;
+	font-size : 30px;
+  	margin-left: 7px;
 	color: lighten($foreground, 10);
 }
 
 /** Volume ***********************************************/
 .iconvolume {
-	font-size : 28px;
-  	margin-left: 6px;
+	font-size : 30px;
+  	margin-left: 5px;
 	color: lighten($foreground, 10);
 }
 
@@ -73,7 +73,7 @@ $ncolor6:darken($color6,10);
 }
 
 .iconbright {
-	font-size : 24px;
+	font-size : 28px;
 	color: lighten($foreground, 10);
 }
 
@@ -100,11 +100,11 @@ $ncolor6:darken($color6,10);
 }
 
 .poweric{
-	font-size: 19px;
+	font-size: 21px;
 }
 
 .percent{
-	font-size: 13px;
+	font-size: 15px;
 	font-weight: 500;
 	margin-right: 8px;
 	color: lighten($foreground, 10);
@@ -114,7 +114,7 @@ $ncolor6:darken($color6,10);
 
 .bx_sys {
 	color: darken($color7, 13);
-	font-size : 10px;
+	font-size : 12px;
 	font-weight : bold;
 	margin-left: 10px;
 }
@@ -134,7 +134,7 @@ $ncolor6:darken($color6,10);
 }
 
 .txt_sys{
-	font-size: 7.5pt;
+	font-size: 8pt;
 	color: lighten($foreground, 10);
 }
 

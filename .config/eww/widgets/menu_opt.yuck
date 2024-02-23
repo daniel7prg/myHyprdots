@@ -1,6 +1,6 @@
 ;; system sliders
 (defwidget sys_sliders []
-  (box :class "genwin" :vexpand "false" :hexpand "false" :width 355
+  (box :class "genwin" :vexpand "false" :hexpand "false" :width 365
 	(box :class "slidersbox" :orientation "v" :spacing 10 :halign "center" :valign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
 	  (box :class "volume_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
 		(button :width 30 :onclick "scripts/audio --toggle-vol" 
