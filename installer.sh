@@ -68,7 +68,7 @@ install_stage=(
     ttf-jetbrains-mono-nerd
     ttf-noto-nerd
     noto-fonts-emoji
-    eww-wayland
+    eww
     geticons
     sddm-git
 )
