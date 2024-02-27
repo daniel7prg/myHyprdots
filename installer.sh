@@ -254,7 +254,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
         sudo sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
         sudo mkinitcpio -P
         
-        if [[ -z "$(yay -Ss grub)" ]]; then
+        if [[ -z "$(yay -Q grub)" ]]; then
             echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
         else
             sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 nvidia_drm.modeset=1"/' /etc/default/grub
@@ -323,7 +323,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 
     # add the Nvidia env file to the config (if needed)
     if [[ "$ISNVIDIA" == false ]]; then
-        sed -i 's/env = LIBVA_DRIVER_NAME,nvidia/#env=LIBVA/' ~/.config/hypr/env.conf
+        sed -i 's/env = LIBVA_DRIVER_NAME,nvidia/#env=LIBVA/' ~/.config/hypr/conf/env.conf
     fi
 
     # Copy the SDDM theme
@@ -372,22 +372,26 @@ fi
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these fish(f)/zsh(z) shells? (f,z,n) ' FIZSH
 if [[ $FIZSH == "F" || $FIZSH == "f" ]]; then
     # install the fish shell
-    echo -e "$CAC - Installing fish..."
-    sudo pacman -Sq --noconfirm fish lsd bat &>> $INSTLOG
-    echo -e "$COK - Done!!"
+    echo -e "$CAC - Installing fish and components..."
+    install_software fish
+    install_software lsd
+    install_software bat
     echo -e "$CAC - Set fish by default..."
-    sleep 1
     sudo usermod -s /usr/bin/fish $USER
+    sleep 1
     echo -e "$COK - Done!!"
 elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
     # install the zsh shell
-    echo -e "$CAC - Installing zsh..."
-    sudo pacman -Sq --noconfirm zsh zsh-syntax-highlighting zsh-autosuggestions lsd bat &>> $INSTLOG
-    echo -e "$COK - Done!!"
+    echo -e "$CAC - Installing zsh and components..."
+    install_software zsh
+    install_software zsh-syntax-highlighting
+    install_software zsh-autosuggestions
+    install_software lsd
+    install_software bat
     echo -e "$CAC - Set zsh by default..."
-    sleep 1
     echo "#Create .zshrc file" > ~/.zshrc
     sudo usermod -s /usr/bin/zsh $USER
+    sleep 1
     echo -e "$COK - Done!!"
 fi
 
@@ -413,7 +417,8 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$COK - Done!!"
         elif [[ $TZSH == "S" || $TZSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            sudo pacman -Sq --noconfirm starship
+            install_software starship
+            echo -e "$CAC - Setting up componenets..."
             echo -e 'eval "$(starship init zsh)"\n' >> ~/.zshrc
             echo -e "#Plugins\nsource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
             echo -e "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> ~/.zshrc
@@ -421,6 +426,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.zshrc
             echo -e "$CNT - You can change theme with presets"
             echo -e "$CNT - See more searching starship presets on web"
+            sleep 1
             echo -e "$COK - Done!!"
         fi
     fi
@@ -440,12 +446,14 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$COK - Done!!"
         elif [[ $TFSH == "S" || $TFSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            sudo pacman -Sq --noconfirm starship
+            install_software starship
+            echo -e "$CAC - Setting up componenets..."
             cp shells/fish/configS.fish ~/.config/fish/
             rm ~/.config/fish/config.fish
             mv ~/.config/fish/configS.fish ~/.config/fish/config.fish
             echo -e "$CNT - You can change theme with presets"
             echo -e "$CNT - See more searching starship presets on web"
+            sleep 1
             echo -e "$COK - Done!!"
         fi
     fi
@@ -467,10 +475,12 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$COK - Done!!"
         elif [[ $TBSH == "S" || $TBSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
-            sudo pacman -Sq --noconfirm starship
+            install_software starship
+            echo -e "$CAC - Setting up componenets..."
             cp shells/bash/.bashrc ~/
             echo -e "$CNT - You can change theme with presets"
             echo -e "$CNT - See more searching starship presets on web"
+            sleep 1
             echo -e "$COK - Done!!"
         fi
     fi
@@ -478,9 +488,13 @@ fi
 
 ### Install termial kitty/foot
 if [[ $ISVM == *"vm"* ]]; then
+    echo "---------------------------------------------------------------------------------------------------"
     echo -e "$CNT - Please note that VMs are not fully supported kitty, I recommend installing foot instead"
-    sed -i 's/blurls=gtk-layer-shell/#blurls=gtk-layer-shell/' ~/.config/hypr/hyprland.conf
-    sed -i 's/layerrule=ignorezero,gtk-layer-shell/#layerrule=ignorezero,gtk-layer-shell/' ~/.config/hypr/hyprland.conf
+    echo "---------------------------------------------------------------------------------------------------"
+    if [[ -e ~/.config/hypr/conf/layerrule.conf ]]; then
+        sed -i 's/blurls=gtk-layer-shell/#blurls=gtk-layer-shell/' ~/.config/hypr/conf/layerrule.conf
+        sed -i 's/layerrule=ignorezero,gtk-layer-shell/#layerrule=ignorezero,gtk-layer-shell/' ~/.config/hypr/conf/layerrule.conf
+    fi
     sleep 1
 fi
 
@@ -488,7 +502,8 @@ read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these kitty(k)/fo
 if [[ $TERM == "K" || $TERM == "k" ]]; then
     # install kitty
     echo -e "$CAC - Installing kitty..."
-    sudo pacman -Sq --noconfirm kitty &>> $INSTLOG
+    install_software kitty
+    echo -e "$CAC - Setting up componenets..."
     cp -R shells/kitty ~/.config/
     
     if [[ -e ~/.zshrc ]]; then
@@ -499,18 +514,21 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
         echo 'alias icat="kitten icat"' >> ~/.bashrc
     fi
 
+    sleep 1
     echo -e "$COK - Done!!"
 elif [[ $TERM == "F" || $TERM == "f" ]]; then
     # install foot
-    echo -e "$CAC - Installing foot..."
-    sudo pacman -Sq --noconfirm foot &>> $INSTLOG
+    echo -e "$CAC - Installing foot and componenets..."
+    install_software foot
+    echo -e "$CAC - Setting up componenets..."
     mkdir -p ~/.config/foot
     cp shells/bash/foot.ini ~/.config/wal/templates/
     wal -q -i .config/swww/wallpapers/MarioDev.gif.png
     cp ~/.cache/wal/foot.ini ~/.config/foot/
     sed -i 's/#/ /g' ~/.config/foot/foot.ini
     sed -i 's/image_backend=kitty/image_backend=ascii/' ~/.config/neofetch/config.conf
-    sed -i 's/bind = $mainMod, Q, exec, kitty/bind = $mainMod, Q, exec, foot/' ~/.config/hypr/hyprland.conf
+    sed -i 's/bind = $mainMod, Q, exec, kitty/bind = $mainMod, Q, exec, foot/' ~/.config/hypr/conf/binds.conf
+    sleep 1
     echo -e "$COK - Done!!"
 fi
 
@@ -520,30 +538,34 @@ read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these Firefox(f)/
 if [[ $BROWSER == "F" || $BROWSER == "f" ]]; then
     # install firefox
     echo -e "$CAC - Installing Firefox..."
-    sudo pacman -Sq --noconfirm firefox &>> $INSTLOG
-    echo -e "$COK - Done!!"
+    install_software firefox
+    echo "---------------------------------------------------------------------------------------------"
     echo -e "$CNT - Remember to set the theme to gtk"
+    echo "---------------------------------------------------------------------------------------------"
 elif [[ $BROWSER == "G" || $BROWSER == "g" ]]; then
     # install Chrome
     echo -e "$CAC - Installing Chrome..."
-    yay -Sq --noconfirm google-chrome &>> $INSTLOG
-    echo -e "$COK - Done!!"
+    install_software google-chrome
+    echo "---------------------------------------------------------------------------------------------"
     echo -e "$CNT - 1) Remember to set the theme to gtk"
     echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'chrome://flags/'"
+    echo "---------------------------------------------------------------------------------------------"
 elif [[ $BROWSER == "C" || $BROWSER == "C" ]]; then
     # install Chromium
     echo -e "$CAC - Installing Chromium..."
-    sudo pacman -Sq --noconfirm chromium &>> $INSTLOG
-    echo -e "$COK - Done!!"
+    install_software chromium
+    echo "---------------------------------------------------------------------------------------------"
     echo -e "$CNT - 1) Remember to set the theme to gtk"
     echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'chrome://flags/'"
+    echo "---------------------------------------------------------------------------------------------"
 elif [[ $BROWSER == "B" || $BROWSER == "b" ]]; then
     # install Brave
     echo -e "$CAC - Installing Brave..."
-    yay -Sq --noconfirm brave-bin &>> $INSTLOG
-    echo -e "$COK - Done!!"
+    install_software brave-bin
+    echo "---------------------------------------------------------------------------------------------"
     echo -e "$CNT - 1) Remember to set the theme to gtk"
     echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'brave://flags/'"
+    echo "---------------------------------------------------------------------------------------------"
 fi
 
 ### Script is done ###
@@ -554,9 +576,9 @@ if [[ "$ISNVIDIA" == true ]]; then
     exit
 fi
 
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to start Hyprland now? (y,n) ' HYP
-if [[ $HYP == "Y" || $HYP == "y" ]]; then
-    exec sudo systemctl start sddm &>> $INSTLOG
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like to start reboot now? (y,n) ' RBT
+if [[ $RBT == "Y" || $RBT == "y" ]]; then
+    exec sudo systemctl reboot
 else
     exit
 fi
