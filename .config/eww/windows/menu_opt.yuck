@@ -2,6 +2,6 @@
     :monitor 0
     :stacking "fg"
     :exclusive "false"
-	:geometry (geometry :x "8" :y "5" :anchor "top right")
+	:geometry (geometry :x "8" :y "7" :anchor "top right")
    (_menuopt)
 )

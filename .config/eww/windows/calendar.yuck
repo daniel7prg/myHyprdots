@@ -5,7 +5,7 @@
     :monitor 0
 	:geometry (geometry
         :x "148" 
-	    :y "5" 
+	    :y "7" 
         :anchor "top right"
 	    :width "280px" 
 	    :height "140px")
