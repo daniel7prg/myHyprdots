@@ -21,5 +21,5 @@ chmod +x ./install.sh
 ```
 # "repo_dir" is the directory where you've cloned the repository 
 cd repo_dir/myHyprdots
-git stash; git clone
+git stash; git pull
 ```
