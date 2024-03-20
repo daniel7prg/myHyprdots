@@ -29,7 +29,7 @@ nvidia_stage=(
     nvidia-dkms
     nvidia-utils
     libva
-    libva-nvidia-drive
+    libva-nvidia-driver
 )
 
 #the main packages
@@ -254,10 +254,12 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
         sudo sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
         sudo mkinitcpio -P
         
-        if [[ -z "$(yay -Q grub)" ]]; then
+        if [[ -z "$(pacman -Q grub)" ]]; then
             echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
+            echo -e "$CWR - If you use systemd-boot or some other bootloader then refer to the Hyprland wiki (Nvidia Section) for more information"
         else
-            sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 nvidia_drm.modeset=1"/' /etc/default/grub
+            sudo sed -i '/GRUB_CMDLINE_LINUX_DEFAULT=s/"$/ nvidia_drm.modeset=1"/' /etc/default/grub
+            echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
         fi
     fi
 
