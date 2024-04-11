@@ -1,22 +1,27 @@
 #!/bin/bash
 
+#  _________________________
+# | General Network Control |
+#  -------------------------
+
 ## Toggle state
 
 toggle() {
-  if [ "$(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')" != "Conexión cableada 1" ]; then
-    if [ "$(nmcli -t -f NAME connection show --active | head -n1 | sed 's/\"/\\"/g')" = "lo" ];then
-      nmcli radio wifi on
-    else
-      nmcli radio wifi off
-    fi
-  fi
+	TYPE=$(nmcli -t -f type con show --active | head -n1 | sed 's/.*-//g')
+	if [ "$TYPE" != "ethernet" ]; then
+		if [ "$TYPE" == "loopback" ];then
+			nmcli radio wifi on
+		else
+			nmcli radio wifi off
+		fi
+	fi
 }
 
 ## Get Status
 get_status() {  
-  SIGNAL=$(nmcli -t -f in-use,signal dev wifi | grep "*:*" | sed "s/*://")
-	TYPE=$(nmcli -t -f type con show --active | grep -o "wireless")
-  NET=$(nmcli -t -f name con show --active | head -n1 | sed 's/\"/\\"/g')
+  	SIGNAL=$(nmcli -t -f in-use,signal dev wifi | grep "*:*" | sed "s/*://")
+	TYPE=$(nmcli -t -f type con show --active | head -n1 | sed 's/.*-//g')
+  	NET=$(nmcli -t -f name con show --active | head -n1 | sed 's/\"/\\"/g')
 
 	if [[ "$TYPE" == "wireless" ]]; then
 		if [[ "$SIGNAL" -gt 80 ]]; then
@@ -31,7 +36,7 @@ get_status() {
 			echo "󰤫  $NET"
 		fi
 	elif [[ "$TYPE" == "ethernet" ]]; then
-		echo "󰈀 $NET"
+		echo "󰈀 Ethernet"
 	else
 		echo "󰤭   Offline"
 	fi

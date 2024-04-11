@@ -13,21 +13,22 @@ button {
     background-position: center;
     background-size: 25%;
     border: none;
-    background-color: @background;
     margin: 5px;
+    background-color: @background;
+    color: @foreground;
 }
 
 button:hover {
-    background-color: @background;
     background-size: 20%;
     font-size: 10pt;
+    background-color: @background;
 }
 
 button:focus {
-    background-color: @color6;
-    color: @background;
     background-size: 20%;
     font-size: 10pt;
+    background-color: @color6;
+    color: @background;
 }
 
 #lock {

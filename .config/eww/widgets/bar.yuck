@@ -1,18 +1,20 @@
 ;; MENU_OPT
 (defwidget _menuIC []
-  (button :onclick "scripts/launch_menu"
-    (box :orientation "h" :space-evenly "true"
-      (label :class "iconmenu_vol" :text "${VOLUMEICON}")
-      (label :class "iconmenu_msc" :text "${iconmusic}")
-      (label :class "iconmenu_bth" :text "${iconbth}")
-      (label :class "iconmenu_wf" :text "${iconwifi} ")
-      (label :class "iconmenu" :text "${iconmenu}")
+  (eventbox :cursor "pointer"
+    (button :onclick "scripts/launch_menu -p"
+      (box :orientation "h" :space-evenly "true"
+        (label :class "iconmenu_vol" :text "${VOLUMEICON}")
+        (label :class "iconmenu_msc" :text "${iconmusic}")
+        (label :class "iconmenu_bth" :text "${iconbth}")
+        (label :class "iconmenu_wf" :text "${iconwifi} ")
+        (label :class "iconmenu" :text "${iconmenu}")
+      )
     )
   )
 )
 
 (defwidget _clock []
-  (eventbox :onhover "${EWW_CMD} update time_rev=true" :onhoverlost "${EWW_CMD} update time_rev=false"
+  (eventbox :onhover "${EWW_CMD} update time_rev=true" :onhoverlost "${EWW_CMD} update time_rev=false" :cursor "pointer"
     (box :orientation "h" :space-evenly "false" :class "clock"
       (label :text "󰥔" :class "clock_icon")
       (label :text "${current_time.hour}:${current_time.min} " :class "clock_text")
@@ -29,9 +31,16 @@
 )
 
 (defwidget _wallpaper []
-  (button :onclick "sh -c '(sleep 1.5s; '$HOME/.config/rofi/scripts/wallselect.sh')' & disown \
-                    && dunstify '(ESC) to close' -t 1450"
-    (label :class "wal" :text "󰋹 wal")
+  (eventbox :onhover "${EWW_CMD} update rev2=true" :onhoverlost "${EWW_CMD} update rev2=false" :cursor "pointer"
+    (box :orientation "h" :space-evenly "false"
+      (label :text "󰋹" :class "wal_icon")
+      (revealer :transition "slideright" :reveal rev2 :duration "350ms"
+        (button :onclick "sh -c '(sleep 1.5s; '$HOME/.config/rofi/scripts/wallselect.sh')' & disown \
+                          && dunstify 'ROFI - (ESC) to close' -t 1450"
+          (label :class "opt_txt" :text " wal")
+        )
+      )
+    )
   )
 )
 
@@ -53,6 +62,7 @@
 (defwidget _workspaces []
   (eventbox
     :class "workspaces"
+    :cursor "pointer"
     :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
     (box
       :orientation "h"
@@ -66,8 +76,8 @@
               "empty"
             }
             :text {
-              workspaces[ws - 1] == 1 ? " 󰮯 " :
-              workspaces[ws - 1] == 2 ? " 󰊠 " :
+              workspaces[ws - 1] == 1 ? "󰮯 " :
+              workspaces[ws - 1] == 2 ? "󰊠 " :
               " "
             }
           )
@@ -77,14 +87,31 @@
   )
 )
 
+(defwidget switch_theme []
+  (box :orientation "h" :space-evenly "false"
+    (label :class "light_icon" :text "")
+    (eventbox :cursor "pointer" :width 50
+      (button :onclick "scripts/switch-theme" :class "btn_switch"
+        (label :class "thm_icon" :text "${iconswitch}" :tooltip "Light/Dark")
+      )
+    )
+    (label :class "dark_icon" :text "")
+  )
+)
+
 (defwidget bar []
   (centerbox
     :class "bar"
     (box
-      :class "bx_workspace"
       :space-evenly false
       :halign "start"
-      (_workspaces)
+      (box
+        :class "bx_workspace"
+        :halign "start"
+        :tooltip "Workspaces 󰮯"
+        (_workspaces)
+      )
+      (switch_theme)
     )
     (box
       :class "bx_appname"
@@ -99,7 +126,7 @@
       (box
         :class "bx_wal"
         :halign "start"
-        :tooltip "Change wal"
+        :tooltip "Change wal 󰸉"
         (_wallpaper)
       )
       (box

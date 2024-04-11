@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# WAYLAND_SESSION=wayland-1 swaylock ejecutar
+#  _______________________
+# | Swaylock Current Theme|
+#  -----------------------
 
 # Import the colors
 . "${HOME}/.cache/wal/colors.sh"
@@ -10,4 +12,3 @@ swaylock --ring-color "$color5" --inside-color "$background" --line-color "$back
 --inside-wrong-color="$background" --line-wrong-color="$background" \
 --inside-clear-color="$background" --line-clear-color="$background" \
 --key-hl-color "$foreground"
-

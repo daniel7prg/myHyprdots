@@ -8,15 +8,21 @@
 (include "windows/menu_opt.yuck")
 
 ;;;;;;;;;   BARS         ;;;;;;;;;
+(defpoll net_state :interval "0.2s" `echo $(nmcli -t -f type con show --active | head -n1 | sed 's/.*-//g')`)
+(defpoll bth_state :interval "0.2s" `echo $(systemctl is-active bluetooth.service)`)
 
 ;;;;;;;;;   WORKSPACES   ;;;;;;;;;     
 (defpoll workspaces :interval "0.5s" `scripts/workspaces`)
 (defvar my-workspaces "[1,2,3,4,5,6,7,8,9,10]")
 
-;;;;;;;;;   APPNAME     ;;;;;;;;;
+;;;;;;;;;   SWITCH THEME   ;;;;;;;;;
+;; Switch color scheme
+(defpoll iconswitch :interval "0.2s" `scripts/switch-theme --icon`)
+
+;;;;;;;;;   APPNAME   ;;;;;;;;;
 (deflisten appname `scripts/appname`)
 
-;;;;;;;;;   CLOCK       ;;;;;;;;;
+;;;;;;;;;   CLOCK   ;;;;;;;;;
 (defvar time_rev false)
 (defpoll current_time :interval "10s"
   `date '+{"hour":"%H","min":"%M","mouth":"%b","day":"%d","week":"%A"}'`
@@ -28,7 +34,7 @@
   `date '+{"hour":"%H","min":"%M","mouth":"%b","day":"%d","week":"%A"}'`
 )
 
-;;;;;;;;;   CALENDAR    ;;;;;;;;;;
+;;;;;;;;;   CALENDAR   ;;;;;;;;;;
 (defpoll calendar_day :interval "20h" "date '+%d'")
 (defpoll calendar_year :interval "20h" "date '+%Y'")
 
@@ -44,7 +50,7 @@
 ;; Music
 (defpoll iconmusic :interval "0.2s" `scripts/launch_menu --icon-music`)
 
-;;;;;;;;;   MENU_OPT    ;;;;;;;;;;
+;;;;;;;;;   MENU_OPT   ;;;;;;;;;;
 
 ;; System vars
 (defpoll BLIGHT :interval "0.2s" `scripts/brightness --get`)

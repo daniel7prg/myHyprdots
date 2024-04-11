@@ -1,4 +1,8 @@
-#!/usr/bin/env sh
+#!/bin/bash
+
+#  ____________________
+# | Brightness Control |
+#  --------------------
 
 function print_error
 {

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#  _______________
+# | Power Control |
+#  ---------------
+
 _poweroff(){
     if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
         systemctl poweroff
@@ -19,6 +23,7 @@ _reboot(){
 _logout(){
     if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
         hyprctl dispatch exit
+        # loginctl kill-session $XDG_SESSION_ID
     else
         dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de cerrar sesión"
     fi

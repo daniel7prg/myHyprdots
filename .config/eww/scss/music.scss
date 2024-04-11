@@ -1,9 +1,9 @@
 @import "./colors.scss";
 
 .album_art {
-	background-size: 180px;
-	min-height: 180px;
-	min-width: 180px;
+	background-size: 200px;
+	min-height: 200px;
+	min-width: 200px;
 	margin: 4px;
 	border-radius: 14px;
 }
@@ -24,6 +24,8 @@
 
 .prev, .stat, .nxt{
 	font-size: 34px;
+	padding-right: 12px;
+	margin-left: 18px;
 }
 
 .btn_prev, .btn_play, .btn_next{

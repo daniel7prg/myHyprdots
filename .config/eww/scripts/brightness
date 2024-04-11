@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#  ________________________
+# | Brightness Control Bar |
+#  ------------------------
+
 ## Get Brightness
 get_blight(){
 	echo $(brightnessctl get)

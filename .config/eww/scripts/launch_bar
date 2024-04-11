@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#  ______________
+# | Open Bar EWW |
+#  --------------
+
 EWW="eww -c $HOME/.config/eww/"
 
 ## Run eww daemon if not running already

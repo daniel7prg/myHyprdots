@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#  _______________
+# | Music Control |
+#  ---------------
+
 ## Get data
 STATUS="$(playerctl status)"
 
@@ -58,18 +62,12 @@ previous() {
 }
 
 ## Execute accordingly
-if [[ "$1" == "--song" ]]; then
-	get_song
-elif [[ "$1" == "--artist" ]]; then
-	get_artist
-elif [[ "$1" == "--status" ]]; then
-	get_status
-elif [[ "$1" == "--cover" ]]; then
-	get_cover
-elif [[ "$1" == "--toggle" ]]; then
-	toggle
-elif [[ "$1" == "--next" ]]; then
-	next
-elif [[ "$1" == "--prev" ]]; then
-	previous
-fi
+case $1 in
+    --song) get_song ;;
+	--artist) get_artist ;;
+	--status) get_status ;;
+	--cover) get_cover ;;
+	--toggle) toggle ;;
+	--next) next ;;
+	--prev) previous ;;
+esac

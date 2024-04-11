@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#  _______________
+# | Audio Control |
+#  ---------------
+
 ## Get Volume
 get_vol() {
   	echo $(pactl get-sink-volume @DEFAULT_SINK@) | awk '{print $5}'| sed 's/%//'
@@ -51,21 +55,13 @@ set_mic() {
   pactl set-source-volume @DEFAULT_SOURCE@ $1%
 }
 
-if [[ "$1" == "--set-vol" ]]; then
-	set_vol "$2"
-elif [[ "$1" == "--get-vol" ]]; then
-	get_vol
-elif [[ "$1" == "--toggle-vol" ]]; then
-	toggle_vol
-elif [[ "$1" == "--get-volicon" ]]; then
-	get_volicon
-elif [[ "$1" == "--get-micicon" ]]; then
-	get_micicon
-elif [[ "$1" == "--toggle-mic" ]]; then
-	toggle_mic
-elif [[ "$1" == "--get-mic" ]]; then
-	get_mic
-elif [[ "$1" == "--set-mic" ]]; then
-	set_mic "$2"
-fi
-
+case $1 in
+    --set-vol) set_vol "$2" ;;
+    --get-vol) get_vol ;;
+    --toggle-vol) toggle-vol ;;
+	--get-volicon) get_volicon ;;
+	--get-micicon) get_micicon ;;
+    --toggle-mic) toggle-mic ;;
+	--set-mic) set_mic "$2" ;;
+    --get-mic) get_mic ;;
+esac

@@ -9,6 +9,24 @@
     margin: 4px 4px 0px 4px;
 }
 
+.bx_help{
+    background-color: rgba($background, 0.55);
+    margin-right: 5px;
+    border: 1.5px solid $color6;
+    border-radius: 10px;
+    color: lighten($foreground, 10);
+}
+
+.hlp_icon{
+    padding: 0px 12px 0px 8px;
+    color: $color5;
+}
+
+.opt_txt{
+    padding-right: 8px;
+    color: lighten($foreground, 10);
+}
+
 .bx_workspace{
     background-color: rgba($background, 0.55);
     padding: 0 8px 0 12px;
@@ -16,7 +34,30 @@
     border-radius: 10px;
 }
 
-//-----IF you want change color icons------
+.btn_switch{
+    background-image: linear-gradient(45deg, $ncolor3 30%, $color3 70%);
+    border: 1.5px solid darken($foreground,20);
+    border-radius: 35px;
+    padding-right: 13px;
+}
+
+.thm_icon{
+    margin: -1rem 0;
+    font-size: 36.5pt;
+    color: $background;
+}
+
+.light_icon{
+    padding: 0 12px 0 7px;
+    color: $foreground;
+}
+
+.dark_icon{
+    padding-left: 7px;
+    color: $foreground;
+}
+
+//-----IF you want change color workspaces icons------
 .active{
     color: $foreground;
 }
@@ -28,6 +69,7 @@
 .empty{
     color: $color6;
 }
+//------------------------------------------------------
 
 .bx_appname{
     background-color: rgba($background, 0.55);
@@ -54,8 +96,8 @@
     margin-right: 5px;
 }
 
-.wal{
-    padding-right: 6px;
+.wal_icon{
+    padding-right: 12px;
     color: $color3;
 }
 

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#  _________________
+# | Battery Control |
+#  -----------------
+
 ## Get Battery 
 get_percentage() {
   BAT=$(ls /sys/class/power_supply | grep BAT | head -n 1)

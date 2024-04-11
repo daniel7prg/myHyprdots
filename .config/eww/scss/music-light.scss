@@ -1,0 +1,37 @@
+@import "./colors.scss";
+
+.album_art {
+	background-size: 200px;
+	min-height: 200px;
+	min-width: 200px;
+	margin: 4px;
+	border-radius: 14px;
+}
+
+.song {
+	color: darken($color7, 60);
+	font-size : 20px;
+	font-weight : bold;
+	margin : 30px 0px 0px 0px;
+}
+
+.artist {
+	color: darken($foreground, 30);
+	font-size : 18px;
+	font-weight : normal;
+	margin : 0px 0px 15px 0px;
+}
+
+.prev, .stat, .nxt{
+	font-size: 34px;
+}
+
+.btn_prev, .btn_play, .btn_next{
+	color: darken($foreground, 30);
+}
+
+.btn_prev, .btn_play, .btn_next{
+	&:hover{
+		color: $background;
+	}
+}

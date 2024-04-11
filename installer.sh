@@ -55,10 +55,7 @@ install_stage=(
     pamixer
     pavucontrol
     brightnessctl
-    bluez
-    bluez-libs
-    bluez-utils
-    blueman
+    blueberry
     playerctl
     gedit
     papirus-icon-theme
@@ -68,6 +65,7 @@ install_stage=(
     ttf-jetbrains-mono-nerd
     ttf-noto-nerd
     noto-fonts-emoji
+    ttf-nerd-fonts-symbols
     eww
     geticons
     sddm-git
@@ -302,23 +300,25 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     CONFDIR=~/.config
     if [ -d "$CONFDIR" ]; then
         echo -e "$COK - $CONFDIR found"
-        for DIR in ${backup_files[@]}; do 
-            DIRPATH=~/.config/$DIR
-            if [ -d "$DIRPATH" ]; then 
-                echo -e "$CAT - Config for $DIR located, backing up."
-                mv $DIRPATH $DIRPATH-back &>> $INSTLOG
-                echo -e "$COK - Backed up $DIR to $DIRPATH-back."
-            fi
-        done
+        read -rep $'[\e[1;33mACTION\e[0m] - Would you like to make a copy of your files? (y,n) ' BFG
+        if [[ $BFG == "Y" || $BFG == "y" ]]; then
+            for DIR in ${backup_files[@]}; do 
+                DIRPATH=~/.config/$DIR
+                if [ -d "$DIRPATH" ]; then 
+                    echo -e "$CAT - Config for $DIR located, backing up."
+                    mv $DIRPATH $DIRPATH-back &>> $INSTLOG
+                    echo -e "$COK - Backed up $DIR to $DIRPATH-back."
+                fi
+            done
+        fi
     else
         echo -e "$CWR - $CONFDIR NOT found, creating..."
+        # copy .config directory
         mkdir $CONFDIR
+        wal -q -i .config/swww/wallpapers/MarioDev.gif.png
+        cp -R .config/ ~/
+        wal -q -i .config/swww/wallpapers/MarioDev.gif.png
     fi
-    
-    # copy .config directory
-    wal -q -i .config/swww/wallpapers/MarioDev.gif.png
-    cp -R .config/ ~/
-    wal -q -i .config/swww/wallpapers/MarioDev.gif.png
     
     # setting config files
     echo -e "$CNT - Setting up the new config..."
@@ -353,12 +353,13 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     cp .config/gedit/themes/ayu-dark.xml ~/.local/share/gedit/styles/
     gsettings set org.gnome.gedit.preferences.editor scheme 'ayu'
     ln -sf ~/.cache/wal/ayu-dark.xml ~/.local/share/gedit/styles/ayu-dark.xml
+    cp .config/gedit/themes/catppuccin_latte.xml ~/.local/share/gedit/styles/
+    ln -sf ~/.cache/wal/catppuccin_latte.xml ~/.local/share/gedit/styles/catppuccin_latte.xml
     gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
     gsettings set org.gnome.desktop.interface icon-theme Papirus
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
-    ln -sf ~/.cache/wal/dunstrc ~/.config/dunst/dunstrc
-    ln -sf ~/.cache/wal/MateriaDark.kvconfig ~/.config/Kvantum/MateriaDark/MateriaDark.kvconfig
     papirus-folders -C cat-mocha-blue
+    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Decay-Green/gtk-3.0/gtk.css
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
     echo "@import '${HOME}/.cache/wal/colors.scss';" > ~/.config/eww/scss/colors.scss
     sudo sed -i 's/Inherits=Adwaita/Inherits=Qogir-cursors/' /usr/share/icons/default/index.theme
@@ -371,7 +372,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 fi
 
 ### Install the fish shell ###
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these fish(f)/zsh(z) shells? (f,z,n) ' FIZSH
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these fish(f)/zsh(z)/No(n) shells? (f,z,n) ' FIZSH
 if [[ $FIZSH == "F" || $FIZSH == "f" ]]; then
     # install the fish shell
     echo -e "$CAC - Installing fish and components..."
@@ -405,7 +406,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         echo "----------------------------------"
         echo -e "$CNT Installing theme for zsh"
         echo "----------------------------------"
-        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)? (o,s,n) ' TZSH
+        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)/No(n)? (o,s,n) ' TZSH
         if [[ $TZSH == "O" || $TZSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-zsh..."
             sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -437,7 +438,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         echo "----------------------------------"
         echo -e "$CNT Installing theme for fish"
         echo "----------------------------------"
-        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)? (o,s,n) ' TFSH
+        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)/No(n)? (o,s,n) ' TFSH
         if [[ $TFSH == "O" || $TFSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-fish..."
             curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install
@@ -464,7 +465,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         echo "----------------------------------"
         echo -e "$CNT Installing theme for bash"
         echo "----------------------------------"
-        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)? (o,s,n) ' TBSH
+        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)/No(n)? (o,s,n) ' TBSH
         if [[ $TBSH == "O" || $TBSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-posh..."
             mkdir ~/.oh-my-posh
@@ -500,13 +501,16 @@ if [[ $ISVM == *"vm"* ]]; then
     sleep 1
 fi
 
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these kitty(k)/foot(f) terminals? (k,f,n) ' TERM
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these kitty(k)/foot(f)/No(n) terminals? (k,f,n) ' TERM
 if [[ $TERM == "K" || $TERM == "k" ]]; then
     # install kitty
     echo -e "$CAC - Installing kitty..."
     install_software kitty
     echo -e "$CAC - Setting up componenets..."
     cp -R shells/kitty ~/.config/
+    cp Extras/Configs/colors-kitty-light.conf ~/.config/wal/templates
+    wal -q -i .config/swww/wallpapers/MarioDev.gif.png
+    sed -i '19, 38 s/#/ /' ~/.config/eww/scripts/switch-theme
     
     if [[ -e ~/.zshrc ]]; then
         echo 'alias icat="kitten icat"' >> ~/.zshrc
@@ -527,16 +531,68 @@ elif [[ $TERM == "F" || $TERM == "f" ]]; then
     cp shells/bash/foot.ini ~/.config/wal/templates/
     wal -q -i .config/swww/wallpapers/MarioDev.gif.png
     cp ~/.cache/wal/foot.ini ~/.config/foot/
+    sed -i '20, 39 s/#/ /' ~/.config/eww/scripts/switch-theme
+    sed -i '46s/#/ /' Extras/Scripts/wallselect.sh
+    sed -i '46s/#/ /' Extras/Scripts/wallselect_gif.sh
     sed -i 's/#/ /g' ~/.config/foot/foot.ini
     sed -i 's/image_backend=kitty/image_backend=ascii/' ~/.config/neofetch/config.conf
     sed -i 's/bind = $mainMod, Q, exec, kitty/bind = $mainMod, Q, exec, foot/' ~/.config/hypr/conf/binds.conf
     sleep 1
     echo -e "$COK - Done!!"
+else
+    echo "---------------------------------------------------------------"
+    echo -e "$CNT - Please install a terminal before starting hyprland" -
+    echo "---------------------------------------------------------------"
+fi
+
+## Copy wallpaper repo
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like to have wallpaper repo? (y,n) ' IMG
+if [[ $IMG == "Y" || $IMG == "y" ]]; then
+    read -rep $'[\e[1;33mACTION\e[0m] - Would you like copy any these Pics(p)/Gifs(g)/AnimeGirls(a)/Minimalist(m) wallpapers? (p,g,a,m,n) ' PIC
+    if [[ $PIC == "P" || $PIC == "p" ]]; then
+        echo -e "$CAC - Setting up wallpapers..."
+        cp -R Extras/wallpapers/PICs
+        sed -i 's|~/wallpapers/|~/wallpapers/PICs'
+        echo -e "$COK - Done!!"
+    elif [[ $PIC == "G" || $PIC == "g" ]]; then
+        echo -e "$CAC - Setting up wallpapers..."
+        cp -R Extras/wallpapers/Gifs
+        sed -i 's|~/wallpapers/|~/wallpapers/Gifs'
+        echo -e "$COK - Done!!"
+    elif [[ $PIC == "A" || $PIC == "a" ]]; then
+        echo -e "$CAC - Setting up wallpapers..."
+        cp -R Extras/wallpapers/Anime_Girls
+        sed -i 's|~/wallpapers/|~/wallpapers/Anime_Girls'
+        echo -e "$COK - Done!!"
+    elif [[ $PIC == "M" || $PIC == "m" ]]; then
+        echo -e "$CAC - Setting up wallpapers..."
+        cp -R Extras/wallpapers/Minimalist
+        sed -i 's|~/wallpapers/|~/wallpapers/Minimalist'
+        echo -e "$COK - Done!!"
+    fi
+else
+    mkdir -p ~/wallpapers
+    cp Extras/wallpapers/default.png
+fi
+
+## Install app wallpaper selector
+read -rep $'[\e[1;33mACTION\e[0m] - Do you want to install waypaper as a wallpaper selector? (y,n) ' WAL
+if [[ $WAL == "Y" || $WAL == "y" ]]; then
+    echo -e "$CAC - Installing waypaper and componenets..."
+    install_software waypaper
+    sed -i 's|$HOME/.config/rofi/scripts/wallselect.sh|waypaper' ~/.config/eww/widgets/bar.yuck
+else
+    read -rep $'[\e[1;33mACTION\e[0m] - Would you like to have support for .gif? (y,n) ' RWAL
+    if [[ $RWAL == "Y" || $RWAL == "Y" ]]; then
+        cp Extras/Scripts/wallselect_gif.sh ~/.config/rofi/scripts
+        cp Extras/Scripts/wallselect.sh ~/.config/rofi/scripts
+    else
+        cp Extras/Scripts/wallselect_gif.sh ~/.config/rofi/scripts
+    fi
 fi
 
 ## Install browser
-
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these Firefox(f)/Chrome(g)/Chromium(c)/Brave(b) browsers? (f,g,c,b,n) ' BROWSER
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these Firefox(f)/Chrome(g)/Chromium(c)/Brave(b)/No(n) browsers? (f,g,c,b,n) ' BROWSER
 if [[ $BROWSER == "F" || $BROWSER == "f" ]]; then
     # install firefox
     echo -e "$CAC - Installing Firefox..."
@@ -568,6 +624,10 @@ elif [[ $BROWSER == "B" || $BROWSER == "b" ]]; then
     echo -e "$CNT - 1) Remember to set the theme to gtk"
     echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'brave://flags/'"
     echo "---------------------------------------------------------------------------------------------"
+else
+    echo "---------------------------------------------------------------"
+    echo -e "$CNT - Please install a browser before starting hyprland" -
+    echo "---------------------------------------------------------------"
 fi
 
 ### Script is done ###
@@ -580,7 +640,7 @@ fi
 
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like to start reboot now? (y,n) ' RBT
 if [[ $RBT == "Y" || $RBT == "y" ]]; then
-    exec sudo systemctl reboot
+    exec systemctl reboot
 else
     exit
 fi

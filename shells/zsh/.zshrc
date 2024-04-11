@@ -4,7 +4,7 @@
 
 #Neofetch
 sleep 0.1
-current_wal=$(echo "$(swww query)" | grep eDP-1 | grep -o 'image:.*' | awk '{print $2}')
+current_wal=$(echo "$(swww query)" | grep -o 'image:.*' | awk '{print $2}')
 neofetch --source "${current_wal}.png"
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then

@@ -1,6 +1,9 @@
 @import "./music.scss";
 
 $ncolor6:darken($color6,10);
+$ncolor3:darken($color3,10);
+$lcolor3:lighten($color3, 5);
+$lncolor3:lighten($ncolor3, 5);
 
 .background_mn{
     background-color: rgba($background, 0.55);
@@ -18,7 +21,21 @@ $ncolor6:darken($color6,10);
 /* ------ Modules ------- */
 /* Network & Bluetooth ********************************************/
 .btn_net, .btn_bluet{
+	color: lighten($background, 10);
+	border-radius: 16px;
+	background-image: linear-gradient(45deg, $ncolor3 30%, $color3 60%);
+}
+
+.disable {
+	background-color: rgba($background, 0.1);
+	border-radius: 16px;
 	color: lighten($foreground, 10);
+}
+
+.disable:hover{
+	background-image: linear-gradient(45deg, $lncolor3 30%, $lcolor3 60%);
+	color: $background;
+	border-radius: 16px;
 }
 
 .network {
@@ -27,7 +44,7 @@ $ncolor6:darken($color6,10);
 
 .btn_net, .btn_bluet, .btn_poweroff{
 	&:hover{
-		background-color: $color3;
+		background-image: linear-gradient(45deg, $lncolor3 30%, $lcolor3 60%);
 		color: $background;
 		border-radius: 16px;
 	}
@@ -95,11 +112,11 @@ $ncolor6:darken($color6,10);
 
 /** Power buttons ***************************************/
 .btn_poweroff{
-	padding-right: 4px;
 	color: lighten($foreground, 10);
 }
 
 .poweric{
+	padding-left: 9.3px;
 	font-size: 21px;
 }
 

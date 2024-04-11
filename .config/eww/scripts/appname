@@ -1,7 +1,11 @@
-#! /bin/bash
+#!/bin/bash
+
+#  __________________
+# | App Name Section |
+#  ------------------
 
 #define icons for workspaces
-icontheme=$(grep "gtk-icon-theme-name" $HOME/.config/gtk-3.0/settings.ini | cut --delimiter="=" -f 2)
+icontheme=$(grep -o "gtk-icon-theme-name.*" ~/.config/gtk-3.0/settings.ini | cut -d "=" -f 2)
 
 workspaces() {
 if [[ ${1:0:14} == "activewindow>>" ]]; then #set focused workspace

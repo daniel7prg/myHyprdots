@@ -1,4 +1,8 @@
-#!/usr/bin/env sh
+#!/bin/bash
+
+#  ________________
+# | Volume Control |
+#  ----------------
 
 # define functions
 

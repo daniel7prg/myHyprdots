@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#  ____________________
+# | Workspaces Control |
+#  --------------------
+
+# Enabled number of workspaces
 n=10
 
 # Initialize an associative array

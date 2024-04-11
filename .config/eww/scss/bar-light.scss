@@ -1,0 +1,150 @@
+@import "./calendar-light.scss";
+@import "./menu_opt-light.scss";
+
+.bar{
+    padding: 12px 13px;
+    border: 2.5px solid darken($color6, 30);
+    border-radius: 10px;
+    background-color: rgba($foreground, 0.55);
+    margin: 4px 4px 0px 4px;
+}
+
+.bx_help{
+    background-color: rgba($foreground, 0.55);
+    margin-right: 5px;
+    border: 1.5px solid darken($color6, 30);
+    border-radius: 10px;
+    color: darken($color6, 30);
+}
+
+.hlp_icon{
+    padding: 0px 12px 0px 8px;
+    color: darken($color5,30);
+}
+
+.opt_txt{
+    padding-right: 8px;
+    color: darken($color6, 30);
+}
+
+.bx_workspace{
+    background-color: rgba($foreground, 0.55);
+    padding: 0 8px 0 12px;
+    border: 1.5px solid darken($color6, 30);
+    border-radius: 10px;
+}
+
+.btn_switch{
+    background-image: linear-gradient(to right, $ncolor3 30%, $color3 100%);
+    border: 1.5px solid lighten($background,20);
+    border-radius: 35px;
+    padding-right: 13px;
+}
+
+.thm_icon{
+    margin: -1rem 0;
+    font-size: 36.5pt;
+    color: $foreground;
+}
+
+.light_icon{
+    padding: 0 12px 0 7px;
+    color: $background;
+}
+
+.dark_icon{
+    padding-left: 7px;
+    color: $background;
+}
+
+//-----IF you want change color icons------
+.active{
+    color: $background;
+}
+
+.used{
+    color: darken($color3, 25);
+}
+
+.empty{
+    color: darken($color6, 25);
+}
+//------------------------------------------------------
+
+.bx_appname{
+    background-color: rgba($foreground, 0.55);
+    padding: 0 16px 0 14px;
+    border: 1.5px solid darken($color6, 30);
+    border-radius: 10px;
+    color: $background;
+}
+
+.app-icon{
+    padding-right: 5px;
+    padding-left: 0px;
+}
+
+.app-name{
+    padding-left: 5px;
+}
+
+.bx_wal{
+    background-color: rgba($foreground, 0.55);
+    border: 1.5px solid darken($color6, 30);
+    border-radius: 10px;
+    padding-left: 8px;
+    margin-right: 5px;
+}
+
+.wal_icon{
+    padding-right: 12px;
+    color: $background;
+}
+
+.clock_icon{
+    padding-right: 8px;
+    color: $background;
+}
+
+.cal_icon{
+    padding-left: 8px;
+    padding-right: 6px;
+    color: $background;
+}
+
+.bx_clock{
+    background-color: rgba($foreground, 0.55);
+    padding-left: 8px;
+    border: 1.5px solid darken($color6, 30);
+    border-radius: 10px;
+    color: darken($color3, 30);
+}
+
+.bx_options{
+    background-color: rgba($foreground, 0.55);
+    margin-left: 5px;
+    padding: 0 10px 0 7.5px;
+    border: 1.5px solid darken($color6, 30);
+    border-radius: 10px;
+}
+
+.iconmenu_vol{
+    color: darken($color3,30);
+}
+
+.iconmenu_msc{
+    color: darken($color3,30);
+}
+
+.iconmenu_bth{
+    color: darken($color5,30);
+    padding-right: 5.5px;
+}
+
+.iconmenu_wf{
+    color: darken($color5,30);
+}
+
+.iconmenu{
+    color: darken($color8,30);
+}
