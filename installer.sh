@@ -64,8 +64,8 @@ install_stage=(
     ttf-firacode-nerd
     ttf-jetbrains-mono-nerd
     ttf-noto-nerd
-    noto-fonts-emoji
     ttf-nerd-fonts-symbols
+    noto-fonts-emoji
     eww
     geticons
     sddm-git
