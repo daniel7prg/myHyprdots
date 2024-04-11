@@ -1,0 +1,6 @@
+[submodule "Extras/myHyprdots"]
+	path = Extras/myHyprdots
+	url = https://github.com/daniel7prg/myHyprdots.git
+[submodule "Extras/hyprWalls"]
+	path = Extras/hyprWalls
+	url = https://github.com/daniel7prg/hyprWalls.git
