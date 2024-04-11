@@ -551,28 +551,28 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
     read -rep $'[\e[1;33mACTION\e[0m] - Would you like copy any these Pics(p)/Gifs(g)/AnimeGirls(a)/Minimalist(m) wallpapers? (p,g,a,m,n) ' PIC
     if [[ $PIC == "P" || $PIC == "p" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
-        cp -R Extras/hyprWalls/wallpapers/PICs
+        cp -R Extras/hyprWalls/wallpapers/PICs ~/wallpapers
         sed -i 's|~/wallpapers/|~/wallpapers/PICs'
         echo -e "$COK - Done!!"
     elif [[ $PIC == "G" || $PIC == "g" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
-        cp -R Extras/hyprWalls/wallpapers/Gifs
+        cp -R Extras/hyprWalls/wallpapers/Gifs ~/wallpapers
         sed -i 's|~/wallpapers/|~/wallpapers/Gifs'
         echo -e "$COK - Done!!"
     elif [[ $PIC == "A" || $PIC == "a" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
-        cp -R Extras/hyprWalls/wallpapers/Anime_Girls
+        cp -R Extras/hyprWalls/wallpapers/Anime_Girls ~/wallpapers
         sed -i 's|~/wallpapers/|~/wallpapers/Anime_Girls'
         echo -e "$COK - Done!!"
     elif [[ $PIC == "M" || $PIC == "m" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
-        cp -R Extras/hyprWalls/wallpapers/Minimalist
+        cp -R Extras/hyprWalls/wallpapers/Minimalist ~/wallpapers
         sed -i 's|~/wallpapers/|~/wallpapers/Minimalist'
         echo -e "$COK - Done!!"
     fi
 else
     mkdir -p ~/wallpapers
-    cp Extras/wallpapers/default.png
+    cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
 fi
 
 ## Install app wallpaper selector
