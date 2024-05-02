@@ -42,7 +42,7 @@ install_stage=(
     dunst
     swww
     swaylock-effects
-    rofi-lbonn-wayland-git
+    rofi-wayland
     wlogout
     swappy
     grim
