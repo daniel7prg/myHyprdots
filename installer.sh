@@ -66,7 +66,7 @@ install_stage=(
     ttf-noto-nerd
     ttf-nerd-fonts-symbols
     noto-fonts-emoji
-    eww
+    eww-wayland
     geticons
     sddm-git
 )
