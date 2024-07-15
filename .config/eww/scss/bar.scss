@@ -1,82 +1,112 @@
 @import "./calendar.scss";
 @import "./menu_opt.scss";
+@import "./help_opt.scss";
+@import "./systray.scss";
+
+$background-alt: radial-gradient(farthest-side, $ncolor3 30%, $lcolor3 60%);
+$border_clr: darken($foreground, 45);
+$text_opt: lighten($background, 5);
+$text_icn: lighten($background, 5);
+$background-opc: rgba($background, 0.8);
+
+@if (lightness($color3) < 45){
+    $text_opt: lighten($foreground, 10);
+    $text_icn: lighten($foreground, 5);
+}
 
 .bar{
     padding: 12px 13px;
     border: 2.5px solid $color6;
-    border-radius: 10px;
-    background-color: rgba($background, 0.55);
+    border-radius: 50px;
+    background-color: $background-opc;
     margin: 4px 4px 0px 4px;
+    animation: border-move 6s linear infinite;
 }
 
-.bx_help{
-    background-color: rgba($background, 0.55);
+.bx_apps{
+    background-image: $background-alt;
     margin-right: 5px;
-    border: 1.5px solid $color6;
-    border-radius: 10px;
-    color: lighten($foreground, 10);
+    border: 1px solid $border_clr;
+    border-radius: 15px;
 }
 
-.hlp_icon{
-    padding: 0px 12px 0px 8px;
-    color: $color5;
+.app_icon{
+    padding: 0px 11px 0px 8px;
+    color: $text_opt;
+}
+
+.app_img{
+    background-size: 100%;
+	min-width: 17px;
+	min-height: 17px;
+    background-repeat: no-repeat;
+}
+
+.app_name{
+    font-weight: 600;
+    color: $text_opt;
 }
 
 .opt_txt{
     padding-right: 8px;
-    color: lighten($foreground, 10);
+    color: $text_opt;
 }
 
 .bx_workspace{
-    background-color: rgba($background, 0.55);
+    background-image: $background-alt;
     padding: 0 8px 0 12px;
-    border: 1.5px solid $color6;
-    border-radius: 10px;
-}
-
-.btn_switch{
-    background-image: linear-gradient(45deg, $ncolor3 30%, $color3 70%);
-    border: 1.5px solid darken($foreground,20);
-    border-radius: 35px;
-    padding-right: 13px;
-}
-
-.thm_icon{
-    margin: -1rem 0;
-    font-size: 36.5pt;
-    color: $background;
-}
-
-.light_icon{
-    padding: 0 12px 0 7px;
-    color: $foreground;
-}
-
-.dark_icon{
-    padding-left: 7px;
-    color: $foreground;
+    border: 1px solid $border_clr;
+    border-radius: 15px;
 }
 
 //-----IF you want change color workspaces icons------
-.active{
-    color: $foreground;
+.active_btn{
+    color: $text_icn;
+    transition: color 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
 }
 
-.used{
-    color: $color3;
+.active_btn:hover{
+    background-color: $background;
+    border-radius: 35px;
+    margin-left: -5px;
+    padding-left: 5px;
+    animation: color-move 3s linear infinite;
+    transition: background 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
 }
 
-.empty{
-    color: $color6;
+.used_btn{
+    color: mix($text_icn, $color5, 70);
+}
+
+.used_btn:hover{
+    background-color: $background;
+    border-radius: 35px;
+    margin-left: -6px;
+    padding-left: 6px;
+    animation: color-move 3s linear infinite;
+    transition: background 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
+}
+
+.empty_btn{
+    color: mix($text_opt, $color6, 65);
+}
+
+.empty_btn:hover{
+    background-color: $background;
+    border-radius: 35px;
+    margin-left: -5px;
+    padding-left: 6px;
+    animation: color-move 3s linear infinite;
+    transition: background 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
 }
 //------------------------------------------------------
 
 .bx_appname{
-    background-color: rgba($background, 0.55);
+    background-image: $background-alt;
     padding: 0 16px 0 14px;
-    border: 1.5px solid $color6;
-    border-radius: 10px;
-    color: lighten($foreground, 10);
+    border: 1px solid $border_clr;
+    border-radius: 15px;
+    color: $text_opt;
 }
 
 .app-icon{
@@ -88,63 +118,114 @@
     padding-left: 5px;
 }
 
-.bx_wal{
-    background-color: rgba($background, 0.55);
-    border: 1.5px solid $color6;
-    border-radius: 10px;
-    padding-left: 8px;
+.bx_tray{
+    background-image: $background-alt;
+    border: 1px solid $border_clr;
+    border-radius: 15px;
+    padding-left: 7px;
+    padding-right: 7px;
     margin-right: 5px;
+}
+
+.tray_icon {
+    color: $text_opt;
+}
+
+.bx_msc{
+    background-image: $background-alt;
+    border: 1px solid $border_clr;
+    border-radius: 15px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-right: 5px;
+}
+
+.bx_wal{
+    background-image: $background-alt;
+    border: 1px solid $border_clr;
+    border-radius: 15px;
+    padding-left: 7px;
+    margin-left: 5px;
+}
+
+.music_prg{
+    color: $text_opt;
+    background-color: rgba($text_opt, 0.2);
+}
+    
+.music_icon{
+    font-size: 10px;
+    margin: 7px;
+    color: $text_opt;
+}
+
+.music_title{
+    padding-left: 5px;
+    color: $text_opt;
 }
 
 .wal_icon{
     padding-right: 12px;
-    color: $color3;
+    color: $text_opt;
 }
 
 .clock_icon{
     padding-right: 8px;
-    color: $color3;
+    color: $text_opt;
 }
 
 .cal_icon{
     padding-left: 8px;
     padding-right: 6px;
-    color: $color3;
+    color: $text_opt;
 }
 
 .bx_clock{
-    background-color: rgba($background, 0.55);
+    background-image: $background-alt;
     padding-left: 8px;
-    border: 1.5px solid $color6;
-    border-radius: 10px;
-    color: lighten($foreground, 10);
+    border: 1px solid $border_clr;
+    border-radius: 15px;
+    color: $text_opt;
 }
 
 .bx_options{
-    background-color: rgba($background, 0.55);
+    background-image: $background-alt;
+    border: 1px solid $border_clr;
     margin-left: 5px;
-    padding: 0 10px 0 7.5px;
-    border: 1.5px solid $color6;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
-.iconmenu_vol{
-    color: $color3;
+.iconmenu_volS{
+    color: $text_opt;
+    padding: 0px 6px 0px 8px;
 }
 
-.iconmenu_msc{
-    color: $color3;
+.iconmenu_volH{
+    color: $text_opt;
+    padding: 0px 3px 0px 10px;
 }
 
-.iconmenu_bth{
-    color: $color5;
-    padding-right: 5.5px;
+.iconmenu_bat, .iconmenu_bth{
+    color: $text_opt;
 }
 
 .iconmenu_wf{
-    color: $color5;
+    color: $text_opt;
+    padding-right: 4px;
 }
 
 .iconmenu{
-    color: $color8;
+    color: $text_opt;
+    padding-right: 15px;
+}
+
+tooltip{
+    background-color: rgba($background, 0.7);
+    border: 1px solid $color6;
+    border-radius: 15px;
+    animation: border-move 6s linear infinite;
+}
+
+tooltip > box {
+    margin: 0 5px;
 }

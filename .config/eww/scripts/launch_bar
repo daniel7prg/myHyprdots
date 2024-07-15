@@ -4,11 +4,9 @@
 # | Open Bar EWW |
 #  --------------
 
-EWW="eww -c $HOME/.config/eww/"
-
 ## Run eww daemon if not running already
 if [[ ! $(pidof eww) ]]; then
-    ${EWW} daemon
-    sleep 1
-    ${EWW} open status_bar
+    eww daemon
+    sleep 2
+    eww open ewwBar
 fi

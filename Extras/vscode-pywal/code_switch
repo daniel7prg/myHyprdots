@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#  _____________________
+# | Select Theme VSCode |
+#  ---------------------
+
+source $HOME/.config/rofi/scripts/globalcontrol.sh
+
+# Dir extension pywal
+dir=~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template.js ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out
+
+change_theme_code () {
+    mv $dir/template-dr.js
+    mv $dir/template.js
+    mv $dir/template-lt.js
+}

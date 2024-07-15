@@ -44,7 +44,7 @@ mainbox {
 imagebox {
     padding:                     20px;
     background-color:            transparent;
-    background-image:            url("~/.config/rofi/PICs/night_city.png", height);
+    background-image:            url("~/wallpapers/default.png", height);
     orientation:                 vertical;
     children:                    [ "inputbar", "dummy", "mode-switcher" ];
 }

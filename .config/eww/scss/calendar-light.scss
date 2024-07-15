@@ -1,10 +1,22 @@
 @import "./colors.scss";
 
+$ncolor3:lighten($color3,15);
+$text_day_sel: lighten($background, 5);
+$text_day: lighten($background, 85);
+
+@if (lightness($color3) < 50){
+    $text_day_sel: lighten($foreground, 10);
+}
+
 .cal{
     background-color: rgba($foreground, 0.7);
+    color: $text_day;
     border: 2px solid darken($color6, 30);
     border-radius: 12px;
     padding: 10px;
+    box-shadow: 0 0 2px 1px rgba($background, 0.9);
+	margin: 0.4rem;
+    animation: border-move 6s linear infinite;
 }
 
 .cal .header{
@@ -20,8 +32,8 @@
 }
 
 .cal :selected{
-    color: $background;
-    background-color: darken($color6, 30);
+    color: $text_day_sel;
+    background-image: linear-gradient(to left, $ncolor3 30%, $color3 60%);
     border-radius: 10px;
 }
 

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#  __________________
+# | Choose User Icon |
+#  ------------------
+
+user_icon=$(yad --title="Choose wallpaper" --file --image-filter=png --add-preview --large-preview --button=yad-cancel:1 --text-align=center --text "<span font_style='oblique' font_stretch='expanded'>Choose img user </span>")
+icon_name="${user_icon##*/}"
+
+if [[ "${icon_name}" == *".png" ]]; then
+    if [ -n "${user_icon}" ] ; then
+        dunstify "User img" "Please wait..." -t 1800
+        cp $user_icon ~/.config/eww/icons/
+        rm ~/.config/eww/icons/user.face.icon
+        mv ~/.config/eww/icons/$icon_name ~/.config/eww/icons/user.face.icon
+        sleep 2
+        dunstify "User img" "Login User icon" -t 1800
+        sleep 2
+        pkexec cp ~/.config/eww/icons/user.face.icon /usr/share/sddm/faces/
+        copy=$?
+        if [[ $copy -ne 0 ]]; then exit 0; fi
+        sleep 1
+        pkexec rm /usr/share/sddm/faces/$USER.face.icon
+        copy=$?
+        if [[ $copy -ne 0 ]]; then exit 0; fi
+        sleep 1
+        pkexec mv /usr/share/sddm/faces/user.face.icon /usr/share/sddm/faces/$USER.face.icon
+        copy=$?
+        if [[ $copy -eq 0 ]]; then
+            sleep 1
+            dunstify "User img" "Done!!"
+        fi
+    fi
+fi

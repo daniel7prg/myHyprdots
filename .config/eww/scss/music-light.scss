@@ -1,37 +1,103 @@
 @import "./colors.scss";
 
+$ncolor5:lighten($color6,15);
+$ncolor3:lighten($color3,15);
+
+.musicwin {
+	background-color: rgba($foreground, 0.7);
+	border: 2px solid;
+	border-radius: 16px;
+	box-shadow: 0 0 2px 1px rgba($background, 0.9);
+	margin: 0.4rem;
+	animation: border-move 6s linear infinite;
+}
+
+.info_music{
+	padding: 10px 20px 0px;
+}
+
+.cava_module{
+	color: rgba($color6, 0.4);
+	font-size: 28px;
+	letter-spacing: 10px;
+	margin-top: 60px;
+	animation: cava-color 3s linear infinite;
+}
+
 .album_art {
-	background-size: 200px;
-	min-height: 200px;
-	min-width: 200px;
-	margin: 4px;
+	background-size: 100%;
+	min-width: 100px;
+	min-height: 100px;
+	margin: 20px 15px 20px 0px;
 	border-radius: 14px;
+	box-shadow: 0px 0px 5px 2px rgba($background, 0.7);
 }
 
 .song {
 	color: darken($color7, 60);
-	font-size : 20px;
+	font-size : 18px;
 	font-weight : bold;
-	margin : 30px 0px 0px 0px;
+	margin-top: 25px;
 }
 
 .artist {
-	color: darken($foreground, 30);
-	font-size : 18px;
+	color: darken($foreground, 87);
+	font-size : 16px;
 	font-weight : normal;
-	margin : 0px 0px 15px 0px;
+	margin-bottom: 15px;
+}
+
+.info_song{
+	padding: 0px 15px 10px 15px;
+}
+
+scale.scale_music trough {
+	all: unset;
+	background-color: lighten($color5, 25);
+	border: 2px solid;
+	border-radius: 16px;
+	min-height: 10px;
+	animation: border-move 6s linear infinite;
+}
+
+scale.scale_music trough highlight {
+	all: unset;
+	border-radius: 16px;
+	background-image: linear-gradient(to right, $ncolor5 30%, $color5 100%);
+}
+
+.time_init{
+	color: darken($foreground, 87);
+	padding-left: 5px;
+}
+
+.time_end{
+	color: darken($foreground, 87);
+	padding-right: 6px;
+}
+
+.msc_ctl{
+	margin-top: -19px;
+	margin-bottom: 5px;
+	padding: 0px 8px;
+	background-color: rgba($background, 0.1);
+	border: 2px solid;
+	border-radius: 35px;
+	box-shadow: 0px 0px 2px 1px rgba($background, 0.7);
+	animation: border-move 3s linear infinite;
 }
 
 .prev, .stat, .nxt{
 	font-size: 34px;
+	padding-right: 8px;
 }
 
 .btn_prev, .btn_play, .btn_next{
-	color: darken($foreground, 30);
+	color: darken($foreground, 87);
 }
 
 .btn_prev, .btn_play, .btn_next{
 	&:hover{
-		color: $background;
+		animation: color-move 3s linear infinite;
 	}
 }

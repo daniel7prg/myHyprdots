@@ -4,37 +4,23 @@
 # | App Name Section |
 #  ------------------
 
-#define icons for workspaces
+#define icons for window
 icontheme=$(grep -o "gtk-icon-theme-name.*" ~/.config/gtk-3.0/settings.ini | cut -d "=" -f 2)
 
-workspaces() {
-if [[ ${1:0:14} == "activewindow>>" ]]; then #set focused workspace
-    string=${1:14}
-    class="${string/,*/}"
-    export title=${string/,/ \| }
-    [[ $title == " | " ]] && unset title
-    export iconpath=$(geticons "$class" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
-fi
+active_win() {
+    if [[ ${1:0:14} == "activewindow>>" ]]; then
+        string=${1:14}
+        class="${string/,*/}"
+        title=${string/,/ \| }
+        icon=$(geticons "$class" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1 2>/dev/null);
+        if [[ "$title" == " | " ]]; then unset title;
+        else 
+            if [[ -z "$icon" ]]; then icon="$HOME/.config/eww/icons/hyprland.png"; fi
+        fi
+        echo '{"title":"'$title'","icon":"'$icon'"}'
+    fi  
 }
 
-module() {
-echo 	"(box \
-                :orientation \"h\" \
-                :halign \"start\" \
-                :space-evenly false \
-                (image \
-                    :class \"app-icon\" \
-                    :path \"$iconpath\" \
-                    :image-width \"18\") \
-                (label \
-                    :class \"app-name\" \
-                    :limit-width \"35\" \
-                    :text \"$title\" \
-                    :tooltip \"$title\"))"
-}
-
-socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r event; do 
-workspaces "$event"
-module
-done
+socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | 
+while read -r event; do active_win "$event"; done
 

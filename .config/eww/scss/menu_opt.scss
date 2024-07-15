@@ -1,157 +1,292 @@
 @import "./music.scss";
 
-$ncolor6:darken($color6,10);
-$ncolor3:darken($color3,10);
-$lcolor3:lighten($color3, 5);
+$lcolor3:lighten($color3, 10);
 $lncolor3:lighten($ncolor3, 5);
+$text_btn: lighten($background, 5);
 
-.background_mn{
-    background-color: rgba($background, 0.55);
-	border: 2px solid $color6;
-    border-radius: 12px;
-    padding: 10px;
+@if (lightness($color3) < 45){
+    $text_btn: lighten($foreground, 10);
 }
 
-/** Generic window ***********************************/
-.genwin {
-	background-color: rgba($background, 0.55);
-	border-radius: 16px;
+.background_main{
+    background-color: rgba($background, 0.9);
+	border: 2px solid;
+    border-radius: 15px;
+    padding: 15px 15px 25px 15px;
+	box-shadow: 0 0 2px 1px rgba($background, 0.9);
+	margin: 0.4rem;
+	animation: border-move 6s linear infinite;
+}
+
+/** Generic box ***********************************/
+.box_opt {
+	background-color: rgba($foreground, 0.12);
+	border-radius: 50px;
+}
+
+.box_osd {
+	background-color: rgba($foreground, 0.12);
+	border-radius: 20px;
 }
 
 /* ------ Modules ------- */
+/****  User Info  *******/
+.user_img{
+	background-size: 100%;
+	min-width: 60px;
+	min-height: 60px;
+	border: 2px solid $color6;
+	border-radius: 50%;
+	box-shadow: 0px 0px 2px 2px rgba($background, 0.7);
+}
+
+.user_title {
+	color: lighten($foreground, 10);
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.user_name {
+	color: lighten($foreground, 10);
+	font-size: 15px;
+}
+
+/****  Quick Settiengs  *******/
+.btn_quick {
+	color: lighten($foreground, 10);
+}
+
+.btn_quick:hover {
+	background-color: rgba(#ffffff, 0.12);
+	border-radius: 15px;
+	color: $color6;
+}
+
+.icon_settings{
+	padding-right: 4px;
+	font-size: 15px;	
+}
+
+.icon_help, .icon_power{
+	padding-right: 6px;
+	font-size: 15px;
+}
+
 /* Network & Bluetooth ********************************************/
 .btn_net, .btn_bluet{
-	color: lighten($background, 10);
-	border-radius: 16px;
-	background-image: linear-gradient(45deg, $ncolor3 30%, $color3 60%);
+	color: $text_btn;
+	border-radius: 50px 0px 0px 50px;
+	background-image: linear-gradient(to right, $ncolor3 40%, $color3 100%);
+}
+
+.btn_net, .btn_bluet{
+	&:hover{
+		background-image: linear-gradient(to right, $lncolor3 40%, $lcolor3 100%);
+		color: $text_btn;
+		border-radius: 50px 0px 0px 50px;
+	}
 }
 
 .disable {
 	background-color: rgba($background, 0.1);
-	border-radius: 16px;
+	border-radius: 50px 0px 0px 50px;
 	color: lighten($foreground, 10);
 }
 
 .disable:hover{
-	background-image: linear-gradient(45deg, $lncolor3 30%, $lcolor3 60%);
-	color: $background;
-	border-radius: 16px;
+	background-color: rgba(#ffffff, 0.2);
+	color: lighten($foreground, 10);
+	border-radius: 50px 0px 0px 50px;
 }
 
-.network {
-	font-size: 24px;
+.btn_net_opt, .btn_bluet_opt{
+	color: $text_btn;
+	border-radius: 0px 50px 50px 0px;
+	background-color: $color3;
 }
 
-.btn_net, .btn_bluet, .btn_poweroff{
+.btn_net_opt, .btn_bluet_opt{
 	&:hover{
-		background-image: linear-gradient(45deg, $lncolor3 30%, $lcolor3 60%);
-		color: $background;
-		border-radius: 16px;
+		background-color: $lcolor3;
+		color: $text_btn;
+		border-radius: 0px 50px 50px 0px;
 	}
 }
 
-.bluetic{
+.disable_opt {
+	background-color: rgba($background, 0.1);
+	border-radius: 0px 50px 50px 0px;
+	color: lighten($foreground, 10);
+}
+
+.disable_opt:hover{
+	background-color: rgba(#ffffff, 0.2);
+	color: lighten($foreground, 10);
+	border-radius: 0px 50px 50px 0px;
+}
+
+.network_type, .blue_type {
+	font-weight: bolder;
+}
+
+.network_name, .blue_name {
+	font-size: 14px;
+}
+
+.network_icon {
+	font-size: 19px;
+	margin-right: 5px;
+}
+
+.blue_icon {
 	font-size: 22px;
+	margin-left: 5px;
 }
 
 /* Battery **********************************************/
 .battery {
-	padding-top: 30px;
+	background-color: rgba(#ffffff, 0.12);
+	border-radius: 50px;
+	padding: 10px 0px;
+	margin-right: 5px;
 }
 
 .baticon{
-	font-size: 32px;
+	font-size: 25px;
 	color: lighten($foreground, 10);
 }
 
 .batinfo{
-	font-size: 17px;
+	font-size: 11px;
 	font-weight: 500;
-	color: lighten($foreground, 10);
-}
-
-/* Microphone *****************************************/
-.iconmic {
-	font-size : 30px;
-  	margin-left: 7px;
 	color: lighten($foreground, 10);
 }
 
 /** Volume ***********************************************/
 .iconvolume {
-	font-size : 30px;
-  	margin-left: 5px;
+	font-size : 18px;
+	margin-left: 13px;
+	color: $text_btn;
+}
+
+.iconvolume_empty {
+	font-size : 18px;
+	margin-left: 13px;
 	color: lighten($foreground, 10);
+}
+
+.volume_opt {
+	background-color: rgba(#ffffff, 0.12);
+	border-radius: 15px;
+}
+
+.iconvolume_mute {
+	font-size : 18px;
+	color: lighten($foreground, 10);
+	padding-right: 5px;
+}
+
+.iconvolume_opt {
+	font-size : 18px;
+	color: lighten($foreground, 10);
+	padding: 0px 5px 0px 5px;
+}
+
+.volume_btn_mute:hover {
+	background-color: rgba(#ffffff, 0.2);
+	border-radius: 15px 0px 0px 15px;
+	color: $color6;
+}
+
+.volume_btn_opt:hover {
+	background-color: rgba(#ffffff, 0.2);
+	border-radius: 0px 15px 15px 0px;
+	color: $color6;
 }
 
 /** System Sliders ********************************************/
-.slidersbox {
-  	padding: 4px;
-}
-
 .iconbright {
-	font-size : 28px;
+	font-size : 18px;
+	color: $text_btn;
+}
+
+.iconbright_empty {
+	font-size : 18px;
 	color: lighten($foreground, 10);
 }
 
-.bright_bar scale trough, .volume_bar scale trough, .mic_bar scale trough {
+.volume_bar scale trough {
 	all: unset;
-	background-color: darken($ncolor6, 25);
-	border: 2px solid $color6;
+	background-color: rgba($foreground, 0.2);
 	border-radius: 16px;
-	padding: 3px;
-	min-height: 20px;
+	min-height: 30px;
 	min-width: 220px;
+	animation: border-move 6s linear infinite;
 }
 
-.bright_bar scale trough highlight, .volume_bar scale trough highlight, .mic_bar scale trough highlight {
+.bright_bar scale trough {
+	all: unset;
+	background-color: rgba($foreground, 0.2);
+	border-radius: 16px;
+	min-height: 30px;
+	min-width: 280px;
+	animation: border-move 6s linear infinite;
+}
+
+.bright_bar scale trough highlight, .volume_bar scale trough highlight {
 	all: unset;
 	border-radius: 16px;
-	background-image: linear-gradient(to right, $ncolor6 30%, $color6 100%);
+	background-image: linear-gradient(to right, $ncolor3 30%, $lcolor3 100%);
 }
 
-/** Power buttons ***************************************/
-.btn_poweroff{
-	color: lighten($foreground, 10);
+/** Color Mode  ***************************************/
+.btn_colorm{
+	color: $text_btn;
+	border-radius: 50px;
+	background-image: linear-gradient(to right, $ncolor3 40%, $color3 100%);
 }
 
-.poweric{
-	padding-left: 9.3px;
-	font-size: 21px;
+.btn_colorm:hover{
+	background-image: linear-gradient(to right, $lncolor3 40%, $lcolor3 100%);
 }
 
-.percent{
-	font-size: 15px;
-	font-weight: 500;
-	margin-right: 8px;
-	color: lighten($foreground, 10);
+.color_type {
+	font-weight: bolder;
 }
 
-/*Sysinfo*/
+.color_name {
+	font-size: 14px;
+}
 
+.color_icon {
+	font-size: 22px;
+}
+
+/*****  Sysinfo  ******/
 .bx_sys {
 	color: darken($color7, 13);
-	font-size : 12px;
+	font-size : 10px;
 	font-weight : bold;
-	margin-left: 10px;
 }
 
 .bx_sys_per {
-	background-size: 180px;
-	min-height: 60px;
-	min-width: 60px;
-	margin: 10px;
-	border-radius: 14px;
+	background-size: 100px;
+	min-height: 50px;
+	min-width: 50px;
 }
 
 .sysbar {
 	color: $color7;
-	background-color: $ncolor6;
-	border-radius: 10px;
+	background-color: rgba($color7, 0.6);
 }
 
 .txt_sys{
-	font-size: 8pt;
+	font-size: 15px;
+	color: lighten($foreground, 10);
+}
+
+.txt_sys_perc{
+	font-size: 13px;
 	color: lighten($foreground, 10);
 }
 

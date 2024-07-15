@@ -5,18 +5,7 @@
 #  ------------------------
 
 ## Get Brightness
-get_blight(){
-	echo $(brightnessctl get)
-}
-
-## Set Brightness
-set_blight() {
-  	brightnessctl set $1
-}
-
-if [[ "$1" == "--get" ]]; then
-	get_blight
-elif [[ "$1" == "--set" ]]; then
-	set_blight "$2"
-fi
+udevadm monitor | rg --line-buffered "backlight" | while read -r line; do
+    echo $(brightnessctl get)
+done
 

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#  __________________
+# | Choose Wallpaper |
+#  ------------------
+
+## Global vars
+source ${HOME}/.config/rofi/scripts/globalcontrol.sh
+
+# set dir wallpapers
+wallPath=~/walllpapers
+
+# Set current directory wallpapers
+cd $wallPath
+
+# Get path wallpaper selected
+WalSel=$(yad --title="Choose wallpaper" --file --image-filter --add-preview --large-preview --button=yad-cancel:1 --text-align=center --text "<span font_style='oblique' font_stretch='expanded'>Choose wallpaper </span>")
+
+# Get name wallpaper
+walname="${WalSel##*/}"
+walname="${walname%.*}"
+
+# apply wallpaper
+if [ -n "${WalSel}" ] ; then
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')"]; then
+        swww img ${WalSel} --transition-type fade --transition-bezier 1,-0.2,0.65,1.35 --transition-duration 4
+        wal -q -i "$WalSel"
+        killall dunst
+        eww reload
+        killall polkit-gnome-authentication-agent-1
+        dunst -conf "$dunst_theme" &
+        killall xdg-desktop-portal-gtk
+        /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+        dunstify "t1" -a "${walname} 󰲍" -i "$WalSel" -r 91190 -t 2200
+        eww reload
+    else
+        dunstify -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
+    fi
+fi
+

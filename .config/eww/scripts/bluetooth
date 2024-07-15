@@ -4,41 +4,30 @@
 # | Bluetooth Control |
 #  -------------------
 
-toggle(){
-    if [ "$(systemctl is-active bluetooth.service)" = "inactive" ]; then
-        systemctl start bluetooth
-    else
-        systemctl stop bluetooth
-    fi
-}
-
-get_icon(){
-    if [ "$(systemctl is-active bluetooth.service)" = "inactive" ]; then
-        echo "󰂲"
-    else
-        if [ -z "$(bluetoothctl info | grep 'Name' | cut -d ' ' -f 2-)"]; then
-            echo "󰂯"
+## Get bluetooth info
+while true; do
+    power_state=$(bluetoothctl show | grep "Powered:" | cut -d ' ' -f 2)
+    connected_devices=$(bluetoothctl devices Connected | cut -d ' ' -f 3-)
+    if [[ "$power_state" == "yes" ]]; then
+        if [[ -z "$connected_devices" ]]; then
+            status="on"
+            icon="󰂯"
+            sleep_duration=2
+            connected_devices="No device"
         else
-            echo "󰂱"
+            status="connected"
+            icon="󰂱"
+            sleep_duration=2
         fi
-    fi
-}
-
-get_gui(){
-    if [ "$(systemctl is-active bluetooth.service)" = "inactive" ]; then
-        notify-send -i $HOME/.config/eww/icons/bluetooth.png "GUI: Bluetooth desactivado"
     else
-        eww close menu_opt
-		rm "$HOME/.cache/eww_launch.menu_opt"
-        blueman-manager
+        status="off"
+        icon="󰂲"
+        sleep_duration=4
+        connected_devices="Off"
     fi
-}
-
-if [ "$1" = "--toggle" ]; then
-    toggle
-elif [ "$1" = "--gui" ]; then
-    get_gui
-else #default
-    get_icon
-fi
+    
+    # Json format
+    echo '{"status":"'$status'","name":"'$connected_devices'","icon":"'$icon'"}'
+    sleep $sleep_duration
+done
    

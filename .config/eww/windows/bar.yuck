@@ -1,7 +1,8 @@
-(defwindow status_bar
+(defwindow ewwBar
    :monitor 0
    :stacking "fg"
    :exclusive "true"
+   :namespace "bar1_layer"
    :geometry (geometry :width "99%" :height "1%" :anchor "top center")
   (bar)
 )

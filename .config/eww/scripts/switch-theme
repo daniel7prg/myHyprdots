@@ -4,64 +4,51 @@
 # | Change color scheme |
 #  ---------------------
 
+## Global vars
 source $HOME/.config/rofi/scripts/globalcontrol.sh
 
-switch_clr(){
-	if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
-		if [[ "$current_theme" -eq "0" ]]; then
-			killall polkit-gnome-authentication-agent-1
-			sed -i -e "s|'./scss/bar-light.scss';|'./scss/bar.scss';|" -e "s|'./scss/bar1-light.scss';|'./scss/bar1.scss';|" ~/.config/eww/eww.scss
-			gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-			sed -i "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=1/" ~/.config/gtk-3.0/settings.ini
-			/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-			gsettings set org.gnome.gedit.preferences.editor scheme 'ayu'
-			killall dunst
-			#sed -i '2s/colors-kitty-light.conf/colors-kitty.conf/' ~/.config/kitty/kitty.conf
-			#sed -i -e '5s/background/foreground/' -e '6s/foreground/background/' ~/.config/foot/foot.ini
-			sed -i '2s/MateriaLight/MateriaDark/' ~/.config/Kvantum/kvantum.kvconfig
-			sed -i -e '445, 454 s/foreground/background/' -e '461s/foreground/background/' ~/.config/dunst/dunstrc
-			sed -i -e '446, 455 s/background/foreground/' -e '462s/background/foreground/' ~/.config/dunst/dunstrc
-			if [[ -d ~/.vscode-oss/extensions/dlasagno.wal-theme* ]]; then
-				mv ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template.js ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template-dr.js
-				mv ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template-lt.js ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template.js
-				mv ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template-dr.js ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template-lt.js
-			fi
-			dunstify "t1" -a "Cambiando a tema oscuro  ..." -t 2200
-		else
-			killall polkit-gnome-authentication-agent-1
-			sed -i -e "s|'./scss/bar.scss';|'./scss/bar-light.scss';|" -e "s|'./scss/bar1.scss';|'./scss/bar1-light.scss';|" ~/.config/eww/eww.scss
-			gsettings set org.gnome.desktop.interface color-scheme prefer-light
-			sed -i "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=0/" ~/.config/gtk-3.0/settings.ini
-			/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-			gsettings set org.gnome.gedit.preferences.editor scheme 'catppuccin_latte'
-			killall dunst
-			#sed -i '2s/colors-kitty.conf/colors-kitty-light.conf/' ~/.config/kitty/kitty.conf
-			#sed -i -e '5s/foreground/background/' -e '6s/background/foreground/' ~/.config/foot/foot.ini
-			sed -i '2s/MateriaDark/MateriaLight/' ~/.config/Kvantum/kvantum.kvconfig
-			sed -i -e '445, 454 s/background/foreground/' -e '461s/background/foreground/' ~/.config/dunst/dunstrc
-			sed -i -e '446, 455 s/foreground/background/' -e '462s/foreground/background/' ~/.config/dunst/dunstrc
-			if [[ -d ~/.vscode-oss/extensions/dlasagno.wal-theme* ]]; then
-				mv ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template.js ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template-dr.js
-				mv ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template-lt.js ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template.js
-				mv ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template-dr.js ~/.vscode-oss/extensions/dlasagno.wal-theme-1.1.2-universal/out/template-lt.js
-			fi
-			dunstify "t1" -a "Cambiando a tema claro  ..." -t 2200
-		fi
-	else
-		dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de cambiar de tema" -t 3600
-	fi
-}
+## For foot terminal
+#source $HOME/.config/foot/scripts/foot-theme
 
-get_icon(){
-	if [[ "$current_theme" -eq "0" ]]; then
-		echo "󰨙"
-	else
-		echo "󰨚"
-	fi
-}
+## For VSCODE theme
+#source $HOME/.config/code_switch
 
-if [ "$1" = "--icon" ]; then
-  	get_icon
-else #default
-  	switch_clr
+if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+	if [[ "$current_theme" -eq 0 ]]; then
+		sed -i 's/gtk.css/gtk-dark.css/' ~/.config/gtk-4.0/gtk.css
+		killall polkit-gnome-authentication-agent-1 &
+		sed -i -e "s|'./scss/bar-light.scss';|'./scss/bar.scss';|" -e "s|'./scss/bar1-light.scss';|'./scss/bar1.scss';|" ~/.config/eww/eww.scss
+		gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+		gsettings set org.gnome.desktop.interface icon-theme 'Flatery-Indigo-Dark'
+		eww reload
+		sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=1/" -e "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=Flatery-Indigo-Dark/" ~/.config/gtk-3.0/settings.ini
+		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+		killall dunst &
+		#sed -i '2s/colors-kitty-light.conf/colors-kitty.conf/' ~/.config/kitty/kitty.conf
+		killall xdg-desktop-portal-gtk &
+		sed -i '2s/MateriaLight/MateriaDark/' ~/.config/Kvantum/kvantum.kvconfig
+		dunst -conf "~/.cache/wal/dunstrc-dark" &
+		#change_theme_foot
+		#change_theme_code
+		dunstify "t1" -a "${CHANGE_MS} ${MODE_MS}  " -i "${wallpaper}" -t 2200
+	else
+		sed -i 's/gtk-dark.css/gtk.css/' ~/.config/gtk-4.0/gtk.css
+		killall polkit-gnome-authentication-agent-1 &
+		sed -i -e "s|'./scss/bar.scss';|'./scss/bar-light.scss';|" -e "s|'./scss/bar1.scss';|'./scss/bar1-light.scss';|" ~/.config/eww/eww.scss
+		gsettings set org.gnome.desktop.interface color-scheme prefer-light
+		gsettings set org.gnome.desktop.interface icon-theme 'Flatery-Indigo'
+		eww reload
+		sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=0/" -e "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=Flatery-Indigo/" ~/.config/gtk-3.0/settings.ini
+		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+		killall dunst &
+		#sed -i '2s/colors-kitty.conf/colors-kitty-light.conf/' ~/.config/kitty/kitty.conf
+		killall xdg-desktop-portal-gtk &
+		sed -i '2s/MateriaDark/MateriaLight/' ~/.config/Kvantum/kvantum.kvconfig
+		dunst -conf "~/.cache/wal/dunstrc-light" &
+		#change_theme_foot
+		#change_theme_code
+		dunstify "t1" -a "${CHANGE_MS} ${MODE_MS}  " -i "${wallpaper}" -t 2200
+	fi
+else
+	dunstify -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
 fi

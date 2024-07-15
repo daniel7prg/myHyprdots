@@ -4,47 +4,36 @@
 # | Battery Control |
 #  -----------------
 
-## Get Battery 
-get_percentage() {
-  BAT=$(ls /sys/class/power_supply | grep BAT | head -n 1)
-  echo "$(cat /sys/class/power_supply/${BAT}/capacity)%"
-}
+## Get Battery info
+while true; do
+  BAT=$(ls /sys/class/power_supply | grep -m 1 BAT)
 
-## Get Battery Icon
-get_icon() {
-  BAT=$(ls /sys/class/power_supply | grep BAT | head -n 1)
-  BATSTATUS="$(cat /sys/class/power_supply/${BAT}/status)"
-  BATVAL="$(cat /sys/class/power_supply/${BAT}/capacity)"
+  if [[ -n "$BAT" ]]; then
+    BATSTATUS="$(cat /sys/class/power_supply/${BAT}/status)"
+    BATVAL="$(cat /sys/class/power_supply/${BAT}/capacity)"
 
-  if [[ "$BATSTATUS" == "Discharging" ]];then
-    if [ "$BATVAL" -gt 90 ];then
-      echo "󰂂"
-    elif [ "$BATVAL" -gt 80 ];then
-      echo "󰂁"
-    elif [ "$BATVAL" -gt 70 ];then
-      echo "󰂀"
-    elif [ "$BATVAL" -gt 60 ];then
-      echo "󰁿"
-    elif [ "$BATVAL" -gt 50 ];then
-      echo "󰁾"
-    elif [ "$BATVAL" -gt 40 ];then
-      echo "󰁽"
-    elif [ "$BATVAL" -gt 30 ];then
-      echo "󰁼"
-    elif [ "$BATVAL" -gt 20 ];then
-      echo "󰁻"
-    elif [ "$BATVAL" -gt 10 ];then
-      echo "󰁺"
-    elif [ "$BATVAL" -gt 0 ];then
-      echo "󰂎"
-    fi
+    if [[ "$BATSTATUS" == "Discharging" ]];then
+      if [ "$BATVAL" -gt 90 ];then ICON="󰂂"
+      elif [ "$BATVAL" -gt 80 ];then ICON="󰂁"
+      elif [ "$BATVAL" -gt 70 ];then ICON="󰂀"
+      elif [ "$BATVAL" -gt 60 ];then ICON="󰁿"
+      elif [ "$BATVAL" -gt 50 ];then ICON="󰁾"
+      elif [ "$BATVAL" -gt 40 ];then ICON="󰁽"
+      elif [ "$BATVAL" -gt 30 ];then ICON="󰁼"
+      elif [ "$BATVAL" -gt 20 ];then ICON="󰁻"
+      elif [ "$BATVAL" -gt 10 ];then ICON="󰁺"
+      elif [ "$BATVAL" -gt 0 ];then ICON="󰂎"; fi
+    else ICON="󰂄"; fi
+    BATVAL="${BATVAL}%"
+    sleep_duration=2
   else
-    echo "󰂄"
+    BATVAL="PC-"
+    BATSTATUS="Plugged"
+    ICON="󰇅"
+    sleep_duration=60
   fi
-}
 
-if [[ "$1" == "--perc" ]]; then
-	get_percentage
-elif [[ "$1" == "--icon" ]]; then
-	get_icon
-fi
+  # Json format
+  echo '{"capacity":"'$BATVAL'","status":"'$BATSTATUS'","icon":"'$ICON'"}'
+  sleep $sleep_duration
+done

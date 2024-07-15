@@ -4,47 +4,32 @@
 # | General Network Control |
 #  -------------------------
 
-## Toggle state
-
-toggle() {
-	TYPE=$(nmcli -t -f type con show --active | head -n1 | sed 's/.*-//g')
-	if [ "$TYPE" != "ethernet" ]; then
-		if [ "$TYPE" == "loopback" ];then
-			nmcli radio wifi on
-		else
-			nmcli radio wifi off
-		fi
-	fi
-}
-
-## Get Status
-get_status() {  
-  	SIGNAL=$(nmcli -t -f in-use,signal dev wifi | grep "*:*" | sed "s/*://")
+## Get network info
+while true; do
+	SIGNAL=$(nmcli -t -f in-use,signal dev wifi | grep "*:*" | sed "s/*://")
 	TYPE=$(nmcli -t -f type con show --active | head -n1 | sed 's/.*-//g')
   	NET=$(nmcli -t -f name con show --active | head -n1 | sed 's/\"/\\"/g')
 
 	if [[ "$TYPE" == "wireless" ]]; then
-		if [[ "$SIGNAL" -gt 80 ]]; then
-			echo "󰤨  $NET"
-		elif [[ "$SIGNAL" -gt 60 ]]; then
-			echo "󰤥  $NET"
-		elif [[ "$SIGNAL" -gt 40 ]]; then
-			echo "󰤢  $NET"
-		elif [[ "$SIGNAL" -gt 20 ]]; then
-			echo "󰤟  $NET"
-		elif [[ "$SIGNAL" -eq 0 ]]; then
-			echo "󰤫  $NET"
-		fi
-	elif [[ "$TYPE" == "ethernet" ]]; then
-		echo "󰈀 Ethernet"
+		if [[ "$SIGNAL" -gt 80 ]]; then ICON="󰤨"
+		elif [[ "$SIGNAL" -gt 60 ]]; then ICON="󰤥"
+		elif [[ "$SIGNAL" -gt 40 ]]; then ICON="󰤢"
+		elif [[ "$SIGNAL" -gt 20 ]]; then ICON="󰤟"
+		elif [[ "$SIGNAL" -eq 0 ]]; then ICON="󰤫"; fi
+		TYPE="WI-FI"
+		sleep_duration=2
+	elif [[ "$TYPE" == "ethernet" ]]; then 
+		ICON="󰈀"
+		NET="Plugged"
+		sleep_duration=6
 	else
-		echo "󰤭   Offline"
+		ICON="󰤭"
+		TYPE="Internet"
+		NET="Offline"
+		sleep_duration=4
 	fi
-}
-
-if [ "$1" = "--toggle" ]; then
-  toggle
-else #default
-  get_status
-fi
-   
+	
+	# Json format
+	echo '{"type":"'$TYPE'","name":"'$NET'","icon":"'$ICON'"}'
+	sleep $sleep_duration
+done

@@ -26,14 +26,14 @@
 )
 
 (defwidget _clock1 []
-	(eventbox :onhover "${EWW_CMD} update time_rev1=true" :onhoverlost "${EWW_CMD} update time_rev1=false"
+	(eventbox :onhover "${EWW_CMD} update rev_clock_2=true" :onhoverlost "${EWW_CMD} update rev_clock_2=false"
     (box :orientation "h" :space-evenly "false" :class "time"
       (label :text "󰥔" :class "clock_icon")
-      (label :text "${current_time1.hour}:${current_time1.min} ")
-      (revealer :transition "slideright" :reveal time_rev1 :duration "350ms"
-        (label :text "- ${current_time1.day} ${current_time1.mouth} ${current_time1.week}")
+      (label :text "${time.hour}:${time.min} ")
+      (revealer :transition "slideright" :reveal rev_clock_2 :duration "350ms"
+        (label :text "- ${time.day} ${time.mouth} ${time.week}")
       )
-      (revealer :transition "slideright" :reveal time_rev1 :duration "350ms"
+      (revealer :transition "slideright" :reveal rev_clock_2 :duration "350ms"
         (label :text " " :class "cal_icon")
       )
     )

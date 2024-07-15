@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#  ____________________________
+# | Select Theme Foot Terminal |
+#  ----------------------------
+
+source $HOME/.config/rofi/scripts/globalcontrol.sh
+
+change_theme_foot () {
+    if [[ "$current_theme" -eq 1 ]]; then
+        rm ~/.config/foot/foot.ini
+        cp ~/.cache/wal/foot-dark.ini ~/.config/foot/
+        mv ~/.config/foot/foot-dark.ini ~/.config/foot/foot.ini
+    else
+        rm ~/.config/foot/foot.ini
+        cp ~/.cache/wal/foot-light.ini ~/.config/foot/
+        mv ~/.config/foot/foot-light.ini ~/.config/foot/foot.ini
+    fi
+}

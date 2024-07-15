@@ -5,7 +5,7 @@
 #Neofetch
 sleep 0.1
 current_wal=$(echo "$(swww query)" | grep -o 'image:.*' | awk '{print $2}')
-neofetch --source "${current_wal}.png"
+neofetch --source "${current_wal}"
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -126,7 +126,7 @@ alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias update-arch="yay -Syu --noconfirm"
 alias update-mirror="sudo reflector --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
 alias update-cursor="~/.config/hypr/scripts/up_cursor.sh"
-alias neofetch="neofetch --source '${current_wal}.png'"
+alias neofetch="neofetch --source '${current_wal}'"
 
 #Theme zsh
 source ~/powerlevel10k/powerlevel10k.zsh-theme

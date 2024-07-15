@@ -4,17 +4,11 @@
 # | Notification with sound |
 #  -------------------------
 
-# Volumen control variables
-vol=`pamixer $srce --get-volume | cat`
-barv=$(seq -s "." $(($vol / 15)) | sed 's/[0-9]//g')
-
-# Brightness control variables
-brightness=`brightnessctl info | grep -oP "(?<=\()\d+(?=%)" | cat`
-barb=$(seq -s "." $(($brightness / 15)) | sed 's/[0-9]//g')
-
 case $5 in
     LOW) paplay ~/.config/dunst/sounds/low.ogg ;;
-    NORMAL) if [[ "$1" == "$vol$barv" ||  $1 == "$brightness$barb" ]]; then
+    NORMAL) vol=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}'| sed 's/%//')
+            bright=$(brightnessctl get)
+            if [[ "$1" == "Vol: $vol%" || "$1" == "Bri: $bright%" ]]; then
                 paplay ~/.config/dunst/sounds/control.ogg
             else
                 paplay ~/.config/dunst/sounds/normal.ogg

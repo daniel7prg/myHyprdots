@@ -1,9 +1,15 @@
 @import './scss/bar.scss';
 @import './scss/bar1.scss';
+@import './scss/animations.scss';
 
 *{
     all: unset;
-    font-family: 'FiraCode Nerd Font';
+    font-family: 'JetBrainsMono Nerd Font';
     font-size: 17px;
 }
 
+/*General class for widgets*/
+.box_rev{
+	background-color: transparent;
+	padding-top: 2px;
+}

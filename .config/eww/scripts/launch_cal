@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#  ___________________
+# | Open Calendar EWW |
+#  -------------------
+
+## Widget status
+state=$(hyprctl layers | grep -o "calendar_layer")
+
+if [[ -z "$state" ]]; then
+	eww open calendar &
+	echo $!
+	usleep 10000
+	eww update open_cal=true
+else
+	eww update open_cal=false &
+	usleep 180000
+	eww close calendar
+fi

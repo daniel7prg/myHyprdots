@@ -4,39 +4,24 @@
 # | Workspaces Control |
 #  --------------------
 
-# Enabled number of workspaces
-n=10
+move_ws(){
+    activeID=$(hyprctl -j activeworkspace | jaq -c '.id')
+    usedIDs=($(hyprctl -j workspaces | jaq -c '.[] | .id'))
+    totalws=(0 0 0 0 0 0 0 0 0 0) #default ws 10
+    #dynamicws=$(hyprctl workspaces -j | jq -c 'length') #Dynamic open ws
 
-# Initialize an associative array
-declare -A array
+    for ws_id in "${usedIDs[@]}"; do
+        if [ $ws_id -le 10 ]; then
+            totalws[$(( ws_id - 1 ))]=2
+        fi
+    done
 
-for ((i = 1; i <= n; i++)); do
-    array["$i"]="0"
-done
+    totalws[$(( activeID - 1 ))]=1
 
-activeWS="$(hyprctl activeworkspace | grep "workspace ID" | awk '{print $3}')"
+    JSON_STRING=$(printf '%s\n' "${totalws[@]}" |
+    jaq -R -s -c 'split("\n") | map(select(length > 0) | tonumber)')
+    echo $JSON_STRING
+}
 
-readarray -t usedWorkspaces <<< "$(hyprctl workspaces | grep "workspace ID" | awk '{print $3}')"
-
-# Loop through usedWorkspaces and set corresponding elements to "2"
-for workspace_id in "${usedWorkspaces[@]}"; do
-    if [ "$workspace_id" -le "$n" ]; then
-        array["$workspace_id"]="2"
-    fi
-done
-
-# Set the element at position activeWS to "1"
-array["$activeWS"]="1"
-
-# Construct a JSON array manually
-json_array="["
-for ((i = 1; i <= n; i++)); do
-    json_array+="${array[$i]}"
-    if [ "$i" -ne "$n" ]; then
-        json_array+=","
-    fi
-done
-json_array+="]"
-
-echo "$json_array"
-
+socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | 
+while read -r event; do move_ws; done

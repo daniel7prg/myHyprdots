@@ -14,3 +14,5 @@ set +o functrace
 alias cat="bat"
 alias ls="lsd"
 alias grep="grep --color=auto"
+alias update-cursor="~/.config/hypr/scripts/up_cursor.sh"
+alias hypr-keymap="~/.config/hypr/scripts/hypr-keymap.sh"

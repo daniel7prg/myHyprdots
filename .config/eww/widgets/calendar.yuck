@@ -1,11 +1,8 @@
 (defwidget cal []
-	(box 
-	    :class "cal"
-	    :orientation "v"
-	    (box
-	        (calendar
-			  :day calendar_day 
-			  :year calendar_year
+	(box :orientation "v" :space-evenly false :class "box_rev"
+		(revealer :transition "slidedown" :reveal open_cal :duration "200ms"
+			(box :class "cal" :orientation "v"
+				(calendar :day {time.day} :year {time.year})
 			)
 		)
 	)

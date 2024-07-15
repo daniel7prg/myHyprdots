@@ -1,0 +1,105 @@
+#!/bin/bash
+
+#  ________________________
+# | Update Keyboard Layout |
+#  ------------------------
+
+# Directory conf file
+conf_dir=~/.config/hypr/conf/input.conf
+
+# Get layout list - ouput on json format
+layout_list=$(cat $conf_dir | grep 'kb_layout*' | cut -d '=' -f2 | sed 's/ //g')
+IFS=',' read -ra layout_array <<< "$layout_list"
+layout_count=${#layout_array[@]}
+
+# Data on json and list availables layouts
+for ((i = 0; i < layout_count; i++)); do
+  json+=$(echo '{"name":"'${layout_array[i]}'","id":'$i'}')
+  layout_avl+="$(sed -n '/! layout/,/! variant/ {/! layout/d;/! variant/d;p}' /usr/share/X11/xkb/rules/base.lst | grep -w ''${layout_array[i]}''),"
+done
+
+# Verifications
+check_layout(){
+    if [[ -z "$layout_list" ]]; then
+        sed -i 's/kb_layout = */kb_layout = us/g' $conf_dir
+        dunstify "Layout 󰌌" "Void a keyboard layout. Adding 'English' layout and exiting..."
+        exit 0
+    elif [[ "$layout_count" -eq 1 ]]; then
+        dunstify "Layout 󰌌" "Only one keyboard layout. Exiting..."
+        exit 0
+    fi
+}
+
+# Select layout availables
+select_layout(){
+    layout_choose=$(echo "$layout_avl" | tr ',' '\n' | yad --title="kb layout" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Layouts</span>" --separator=" " --text-align=center --text="<b>KEYBOARD LAYOUTS LIST</b>")
+    layout_select=$(echo "$layout_choose" | awk '{print $1}')
+    lan=$(echo "$layout_choose" | awk '{print $2}')
+    get_id=$(echo $json | jq -c 'select(.name=="'${layout_select}'") | .id')
+    if [[ -z "$get_id" ]]; then exit 0; fi
+}
+
+# ------Add language------
+add_layout(){
+    kb_list=$(sed -n '/! layout/,/! variant/ {/! layout/d;/! variant/d;p}' /usr/share/X11/xkb/rules/base.lst |
+    yad --title="kb layout" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Layout Availables (Language)</span>" --separator=" " --text-align=center --text="<b>KEYBOARD LAYOUT LIST AVAILABLE</b>")
+
+    chosen_layout=$(echo $kb_list | awk '{print $1}')
+    chosen_lan=$(echo $kb_list | awk '{print $2}')
+
+    get_name=$(echo $json | jq -c 'select(.name=="'${chosen_layout}'") | .name')
+
+    if [[ -n $kb_list ]]; then
+        if [[ -z $get_name ]]; then
+            original=$(cat $conf_dir | grep 'kb_layout*')
+            change=$(cat $conf_dir | grep 'kb_layout*' | sed "s/$/,$chosen_layout/")
+            sed -i "s|$original|$change|g" $conf_dir
+        else
+            dunstify "Layout 󰌌" "Layout already exist"
+        fi
+        dunstify "t2" -a "Layout 󰌌" "<span size='large'>Add layout: $chosen_lan [$chosen_layout]</span>" -i " " -r 9125
+    fi
+}
+
+# ------Delete language------
+del_layout(){
+    # Call func
+    check_layout
+    select_layout
+
+    # Pos layout
+    if [[ $get_id -ne 0 ]]; then
+        original=$(cat $conf_dir | grep 'kb_layout*')
+        change=$(cat $conf_dir | grep 'kb_layout*' | sed "s/,$layout_select//")
+    else
+        original=$(cat $conf_dir | grep 'kb_layout*')
+        change=$(cat $conf_dir | grep 'kb_layout*' | sed "s/$layout_select,//")
+    fi
+
+    # Apply change
+    sed -i "s|$original|$change|g" $conf_dir
+    dunstify "t2" -a "Layout 󰌌" "<span size='large'>Delete layout: $lan [$layout_select]</span>" -i " " -r 9125
+}
+
+# ------Switcher Layout------
+swt_layout(){
+    devkb_list=$(hyprctl -j devices | jq -c '.keyboards[] | .name' | sed 's/"//g' |
+    yad --title="kb layout" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Device</span>" --separator=" " --text-align=center --text="<b>KEYBOARD DEVICE LIST</b>")
+
+    if [[ -n "$devkb_list" ]]; then
+        # Call func
+        check_layout
+        select_layout
+
+        # Switching
+        hyprctl -q switchxkblayout $devkb_list $get_id
+        dunstify "t2" -a "Layout 󰌌" "<span size='medium'>Kb: $devkb_list\nLayout: $lan [$layout_select]</span>" -i " " -r 9125
+    fi
+}
+
+case $1 in
+    -a) add_layout ;;
+    -d) del_layout ;;
+    -s) swt_layout ;;
+    *) echo "Error. Command Not Found"
+esac

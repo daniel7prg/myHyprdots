@@ -1,84 +1,123 @@
 ;; MENU_OPT
 (defwidget _menuIC []
-  (eventbox :cursor "pointer"
-    (button :onclick "scripts/launch_menu -p"
-      (box :orientation "h" :space-evenly "true"
-        (label :class "iconmenu_vol" :text "${VOLUMEICON}")
-        (label :class "iconmenu_msc" :text "${iconmusic}")
-        (label :class "iconmenu_bth" :text "${iconbth}")
-        (label :class "iconmenu_wf" :text "${iconwifi} ")
-        (label :class "iconmenu" :text "${iconmenu}")
-      )
+  (eventbox :onclick "scripts/launch_menu" :cursor "pointer"
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "${volume.sink == 'S' ? 'iconmenu_volS' : 'iconmenu_volH'}" :text "${volume.icon}")
+      (label :class "iconmenu_bat" :text "${battery.icon}")
+      (label :class "iconmenu_bth" :text "${bluetooth.icon}")
+      (label :class "iconmenu_wf" :text "${network.icon}")
+      (label :class "iconmenu" :text "${open_menu ? '' : ''}")
     )
   )
 )
 
 (defwidget _clock []
-  (eventbox :onhover "${EWW_CMD} update time_rev=true" :onhoverlost "${EWW_CMD} update time_rev=false" :cursor "pointer"
-    (box :orientation "h" :space-evenly "false" :class "clock"
+  (eventbox :onhover "${EWW_CMD} update rev_clock=true" :onhoverlost "${EWW_CMD} update rev_clock=false" :cursor "pointer"
+    (box :orientation "h" :space-evenly false :class "clock"
       (label :text "󰥔" :class "clock_icon")
-      (label :text "${current_time.hour}:${current_time.min} " :class "clock_text")
-      (revealer :transition "slideright" :reveal time_rev :duration "350ms"
-        (button :onclick "${EWW_CMD} open --toggle calendar"
-          (label :text "- ${current_time.day} ${current_time.mouth} ${current_time.week}" :class "clock_text")
+      (label :text "${time.hour}:${time.min} " :class "clock_text")
+      (revealer :transition "slideright" :reveal rev_clock :duration "350ms"
+        (button :onclick "scripts/launch_cal"
+          (label :text "| ${time.week} ${time.day}-${time.mouth}" :class "clock_text")
         )
       )
-      (revealer :transition "slideright" :reveal time_rev :duration "350ms"
-        (label :text "  " :class "cal_icon")
+      (revealer :transition "slideright" :reveal rev_clock :duration "350ms"
+        (label :text " " :class "cal_icon")
       )
     )
   )
 )
 
+(defwidget _music []
+  (eventbox :onhover "${EWW_CMD} update rev_music=true" :onhoverlost "${EWW_CMD} update rev_music=false" 
+            :cursor "pointer" :onclick "scripts/launch_music"
+    (box :orientation "h" :space-evenly false
+      (circular-progress 
+          :value {msc_info.circular} :class "music_prg" :thickness 2
+          (label :text "${msc_info.icon}" :class "music_icon")
+      )
+      (revealer :transition "slideright" :reveal rev_music :duration "350ms"
+        (label :class "music_title" :markup "| ${msc_info.title} " :limit-width 15)
+      )
+    )
+  )
+)
+
+
 (defwidget _wallpaper []
-  (eventbox :onhover "${EWW_CMD} update rev2=true" :onhoverlost "${EWW_CMD} update rev2=false" :cursor "pointer"
-    (box :orientation "h" :space-evenly "false"
+  (eventbox :onhover "${EWW_CMD} update rev_wal=true" :onhoverlost "${EWW_CMD} update rev_wal=false" :cursor "pointer"
+            :onclick "pkill -x yad || scripts/choosewall&"
+    (box :orientation "h" :space-evenly false
       (label :text "󰋹" :class "wal_icon")
-      (revealer :transition "slideright" :reveal rev2 :duration "350ms"
-        (button :onclick "sh -c '(sleep 1.5s; '$HOME/.config/rofi/scripts/wallselect.sh')' & disown \
-                          && dunstify 'ROFI - (ESC) to close' -t 1450"
-          (label :class "opt_txt" :text " wal")
-        )
+      (revealer :transition "slideright" :reveal rev_wal :duration "350ms"
+        (label :class "opt_txt" :text " wal")
       )
     )
   )
 )
 
 (defwidget _appnames []
-  (eventbox
-    :onhover "${EWW_CMD} update control_reveal=true"
-	  :onhoverlost "${EWW_CMD} update control_reveal=false"
-    (box
-	    :orientation "h"
-	    :space-evenly "false"
-	    :vexpand "false"
-	    :hexpand "false" 
-        (literal 
-            :content appname)
+  (box :orientation "h" :space-evenly false :vexpand false :hexpand false 
+    (box :orientation "h" :halign "center" :space-evenly false :spacing 8
+      (box :class "app_img" :vexpand false :valign "center" :hexpand false 
+           :style "background-image: url('${appname.icon}')") 
+      (label :class "app_name" :text "${appname.title}" :tooltip "${appname.title}" :limit-width 35)
+    )
+  )
+)
+
+(defwidget _apps []
+  (eventbox :onhover "${EWW_CMD} update rev_apps=true" :onhoverlost "${EWW_CMD} update rev_apps=false" 
+            :onclick "pkill -x rofi || sh -c '(sleep 0.15s; ${open_apps})' & disown"
+            :cursor "pointer"
+    (box :orientation "h" :space-evenly false
+      (label :text "" :class "app_icon")
+      (revealer :transition "slideright" :reveal rev_apps :duration "350ms"
+        (label :text "apps" :class "opt_txt")
+      )
+    )
+  )
+)
+
+(defwidget _tray []
+  (eventbox :onhover "${EWW_CMD} update rev_tray=true" 
+            :onhoverlost "${EWW_CMD} update rev_tray=false" 
+            :cursor "pointer" :hexpand true :tooltip "App center "
+    (box :orientation "h" :space-evenly false :spacing 5
+      (label :text "" :class "tray_icon")
+      (revealer :transition "slideright" :reveal rev_tray :duration "350ms"
+        (systray
+          :icon-size 20
+          :prepend-new true
+          :spacing 6
+          :orientation "h"
+        )
+      )
     )
   )
 )
 
 (defwidget _workspaces []
-  (eventbox
-    :class "workspaces"
-    :cursor "pointer"
-    :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
-    (box
-      :orientation "h"
-      :spacing 6
+  (eventbox :class "workspaces" :cursor "pointer"
+            :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
+    (box :orientation "h" :spacing 6
       (for ws in my-workspaces
         (button :onclick "hyprctl dispatch workspace ${ws}"
+          :class {
+              workspaces[ws - 1] == 1 ? "active_btn" :
+              workspaces[ws - 1] == 2 ? "used_btn" :
+              "empty_btn"
+          }
           (label
-            :class {
-              workspaces[ws - 1] == 1 ? "active" :
-              workspaces[ws - 1] == 2 ? "used" :
-              "empty"
+            :tooltip {
+              workspaces[ws - 1] == 1 ? "Active" :
+              workspaces[ws - 1] == 2 ? "Used" :
+              "Empty"
             }
             :text {
               workspaces[ws - 1] == 1 ? "󰮯 " :
-              workspaces[ws - 1] == 2 ? "󰊠 " :
-              " "
+              workspaces[ws - 1] == 2 ? " " :
+              "󱙝 "
             }
           )
         )
@@ -87,58 +126,33 @@
   )
 )
 
-(defwidget switch_theme []
-  (box :orientation "h" :space-evenly "false"
-    (label :class "light_icon" :text "")
-    (eventbox :cursor "pointer" :width 50
-      (button :onclick "scripts/switch-theme" :class "btn_switch"
-        (label :class "thm_icon" :text "${iconswitch}" :tooltip "Light/Dark")
-      )
-    )
-    (label :class "dark_icon" :text "")
-  )
-)
-
 (defwidget bar []
-  (centerbox
-    :class "bar"
-    (box
-      :space-evenly false
-      :halign "start"
-      (box
-        :class "bx_workspace"
-        :halign "start"
-        :tooltip "Workspaces 󰮯"
+  (centerbox :class "bar"
+    (box :space-evenly false :halign "start"
+      (box :class "bx_apps" :halign "start" :tooltip "Apps |"
+        (_apps)
+      )
+      (box :class "bx_workspace" :halign "end"
         (_workspaces)
       )
-      (switch_theme)
-    )
-    (box
-      :class "bx_appname"
-      :space-evenly false
-      :halign "center"
-      :tooltip "Appname 󰈍"
-      (_appnames)
-    )
-    (box
-      :space-evenly false
-      :halign "end"
-      (box
-        :class "bx_wal"
-        :halign "start"
-        :tooltip "Change wal 󰸉"
+      (box :class "bx_wal" :halign "center" :tooltip "Change wal 󰸉 " 
         (_wallpaper)
       )
-      (box
-        :class "bx_clock"
-        :halign "center"
-        :tooltip "Clock "
+    )
+    (box :class "bx_appname" :space-evenly false :halign "center" :tooltip "Appname 󰈍 "
+      (_appnames)
+    )
+    (box :space-evenly false :halign "end"
+      (box :class "bx_tray" :halign "start"
+        (_tray)
+      )
+      (box :class "bx_msc" :halign "center" :tooltip "Music control  "
+        (_music)
+      )
+      (box :class "bx_clock" :halign "center" :tooltip "Clock  "
         (_clock)
       )
-      (box
-        :class "bx_options"
-        :halign "end"
-        :tooltip "Menu 󰮫" 
+      (box :class "bx_options" :halign "end" :tooltip "Menu 󰮫 " 
         (_menuIC)
       )
     )

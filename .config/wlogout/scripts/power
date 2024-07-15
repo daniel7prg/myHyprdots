@@ -4,35 +4,59 @@
 # | Power Control |
 #  ---------------
 
+## Global vars
+source $HOME/.config/rofi/scripts/globalcontrol.sh
+
 _poweroff(){
-    if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+        sleep 0.1
         systemctl poweroff
     else
-        dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de apagar el equipo"
+        dunstify -u critical "${WARNING_TL}" "${WARNING_MS}"
     fi
 }
 
 _reboot(){
-    if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+        sleep 0.1
         systemctl reboot
     else
-        dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de reiniciar el equipo"
+        dunstify -u critical "${WARNING_TL}" "${WARNING_MS}"
     fi
 }
 
 _logout(){
-    if [ "$(hyprctl clients | grep -c 'Window')" -eq "0" ]; then
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+        sleep 0.1
         hyprctl dispatch exit
         # loginctl kill-session $XDG_SESSION_ID
     else
-        dunstify -u critical "ADVERTENCIA - Cierre todas las ventanas antes de cerrar sesión"
+        dunstify -u critical "${WARNING_TL}" "${WARNING_MS}"
     fi
 }
 
-if [ "$1" = "-r" ]; then
-  	_reboot
-elif [ "$1" = "-l" ]; then
-    _logout
-else #default
-  	_poweroff
-fi
+_suspend(){
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+        sleep 0.1
+        systemctl suspend
+    else
+        dunstify -u critical "${WARNING_TL}" "${WARNING_MS}"
+    fi
+}
+
+_hibernate(){
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+        sleep 0.1
+        systemctl hibernate
+    else
+        dunstify -u critical "${WARNING_TL}" "${WARNING_MS}"
+    fi
+}
+
+case $1 in
+    -r)  _reboot ;;
+    -l)  _logout ;;
+    -s)  _suspend ;;
+    -h)  _hibernate ;;
+    -p)  _poweroff ;;
+esac

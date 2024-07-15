@@ -19,7 +19,8 @@ icon_override="configuration {icon-theme: \"${icon_override}\";}"
 
 # read wallpaper
 current_wal=$(echo "$(swww query)" | grep -o 'image:.*'| awk '{print $2}')
-wal_override="inputbar {background-image: url('${current_wal}.png', width);}"
+#wal_override="inputbar {background-image: url('${current_wal}.png', width);}"
+wal_override="inputbar {background-image: url('${current_wal}', width);}"
 
 # rofi action
 case $1 in

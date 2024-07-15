@@ -1,73 +1,63 @@
-(include "widgets/bar.yuck")
+;;;;;;;;;   WINDOWS   ;;;;;;;;;
 (include "windows/bar.yuck")
-(include "widgets/bar1.yuck")
 (include "windows/bar1.yuck")
-(include "widgets/calendar.yuck")
 (include "windows/calendar.yuck")
-(include "widgets/menu_opt.yuck")
 (include "windows/menu_opt.yuck")
+(include "windows/help_opt.yuck")
+(include "windows/music.yuck")
 
-;;;;;;;;;   BARS         ;;;;;;;;;
-(defpoll net_state :interval "0.2s" `echo $(nmcli -t -f type con show --active | head -n1 | sed 's/.*-//g')`)
-(defpoll bth_state :interval "0.2s" `echo $(systemctl is-active bluetooth.service)`)
+;;;;;;;;;   WIDGETS   ;;;;;;;;;
+(include "widgets/bar.yuck")
+(include "widgets/bar1.yuck")
+(include "widgets/calendar.yuck")
+(include "widgets/menu_opt.yuck")
+(include "widgets/help_opt.yuck")
+(include "widgets/music.yuck")
+
+;;;;;;;;;   REVEALER   ;;;;;;;;;
+(defvar open_menu false)
+(defvar open_cal false)
+(defvar open_music false)
+(defvar rev_apps false)
+(defvar rev_tray false)
+(defvar rev_wal false)
+(defvar rev_clock false)
+(defvar rev_clock_2 false)
+(defvar rev_music false)
+
+;;;;;;;;;   HELP WIN   ;;;;;;;;;
+(deflisten usr :initial "USER" `logname`)
+(deflisten csr :initial "THEME" `gsettings get org.gnome.desktop.interface cursor-theme | sed "s/'//g"`)
+
+;;;;;;;;;   WLOGOUT   ;;;;;;;;;
+(defvar open_logout "~/.config/wlogout/scripts/launch_wlogout.sh")
 
 ;;;;;;;;;   WORKSPACES   ;;;;;;;;;     
-(defpoll workspaces :interval "0.5s" `scripts/workspaces`)
+(deflisten workspaces :initial "[1,0,0,0,0,0,0,0,0,0]" `scripts/workspaces`)
 (defvar my-workspaces "[1,2,3,4,5,6,7,8,9,10]")
 
 ;;;;;;;;;   SWITCH THEME   ;;;;;;;;;
-;; Switch color scheme
-(defpoll iconswitch :interval "0.2s" `scripts/switch-theme --icon`)
+(deflisten switcher :initial "1" `scripts/color-mode`)
 
 ;;;;;;;;;   APPNAME   ;;;;;;;;;
-(deflisten appname `scripts/appname`)
+(deflisten appname :initial `{"title":"","icon":""}` `scripts/appname`)
+(defvar open_apps "~/.config/rofi/scripts/rofilaunch.sh -d")
 
 ;;;;;;;;;   CLOCK   ;;;;;;;;;
-(defvar time_rev false)
-(defpoll current_time :interval "10s"
-  `date '+{"hour":"%H","min":"%M","mouth":"%b","day":"%d","week":"%A"}'`
+(defpoll time :interval "1s"
+  `date '+{"hour":"%H","min":"%M","mouth":"%b","day":"%d","week":"%a","year":"%Y"}'`
 )
-
-;; By Bar1
-(defvar time_rev1 false)
-(defpoll current_time1 :interval "10s"
-  `date '+{"hour":"%H","min":"%M","mouth":"%b","day":"%d","week":"%A"}'`
-)
-
-;;;;;;;;;   CALENDAR   ;;;;;;;;;;
-(defpoll calendar_day :interval "20h" "date '+%d'")
-(defpoll calendar_year :interval "20h" "date '+%Y'")
-
-;; Icon menu
-(defpoll iconmenu :interval "0.2s" `scripts/launch_menu --icon`)
-
-;; WIFI
-(defpoll iconwifi :interval "0.2s" `scripts/launch_menu --icon-wifi`)
-
-;; Bluetooth
-(defpoll iconbth :interval "0.2s" `scripts/bluetooth`)
-
-;; Music
-(defpoll iconmusic :interval "0.2s" `scripts/launch_menu --icon-music`)
 
 ;;;;;;;;;   MENU_OPT   ;;;;;;;;;;
-
 ;; System vars
-(defpoll BLIGHT :interval "0.2s" `scripts/brightness --get`)
-(defpoll BATTERY :interval "0.2s" `scripts/battery --perc`)
-(defpoll BATTERYICON :interval "0.2s" `scripts/battery --icon`)
-(defpoll VOLUME :interval "0.2s" `scripts/audio --get-vol`)
-(defpoll VOLUMEICON :interval "0.2s" `scripts/audio --get-volicon`)
-(defpoll MIC :interval "0.2s" `scripts/audio --get-mic`)
-(defpoll MICICON :interval "0.2s" `scripts/audio --get-micicon`)
-(defpoll NET :interval "0.2s" `scripts/network`)
+(defvar user_icon "icons/user.face.icon")
+(deflisten blight :initial "35" `scripts/brightness`)
+(deflisten battery :initial `{"capacity":"35","status":"Plugged","icon":"󰂄"}` `scripts/battery`)
+(deflisten bluetooth :initial `{"status":"off","name":"No device","icon":"󰂲"}` `scripts/bluetooth`)
+(deflisten network :initial `{"type":"Internet","name":"lo","icon":"󰤫"}` `scripts/network`)
+(deflisten volume :initial `{"status":"no","perc":"35","icon":"","sink":"S"}` `scripts/audio`)
 
 ;; Music vars
-(defpoll SONG :interval "0.2s" `scripts/music --song`)
-(defpoll ARTIST :interval "0.2s" `scripts/music --artist`)
-(defpoll STATUS :interval "0.2s" `scripts/music --status`)
-(defpoll COVER :interval "0.2s" `scripts/music --cover`)
-
-
-
-
+(deflisten cava_bar :initial "▁▁▁▁▁▁" `scripts/cava`)
+(defvar cover_default "icons/music.png")
+(deflisten msc_info :initial `{"title":"Play any song ","artist":"Offline","cover":"","status":"󱖑","minInit":"","minEnd":"","scale":"0","circular":"0","position":"0","icon":""}` "scripts/music")

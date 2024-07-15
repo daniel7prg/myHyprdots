@@ -5,7 +5,7 @@
 #  -------------
 
 # Colors Pywal
-. "${HOME}/.cache/wal/colors.sh"
+source "${HOME}/.cache/wal/colors.sh"
 
 # theme var
 gtkTheme=`gsettings get org.gnome.desktop.interface gtk-theme | sed "s/'//g"`
@@ -24,14 +24,14 @@ fnt_override="configuration {font: \"${fnt_override}\";}"
 current_theme=`grep -o "gtk-application.*" ~/.config/gtk-3.0/settings.ini | cut -d "=" -f 2`
 
 # Rofi select color
-color_override="element selected.normal {background-image: linear-gradient(to right, $color5, $color6);} element selected.active {background-image: linear-gradient(to right, $color1, $color2);}"
+color_override="element selected.normal {background-image: linear-gradient(90deg, $color3, $color6);} element selected.active {background-image: linear-gradient(90deg, $color1, $color2);}"
 dconf=~/.config/rofi/conf/applauncher.rasi
 wconf=~/.config/rofi/conf/activewin.rasi
 sconf=~/.config/rofi/conf/wallselect.rasi
 wifils=~/.config/rofi/conf/wifi.rasi
 wifiky=~/.config/rofi/conf/wifiPSW.rasi
 
-if [[ "$current_theme" -eq "0" ]]; then
+if [[ "$current_theme" -eq 0 ]]; then
     dconf=~/.config/rofi/conf/applauncher-light.rasi
     wconf=~/.config/rofi/conf/activewin-light.rasi
     sconf=~/.config/rofi/conf/wallselect-light.rasi

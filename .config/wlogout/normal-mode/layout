@@ -1,0 +1,23 @@
+{
+    "label" : "lock",
+    "action" : "sleep 0.7s; $HOME/.config/swaylock/scripts/launch_swaylock.sh",
+    "text" : "Bloquear"
+}
+
+{
+    "label" : "logout",
+    "action" : "$HOME/.config/wlogout/scripts/power -l",
+    "text" : "Salir"
+}
+
+{
+    "label" : "shutdown",
+    "action" : "$HOME/.config/wlogout/scripts/power",
+    "text" : "Apagar"
+}
+
+{
+    "label" : "reboot",
+    "action" : "$HOME/.config/wlogout/scripts/power -r",
+    "text" : "Reiniciar"
+}

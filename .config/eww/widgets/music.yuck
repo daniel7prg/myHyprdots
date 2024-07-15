@@ -1,0 +1,48 @@
+;; Music
+(defwidget music_info []
+  (box :class "musicwin" :orientation "v" :space-evenly false :vexpand false :hexpand false
+    (box :orientation "h" :space-evenly false :vexpand false 
+         :hexpand false :halign "fill"
+      (overlay :vexpand false :hexpand true
+        (box :orientation "v" :class "info_music"
+          (label :class "song" :markup "${msc_info.title}")
+          (label :class "artist" :markup "${msc_info.artist}")
+        )
+        (label :class "cava_module" :markup "${cava_bar}")
+      )
+      (box :class "album_art" :vexpand false :hexpand false :tooltip "${msc_info.title} "
+           :style "background-image: url('${msc_info.cover == "" ? cover_default : msc_info.cover}');")
+    )
+
+    (box :orientation "v" :space-evenly true :vexpand false :hexpand false :class "info_song"
+      (scale :class "scale_music" :min 0 :max {msc_info.scale} :value {msc_info.position}
+             :active "${msc_info.artist == 'Offline' ? false : true}"
+             :onchange "playerctl position {}")
+      (box :orientation "h" :space-evenly true :vexpand false :hexpand false
+        (label :halign "start" :class "time_init" :text {msc_info.minInit})
+        (label :halign "end" :class "time_end" :text {msc_info.minEnd})
+      )
+    )
+
+    (box :orientation "h" :spacing 30 :halign "center" :space-evenly true :vexpand false 
+         :hexpand false :class "msc_ctl"
+      (eventbox :class "btn_prev" :halign "start" :onclick "playerctl previous" 
+                :cursor "pointer"
+        (label :class "prev" :text "󰙤"))
+      (eventbox :class "btn_play" :halign "center" :onclick "playerctl play-pause" 
+                :cursor "pointer"
+        (label :class "stat" :text {msc_info.status}))
+      (eventbox :class "btn_next" :halign "end" :onclick "playerctl next" 
+                :cursor "pointer"
+        (label :class "nxt" :text "󰙢"))
+    )
+  )
+)
+
+(defwidget music []
+  (box :orientation "v" :space-evenly false :class "box_rev" 
+    (revealer :transition "slidedown" :reveal open_music :duration "200ms"
+      (music_info :visible open_music)
+    )
+  )
+)

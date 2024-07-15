@@ -4,60 +4,15 @@
 # | Open Menu EWW |
 #  ---------------
 
-## Files and cmd
- 
-pop_up(){
-	if [[ ! -f "$HOME/.cache/eww_launch.menu_opt" ]]; then
-		touch "$HOME/.cache/eww_launch.menu_opt"
-		eww open menu_opt
-	else
-		eww close menu_opt
-		rm "$HOME/.cache/eww_launch.menu_opt"
-	fi
-}
+## Widget status
+state=$(hyprctl layers | grep -o "menu_layer")
 
-get_icon_wifi(){
-	SIGNAL=$(nmcli -t -f in-use,signal dev wifi | grep "*:*" | sed "s/*://")
-	TYPE=$(nmcli -t -f type con show --active | head -n1 | sed 's/.*-//g')
-
-	if [[ "$TYPE" == "wireless" ]]; then
-		if [[ "$SIGNAL" -gt 80 ]]; then
-			echo "󰤨"
-		elif [[ "$SIGNAL" -gt 60 ]]; then
-			echo "󰤥"
-		elif [[ "$SIGNAL" -gt 40 ]]; then
-			echo "󰤢"
-		elif [[ "$SIGNAL" -gt 20 ]]; then
-			echo "󰤟"
-		elif [[ "$SIGNAL" -eq 0 ]]; then
-			echo "󰤫"
-		fi
-	elif [[ "$TYPE" == "ethernet" ]]; then
-		echo "󰈀"
-	else
-		echo "󰤭"
-	fi
-}
-
-get_icon_music() {
-	if [ "$(playerctl status)" = "Playing" ]; then
-		echo "󰎈"
-	else
-		echo "󰎊"
-	fi
-}
-
-get_icon(){
-	if [[ ! -f "$HOME/.cache/eww_launch.menu_opt" ]]; then
-		echo ""
-	else
-		echo ""
-	fi
-}
-
-case $1 in
-    --icon) get_icon ;;
-	--icon-wifi) get_icon_wifi ;;
-	--icon-music) get_icon_music ;;
-	-p) pop_up ;;
-esac
+if [[ -z "$state" ]]; then
+	eww open menu_opt &
+	usleep 10000
+	eww update open_menu=true
+else
+	eww update open_menu=false &
+	usleep 180000
+	eww close menu_opt
+fi

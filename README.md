@@ -12,7 +12,6 @@ place my settings automatically. Sorry for my english, I'm still learning.
 ```
 git clone https://github.com/daniel7prg/myHyprdots.git
 cd myHyprdots
-chmod +x ./install.sh
 ./install.sh
 ```
 

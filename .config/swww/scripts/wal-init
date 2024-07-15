@@ -4,10 +4,12 @@
 # | Set wallpaper on shared screen |
 #  --------------------------------
 
-if [ "$(hyprctl monitors | grep -c Monitor)" -ge "2" ]; then
-    current_wal=$(echo "$(swww query)" | grep -o 'image:.*' | awk '{print $2}')
-    swww img -o "HDMI-A-1" $current_wal
-	eww open status_bar1 
+# Colors pywal (path wallpaper)
+source "${HOME}/.cache/wal/colors.sh"
+
+if [ "$(hyprctl monitors -j | jq '.[] | .id' | wc -l)" -ge 2 ]; then
+    swww img -o "HDMI-A-1" $wallpaper
+	eww open ewwBar1
 else
-    swww query && swww init
+    swww init
 fi

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#  ______________
+# | Color Scheme |
+#  --------------
+
+dbus-monitor "interface='org.freedesktop.impl.portal.Settings',member='SettingChanged'" | while read -r line; do
+    echo $(grep -o "gtk-application.*" ~/.config/gtk-3.0/settings.ini | cut -d "=" -f 2)
+done

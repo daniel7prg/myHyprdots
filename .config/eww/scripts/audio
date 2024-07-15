@@ -4,64 +4,25 @@
 # | Audio Control |
 #  ---------------
 
-## Get Volume
-get_vol() {
-  	echo $(pactl get-sink-volume @DEFAULT_SINK@) | awk '{print $5}'| sed 's/%//'
-}
+## Get Volume info
 
-## Set Volume
-set_vol() {
-  pactl set-sink-volume @DEFAULT_SINK@ $1%
-}
-
-## Toggle Volume
-toggle_vol() {
-  pactl set-sink-mute @DEFAULT_SINK@ toggle
-}
-
-## Get Volume Icon
-#TODO: different icons according to volume level, maybe
-get_volicon() {
-	MUTE="$(pactl get-sink-mute @DEFAULT_SINK@)"
-  	if [[ "$MUTE" == "Mute: no" ]]; then
-	  	echo "󰕾"
-  	else
-    	echo "󰸈"
+pactl subscribe | rg --line-buffered "on sink" | while read -r line; do
+    PERCENT=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}'| sed 's/%//')
+    MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ | grep "Mute:" | cut -d ' ' -f2)
+    SNK=$(pactl list sinks | grep -oP '(?<=Active Port: ).*')
+    if [[ "$MUTE" == "no" ]]; then
+      if [[ "$SNK" == "analog-output-headphones" ]]; then 
+        SNK="H"
+        ICON="󰋋"
+      else
+        SNK="S" 
+        ICON="" 
+      fi
+    else
+      if [[ "$SNK" == "analog-output-headphones" ]]; then ICON="󰟎"
+      else ICON=""; fi
   	fi
-}
-
-## Get Mic Icon
-get_micicon() {
-	MUTE="$(pactl get-source-mute @DEFAULT_SOURCE@)"
-  	if [[ "$MUTE" == "Mute: no" ]]; then
-	 		echo ""
-  	else
-    	echo ""
-  	fi
-}
-
-## Toggle Mic
-toggle_mic() {
-  pactl set-source-mute @DEFAULT_SOURCE@ toggle
-}
-
-## Get Mic
-get_mic() {
-	echo $(pactl get-source-volume @DEFAULT_SOURCE@) | awk '{print $5}'| sed 's/%//'
-}
-
-## Set Mic
-set_mic() {
-  pactl set-source-volume @DEFAULT_SOURCE@ $1%
-}
-
-case $1 in
-    --set-vol) set_vol "$2" ;;
-    --get-vol) get_vol ;;
-    --toggle-vol) toggle-vol ;;
-	--get-volicon) get_volicon ;;
-	--get-micicon) get_micicon ;;
-    --toggle-mic) toggle-mic ;;
-	--set-mic) set_mic "$2" ;;
-    --get-mic) get_mic ;;
-esac
+    
+    # Json format
+    echo '{"status":"'$MUTE'","perc":"'$PERCENT'","icon":"'$ICON'","sink":"'$SNK'"}'
+done

@@ -2,7 +2,7 @@
 
 # Define the software that would be inbstalled
 # Original script by SolDoesTech (search github profile)
-#Need some prep work
+# Need some prep work
 prep_stage=(
     pipewire
     wireplumber
@@ -18,9 +18,10 @@ prep_stage=(
     qt5-quickcontrols2
     jq
     jaq
-    gojq
     cliphist
     rustup
+    usleep
+    yad
 )
 
 #software for nvidia GPU only
@@ -35,15 +36,16 @@ nvidia_stage=(
 #the main packages
 install_stage=(
     kvantum
+    kvantum-qt5
     gtk3
     nwg-look
-    python
     python-pywal
     dunst
     swww
     swaylock-effects
     rofi-wayland
     wlogout
+    firefox
     swappy
     grim
     slurp
@@ -52,21 +54,19 @@ install_stage=(
     gvfs
     ntfs-3g
     file-roller
-    pamixer
     pavucontrol
     brightnessctl
     blueberry
     playerctl
-    gedit
+    gnome-text-editor
     papirus-icon-theme
-    papirus-folders-catppuccin-git
     ttf-cascadia-code-nerd
     ttf-firacode-nerd
     ttf-jetbrains-mono-nerd
     ttf-noto-nerd
     ttf-nerd-fonts-symbols
     noto-fonts-emoji
-    eww-wayland
+    eww
     geticons
     sddm-git
 )
@@ -78,8 +78,8 @@ backup_files=(
     omf
     dunst
     eww
-    gedit
     gtk-3.0
+    gtk-4.0
     hypr
     Kvantum
     neofetch
@@ -148,7 +148,7 @@ clear
 # set some expectations for the user
 echo -e "-------------------------------------------"
 echo -e "|   - ORIGINAL SCRIPT BY SOLDOESTECH -    |"
-echo -e "-------------------------------------------"
+echo -e "-------------------------------------------\n"
 echo -e "$CNT - You are about to execute a script that would attempt to setup Hyprland.
 Please note that Hyprland is still in Beta."
 sleep 1
@@ -229,9 +229,7 @@ if [ ! -f /sbin/yay ]; then
     fi
 fi
 
-
-
-### Install all of the above pacakges ####
+### Install all of the above packages ####
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n) ' INST
 if [[ $INST == "Y" || $INST == "y" ]]; then
 
@@ -253,11 +251,9 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
         sudo mkinitcpio -P
         
         if [[ -z "$(pacman -Q grub)" ]]; then
-            echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
             echo -e "$CWR - If you use systemd-boot or some other bootloader then refer to the Hyprland wiki (Nvidia Section) for more information"
         else
-            sudo sed -i '/GRUB_CMDLINE_LINUX_DEFAULT=s/"$/ nvidia_drm.modeset=1"/' /etc/default/grub
-            echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
+            sudo sed -i '/GRUB_CMDLINE_LINUX_DEFAULT=s/"$/ nvidia_drm.modeset=1"/' /etc/default/grub &>> $INSTLOG
         fi
     fi
 
@@ -343,32 +339,21 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi 
     
     # stage the .desktop file
-    sudo cp hyprland.desktop /usr/share/wayland-sessions/
+    sudo cp Extras/hyprland.desktop /usr/share/wayland-sessions/
 
     # setup the first look and feel as dark
-    sudo cp -R gtk-pywal/Decay-Green/ /usr/share/themes/Decay-Green/
+    sudo cp -R gtk-pywal/Pywal-theme/ /usr/share/themes/Pywal-theme/
     sudo cp -R gtk-pywal/Qogir-cursors/ /usr/share/icons/Qogir-cursors/
     sudo cp -R gtk-pywal/Qogir-white-cursors/ /usr/share/icons/Qogir-white-cursors/
-    mkdir -p ~/.local/share/gedit/styles
-    cp .config/gedit/themes/ayu-dark.xml ~/.local/share/gedit/styles/
-    gsettings set org.gnome.gedit.preferences.editor scheme 'ayu'
-    ln -sf ~/.cache/wal/ayu-dark.xml ~/.local/share/gedit/styles/ayu-dark.xml
-    cp .config/gedit/themes/catppuccin_latte.xml ~/.local/share/gedit/styles/
-    ln -sf ~/.cache/wal/catppuccin_latte.xml ~/.local/share/gedit/styles/catppuccin_latte.xml
-    gsettings set org.gnome.desktop.interface gtk-theme Decay-Green
-    gsettings set org.gnome.desktop.interface icon-theme Papirus
+    gsettings set org.gnome.desktop.interface gtk-theme Pywal-theme
+    gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
-    papirus-folders -C cat-mocha-blue
-    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Decay-Green/gtk-3.0/gtk.css
-    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Decay-Green/gtk-3.0/gtk-dark.css
-    echo "@import '${HOME}/.cache/wal/colors.scss';" > ~/.config/eww/scss/colors.scss
+    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk.css
+    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk-dark.css
+    sudo sed -i "5i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-4.0/gtk.css
+    sudo sed -i "5i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-4.0/gtk-dark.css
+    sed -i "1i @import '${HOME}/.cache/wal/colors.scss';" ~/.config/eww/scss/colors.scss
     sudo sed -i 's/Inherits=Adwaita/Inherits=Qogir-cursors/' /usr/share/icons/default/index.theme
-    chmod -R +x ~/.config/eww/scripts/
-    chmod -R +x ~/.config/hypr/scripts/
-    chmod -R +x ~/.config/rofi/scripts/
-    chmod -R +x ~/.config/swaylock/scripts/
-    chmod -R +x ~/.config/swww/scripts/
-    chmod -R +x ~/.config/wlogout/scripts/
 fi
 
 ### Install the fish shell ###
@@ -415,8 +400,9 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "\n" >> ~/.zshrc
             echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"' >> ~/.zshrc
             echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.zshrc
+            echo -e '\nalias hypr-keymap="~/.config/hypr/scripts/hypr-keymap.sh"' >> ~/.zshrc
             echo -e "$CNT - You can customize theme with p10k"
-            echo -e "$CNT - See more searching power-level-10k on web"
+            echo -e "$CNT - See more searching power-level-10k on the official web"
             echo -e "$COK - Done!!"
         elif [[ $TZSH == "S" || $TZSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
@@ -427,8 +413,9 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> ~/.zshrc
             echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"' >> ~/.zshrc
             echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.zshrc
+            echo -e '\nalias hypr-keymap="~/.config/hypr/scripts/hypr-keymap.sh"' >> ~/.zshrc
             echo -e "$CNT - You can change theme with presets"
-            echo -e "$CNT - See more searching starship presets on web"
+            echo -e "$CNT - See more searching starship presets on the official web"
             sleep 1
             echo -e "$COK - Done!!"
         fi
@@ -445,7 +432,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             fish install --path=~/.local/share/omf --config=~/.config/omf --noninteractive --yes
             cp shells/fish/config.fish ~/.config/fish/
             echo -e "$CNT - You can change theme with command omf"
-            echo -e "$CNT - See more searching oh-my-fish on web"
+            echo -e "$CNT - See more searching oh-my-fish on the official web"
             echo -e "$COK - Done!!"
         elif [[ $TFSH == "S" || $TFSH == "s" ]]; then
             echo -e "$CAC - Installing starship..."
@@ -455,7 +442,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             rm ~/.config/fish/config.fish
             mv ~/.config/fish/configS.fish ~/.config/fish/config.fish
             echo -e "$CNT - You can change theme with presets"
-            echo -e "$CNT - See more searching starship presets on web"
+            echo -e "$CNT - See more searching starship presets on the official web"
             sleep 1
             echo -e "$COK - Done!!"
         fi
@@ -473,6 +460,8 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             sed -i '7ieval "$(oh-my-posh init bash --config ~/.cache/oh-my-posh/themes/amro.omp.json)"' ~/.bashrc
             sed -i '10ialias cat="bat"' ~/.bashrc
             sed -i "s/alias ls='ls --color=auto'/alias ls='lsd'/" ~/.bashrc
+            echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.bashrc
+            echo -e '\nalias hypr-keymap="~/.config/hypr/scripts/hypr-keymap.sh"' >> ~/.bashrc
             echo -e "$CNT - You can customize theme"
             echo -e "$CNT - See more searching oh-my-posh (bash) on web"
             echo -e "$COK - Done!!"
@@ -482,7 +471,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
             echo -e "$CAC - Setting up componenets..."
             cp shells/bash/.bashrc ~/
             echo -e "$CNT - You can change theme with presets"
-            echo -e "$CNT - See more searching starship presets on web"
+            echo -e "$CNT - See more searching starship presets on the official web"
             sleep 1
             echo -e "$COK - Done!!"
         fi
@@ -493,10 +482,11 @@ fi
 if [[ $ISVM == *"vm"* ]]; then
     echo "---------------------------------------------------------------------------------------------------"
     echo -e "$CNT - Please note that VMs are not fully supported kitty, I recommend installing foot instead"
-    echo "---------------------------------------------------------------------------------------------------"
-    if [[ -e ~/.config/hypr/conf/layerrule.conf ]]; then
-        sed -i 's/blurls=gtk-layer-shell/#blurls=gtk-layer-shell/' ~/.config/hypr/conf/layerrule.conf
-        sed -i 's/layerrule=ignorezero,gtk-layer-shell/#layerrule=ignorezero,gtk-layer-shell/' ~/.config/hypr/conf/layerrule.conf
+    echo "---------------------------------------------------------------------------------------------------\n"
+    if [[ -e ~/.config/hypr/conf/decoration.conf ]]; then
+        sed -i 's|source = ~/.config/hypr/conf/layerrule.conf|#source = ~/.config/hypr/conf/layerrule.conf|' ~/.config/hypr/hyprland.conf
+        sed -i 's/active_opacity = 0.93/active_opacity = 1.0/' ~/.config/hypr/conf/decoration.conf
+        sed -i 's/enabled = true/enabled = false/' ~/.config/hypr/conf/decoration.conf
     fi
     sleep 1
 fi
@@ -510,12 +500,12 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
     cp -R shells/kitty ~/.config/
     cp Extras/Configs/colors-kitty-light.conf ~/.config/wal/templates
     wal -q -i .config/swww/wallpapers/MarioDev.gif.png
-    sed -i '19, 38 s/#/ /' ~/.config/eww/scripts/switch-theme
+    sed -i '27, 44 s/#/ /' ~/.config/eww/scripts/switch-theme
     
     if [[ -e ~/.zshrc ]]; then
         echo 'alias icat="kitten icat"' >> ~/.zshrc
     elif [[ -e ~/.config/fish/config.fish ]]; then
-        sed -i '4ialias icat="kitten icat"' ~/.config/fish/config.fish
+        sed -i '5ialias icat="kitten icat"' ~/.config/fish/config.fish
     else
         echo 'alias icat="kitten icat"' >> ~/.bashrc
     fi
@@ -527,14 +517,14 @@ elif [[ $TERM == "F" || $TERM == "f" ]]; then
     echo -e "$CAC - Installing foot and componenets..."
     install_software foot
     echo -e "$CAC - Setting up componenets..."
-    mkdir -p ~/.config/foot
-    cp shells/bash/foot.ini ~/.config/wal/templates/
+    mkdir -p ~/.config/foot/scripts
+    cp Extras/Scripts/foot-theme ~/.config/foot/scripts/
+    cp shells/bash/foot* ~/.config/wal/templates/
     wal -q -i .config/swww/wallpapers/MarioDev.gif.png
-    cp ~/.cache/wal/foot.ini ~/.config/foot/
-    sed -i '20, 39 s/#/ /' ~/.config/eww/scripts/switch-theme
-    sed -i '46s/#/ /' Extras/Scripts/wallselect.sh
-    sed -i '46s/#/ /' Extras/Scripts/wallselect_gif.sh
-    sed -i 's/#/ /g' ~/.config/foot/foot.ini
+    rm ~/.config/foot/foot.ini
+    cp ~/.cache/wal/foot-dark.ini ~/.config/foot/
+    mv ~/.config/foot/foot-dark.ini ~/.config/foot/foot.ini
+    sed -i -e 's/#change_theme_foot/change_theme_foot/g' ~/.config/eww/scripts/switch-theme -e '11s/#source/source/' ~/.config/eww/scripts/switch-theme
     sed -i 's/image_backend=kitty/image_backend=ascii/' ~/.config/neofetch/config.conf
     sed -i 's/bind = $mainMod, Q, exec, kitty/bind = $mainMod, Q, exec, foot/' ~/.config/hypr/conf/binds.conf
     sleep 1
@@ -551,84 +541,86 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
     read -rep $'[\e[1;33mACTION\e[0m] - Would you like copy any these Pics(p)/Gifs(g)/AnimeGirls(a)/Minimalist(m) wallpapers? (p,g,a,m,n) ' PIC
     if [[ $PIC == "P" || $PIC == "p" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
-        cp -R Extras/hyprWalls/wallpapers/PICs ~/wallpapers
-        sed -i 's|~/wallpapers/|~/wallpapers/PICs'
+        if [[ -d ~/wallpapers/ ]]; then
+            cp -r Extras/hyprWalls/wallpapers/PICs/ ~/wallpapers
+            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+        else
+            mkdir -p ~/wallpapers
+            cp -r Extras/hyprWalls/wallpapers/PICs/ ~/wallpapers
+            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+        fi
         echo -e "$COK - Done!!"
     elif [[ $PIC == "G" || $PIC == "g" ]]; then
-        echo -e "$CAC - Setting up wallpapers..."
-        cp -R Extras/hyprWalls/wallpapers/Gifs ~/wallpapers
-        sed -i 's|~/wallpapers/|~/wallpapers/Gifs'
+        if [[ $ISVM != *"vm"* ]]; then
+            echo -e "$CAC - Setting up wallpapers..."
+            if [[ -d ~/wallpapers/ ]]; then
+                cp -r Extras/hyprWalls/wallpapers/Gifs ~/wallpapers
+                cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            else
+                mkdir -p ~/wallpapers
+                cp -r Extras/hyprWalls/wallpapers/Gifs ~/wallpapers
+                cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            fi
+        else
+            if [[ -d ~/wallpapers/ ]]; then
+                cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            else
+                mkdir -p ~/wallpapers
+                cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            fi
+            echo -e "$CNT - Gifs in VM give bad performance"
+        fi
         echo -e "$COK - Done!!"
     elif [[ $PIC == "A" || $PIC == "a" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
-        cp -R Extras/hyprWalls/wallpapers/Anime_Girls ~/wallpapers
-        sed -i 's|~/wallpapers/|~/wallpapers/Anime_Girls'
+        if [[ -d ~/wallpapers/ ]]; then
+            cp -r Extras/hyprWalls/wallpapers/Anime_Girls/ ~/wallpapers
+            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+        else
+            mkdir -p ~/wallpapers
+            cp -r Extras/hyprWalls/wallpapers/Anime_Girls/ ~/wallpapers
+            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+        fi
         echo -e "$COK - Done!!"
     elif [[ $PIC == "M" || $PIC == "m" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
-        cp -R Extras/hyprWalls/wallpapers/Minimalist ~/wallpapers
-        sed -i 's|~/wallpapers/|~/wallpapers/Minimalist'
+        if [[ -d ~/wallpapers/ ]]; then
+            cp -R Extras/hyprWalls/wallpapers/Minimalist/ ~/wallpapers
+            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+        else
+            mkdir -p ~/wallpapers
+            cp -r Extras/hyprWalls/wallpapers/Minimalist/ ~/wallpapers
+            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+        fi
         echo -e "$COK - Done!!"
     fi
 else
-    mkdir -p ~/wallpapers
-    cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
-fi
-
-## Install app wallpaper selector
-read -rep $'[\e[1;33mACTION\e[0m] - Do you want to install waypaper as a wallpaper selector? (y,n) ' WAL
-if [[ $WAL == "Y" || $WAL == "y" ]]; then
-    echo -e "$CAC - Installing waypaper and componenets..."
-    install_software waypaper
-    sed -i 's|$HOME/.config/rofi/scripts/wallselect.sh|waypaper' ~/.config/eww/widgets/bar.yuck
-else
-    read -rep $'[\e[1;33mACTION\e[0m] - Would you like to have support for .gif? (y,n) ' RWAL
-    if [[ $RWAL == "Y" || $RWAL == "Y" ]]; then
-        cp Extras/Scripts/wallselect_gif.sh ~/.config/rofi/scripts
-        cp Extras/Scripts/wallselect.sh ~/.config/rofi/scripts
+    if [[ -d ~/wallpapers/ ]]; then
+        cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+        wal -q -i Extras/hyprWalls/wallpapers/default.png
     else
-        cp Extras/Scripts/wallselect_gif.sh ~/.config/rofi/scripts
+        mkdir -p ~/wallpapers
+        cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+        wal -q -i Extras/hyprWalls/wallpapers/default.png
     fi
 fi
 
-## Install browser
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these Firefox(f)/Chrome(g)/Chromium(c)/Brave(b)/No(n) browsers? (f,g,c,b,n) ' BROWSER
-if [[ $BROWSER == "F" || $BROWSER == "f" ]]; then
-    # install firefox
-    echo -e "$CAC - Installing Firefox..."
-    install_software firefox
-    echo "---------------------------------------------------------------------------------------------"
-    echo -e "$CNT - Remember to set the theme to gtk"
-    echo "---------------------------------------------------------------------------------------------"
-elif [[ $BROWSER == "G" || $BROWSER == "g" ]]; then
-    # install Chrome
-    echo -e "$CAC - Installing Chrome..."
-    install_software google-chrome
-    echo "---------------------------------------------------------------------------------------------"
-    echo -e "$CNT - 1) Remember to set the theme to gtk"
-    echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'chrome://flags/'"
-    echo "---------------------------------------------------------------------------------------------"
-elif [[ $BROWSER == "C" || $BROWSER == "C" ]]; then
-    # install Chromium
-    echo -e "$CAC - Installing Chromium..."
-    install_software chromium
-    echo "---------------------------------------------------------------------------------------------"
-    echo -e "$CNT - 1) Remember to set the theme to gtk"
-    echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'chrome://flags/'"
-    echo "---------------------------------------------------------------------------------------------"
-elif [[ $BROWSER == "B" || $BROWSER == "b" ]]; then
-    # install Brave
-    echo -e "$CAC - Installing Brave..."
-    install_software brave-bin
-    echo "---------------------------------------------------------------------------------------------"
-    echo -e "$CNT - 1) Remember to set the theme to gtk"
-    echo -e "$CNT - 2) Remember to enable 'Preferred Ozone platform=Wayland' flag in 'brave://flags/'"
-    echo "---------------------------------------------------------------------------------------------"
-else
-    echo "---------------------------------------------------------------"
-    echo -e "$CNT - Please install a browser before starting hyprland" -
-    echo "---------------------------------------------------------------"
-fi
+### Create wallpaper cache ###
+# Wallpaper
+WAL_DEF=~/wallpapers/default.png
+
+# Monitors
+SEARCH_MON=($(grep -l -w "connected" /sys/class/drm/card0/card0-*/status))
+
+# Create dir cache
+mkdir -p ~/.cache/swww
+
+for wall_path in "${SEARCH_MON[@]}"; do
+    ACTIVE=`basename $(dirname "$wall_path")`
+    CURRENT=($ACTIVE)
+    MONITOR=($(echo "${CURRENT[@]}" | grep -oP "(?<=card0-).*"))
+    echo "$WAL_DEF" > ~/.cache/swww/${MONITOR[@]}
+done
 
 ### Script is done ###
 echo -e "$CNT - Script had completed!"
@@ -638,7 +630,7 @@ if [[ "$ISNVIDIA" == true ]]; then
     exit
 fi
 
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to start reboot now? (y,n) ' RBT
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like reboot now? (y,n) ' RBT
 if [[ $RBT == "Y" || $RBT == "y" ]]; then
     exec systemctl reboot
 else

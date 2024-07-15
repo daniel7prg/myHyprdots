@@ -5,69 +5,49 @@
 #  ---------------
 
 ## Get data
-STATUS="$(playerctl status)"
-
-## Get status
-get_status() {
-	if [ "$(playerctl status)" = "Playing" ]; then
-		echo "󱖒"
-	else
-		echo "󱖑"
-	fi
-}
-
-## Get song
-get_song() {
-	song="$(playerctl metadata xesam:title)"
-	if [[ -z "$song" ]]; then
-		echo "Offline"
-	else
-		echo "$song"
-	fi	
-}
-
-## Get artist
-get_artist() {
-	artist="$(playerctl metadata xesam:artist)"
-	if [[ -z "$artist" ]]; then
-		echo "Play any song 󰎆"
-	else
-		echo "$artist"
-	fi	
-}
-
-
-## Get cover
-get_cover() {
-	if [ "$STATUS" = "Playing" ] || [ "$STATUS" == "Paused" ];then
-		echo "$(playerctl metadata mpris:artUrl)"
-	else
-	    echo "$HOME/.config/eww/icons/music.png"
-	fi
-}
-
-## Toggle status
-toggle() {
-  playerctl play-pause
-}
-
-## Next
-next() {
-  playerctl next
-}
-
-## Previous
-previous() {
-  playerctl previous
-}
-
-## Execute accordingly
-case $1 in
-    --song) get_song ;;
-	--artist) get_artist ;;
-	--status) get_status ;;
-	--cover) get_cover ;;
-	--toggle) toggle ;;
-	--next) next ;;
-	--prev) previous ;;
-esac
+playerctl metadata -F -f ' {{position}} ' | while read -r line; do
+    title="$(playerctl -s metadata -f "{{title}}")"
+    artist=$(playerctl -s metadata -f "{{artist}}")
+    cover=$(playerctl -s metadata -f "{{mpris:artUrl}}")
+    status=$(playerctl -s metadata -f "{{status}}")
+    minInit=$(playerctl -s metadata -f "{{duration(position)}}")
+    minEnd=$(playerctl -s metadata -f "{{duration(mpris:length)}}")
+    scale="0"
+    position="0"
+    circular="0"
+    if [[ $minEnd != "" ]]; then
+        scale=$(playerctl metadata -f "{{mpris:length}}" | awk '{ print int($1/1000000) }')
+        position=$(playerctl metadata -f "{{position}}" | awk '{ print int($1/1000000) }')
+        circular=$(awk -v pos="$position" -v sc="$scale" 'BEGIN { printf("%.2f", (pos / sc) * 100) }')
+    else
+        minInit=""
+        minEnd=""
+    fi
+    if [[ $title == "" ]]; then
+        title="Play any song"
+        artist="Offline"
+        cover="icons/music.png"
+        minInit=""
+        minEnd=""
+    fi
+    if [[ $status == "Playing" ]]; then
+        status="󱖒"
+        icon=""
+    else
+        status="󱖑"
+        icon=""
+    fi
+    JSON_STRING=$( jq -n \
+        --arg title "$title " \
+        --arg artist "$artist" \
+        --arg cover "$cover" \
+        --arg status "$status" \
+        --arg minInit "$minInit" \
+        --arg minEnd "$minEnd" \
+        --arg scale "$scale" \
+        --arg position "$position" \
+        --arg circular "$circular" \
+        --arg icon "$icon" \
+        '{title: $title, artist: $artist, cover: $cover, status: $status, minInit: $minInit, minEnd: $minEnd, scale: $scale, circular: $circular, position: $position, icon: $icon}' )
+    echo $JSON_STRING
+done

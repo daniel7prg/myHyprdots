@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#  ____________________
+# | Open Help Menu EWW |
+#  --------------------
+
+## Check state window
+state=$(hyprctl layers | grep -o "help_layer")
+
+if [[ -z "$state" ]]; then
+	usleep 10000
+	eww open help_opt
+else
+	usleep 10000
+	eww close help_opt
+fi

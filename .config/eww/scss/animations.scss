@@ -1,0 +1,20 @@
+/*Animated border*/
+@keyframes border-move {
+    0% { border-color: $color6; }
+    50% { border-color: $color5; }
+    100% { border-color: $color6; }
+}
+
+/*Animated color*/
+@keyframes color-move {
+    0% { color: $color6; }
+    50% { color: $color5; }
+    100% { color: $color6; }
+}
+
+/*Animated cava*/
+@keyframes cava-color {
+    0% { color: rgba($color6, 0.4); }
+    50% { color: rgba($color5, 0.4); }
+    100% { color: rgba($color6, 0.4); }
+}

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#  _________________
+# | Change Font Eww |
+#  -----------------
+
+# Directory conf file
+font_dir=~/.config/eww/eww.scss
+
+# Select font
+font_select=$(yad --font --separate-output --title="Font Chooser")
+
+if [[ -n "$font_select" ]]; then
+    font_name=$(echo $font_select | cut -d '|' -f1)
+    font_size=$(echo $font_select | cut -d '|' -f3)
+
+    if [[ $font_size -lt 25 ]]; then
+        original_font=$(cat $font_dir | grep 'font-family' | cut -d "'" -f2)
+        original_size=$(cat $font_dir | grep 'font-size' | grep -o '[0-9][0-9]')
+
+        sed -i "s/$original_font/$font_name/" $font_dir
+        sed -i "s/$original_size/$font_size/" $font_dir
+    else dunstify "Error" "Font size not allowed"; fi
+fi

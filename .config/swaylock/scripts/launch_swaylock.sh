@@ -1,14 +1,15 @@
 #!/bin/bash
 
-#  _______________________
-# | Swaylock Current Theme|
-#  -----------------------
+#  ________________________
+# | Swaylock Current Theme |
+#  ------------------------
 
-# Import the colors
-. "${HOME}/.cache/wal/colors.sh"
+source $HOME/.config/rofi/scripts/globalcontrol.sh
 
-swaylock --ring-color "$color5" --inside-color "$background" --line-color "$background" \
---inside-ver-color="$background" --line-ver-color="$background" \
---inside-wrong-color="$background" --line-wrong-color="$background" \
---inside-clear-color="$background" --line-clear-color="$background" \
---key-hl-color "$foreground"
+if [[ "$current_theme" -eq 1 ]]; then
+    sleep 0.1
+    swaylock -C $HOME/.cache/wal/lock-dark
+else
+    sleep 0.1
+    swaylock -C $HOME/.cache/wal/lock-light
+fi

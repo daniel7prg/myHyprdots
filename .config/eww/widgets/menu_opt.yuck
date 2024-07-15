@@ -1,130 +1,244 @@
-;; system sliders
-(defwidget sys_sliders []
-  (box :class "genwin" :vexpand "false" :hexpand "false" :width 365
-	(box :class "slidersbox" :orientation "v" :spacing 10 :halign "center" :valign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
-	  (box :class "volume_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
-		(button :width 30 :onclick "scripts/audio --toggle-vol" 
-          (label :class "iconvolume" :text VOLUMEICON))
-		(scale :min 0 :max 100 :value VOLUME :active "true" :onchange "scripts/audio --set-vol {}")
-    (label :class "percent" :text "${VOLUME}%"))
-      (box :class "mic_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
-		(button :width 30 :onclick "scripts/audio --toggle-mic" 
-          (label :class "iconmic" :text MICICON))
-		(scale :min 0 :max 101 :value MIC :active "true" :onchange "scripts/audio --set-mic {}") 
-    (label :class "percent" :text "${MIC}%"))
-      (box :class "bright_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
-		(button :width 30 :onclick "" 
-		  (label :width 30 :class "iconbright" :text "󰃠"))
-        (scale :min 0 :max 101 :value BLIGHT :active "true" :onchange "scripts/brightness --set {}")
-        (label :class "percent" :text "${BLIGHT}%")))))
-
-;; battery
-(defwidget battery []
-  (box :class "genwin" :vexpand "false" :hexpand "false" :width 65
-    (box :class "battery" :orientation "v" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
-		(label :class "baticon" :text BATTERYICON)
-        (label :class "batinfo" :text BATTERY))))
-
-;; network
-(defwidget network []
-  (box :class "genwin" :vexpand "false" :hexpand "true" :orientation "h" :width 200
-	(eventbox :class "${net_state == 'loopback' ? 'disable' : 'btn_net'}" :onclick "scripts/network --toggle" 
-          :onrightclick "sh -c '(sleep 0.5s; '$HOME/.config/eww/scripts/wifi')' & disown \
-                          && rm $HOME/.cache/eww_launch.menu_opt && eww close menu_opt" :cursor "pointer"
-      (label :class "network" :text NET))))
-
-;; bluetooth
-(defwidget bluetooth []
-  (box :class "genwin" :vexpand "false" :hexpand "false" :width 60
-	(eventbox :class "${bth_state == 'inactive' ? 'disable' : 'btn_bluet'}" :cursor "pointer"
-            :onclick "scripts/bluetooth --toggle" :onrightclick "scripts/bluetooth --gui"
-      (label :class "bluetic" :text iconbth))))
-
-;; Power Button
-(defwidget powerbutton []
-  (box :class "genwin" :vexpand "false" :hexpand "false" :width 60
-	(eventbox :class "btn_poweroff" :cursor "pointer"
-            :onclick "sh -c '(sleep 0.5s; wlogout --protocol layer-shell)' & disown \
-   && rm $HOME/.cache/eww_launch.menu_opt && eww close menu_opt" 
-      (label :class "poweric" :text " ⏻ "))))
-        
-
-;;system
-(defwidget system []
-  (box :space-evenly "false" :orientation "v" :spacing 10 :width 400
-    (box :class "row" :orientation "h" :space-evenly "false" :spacing 10 :height 60
-      (network)
-      (bluetooth)
-      (powerbutton))
-    (box :class "row" :orientation "h" :space-evenly "false" :spacing 10 :height 60
-      (battery)
-      (sys_sliders))
+;; user_info
+(defwidget _user []
+  (box :orientation "h" :space-evenly false :vexpand false :hexpand false :width 225 :spacing 10
+    (eventbox :onclick "scripts/chooseuser& scripts/launch_menu"
+              :cursor "pointer" :tooltip "Select image user"
+      (box :class "user_img" :vexpand false :hexpand false :valign "center"
+            :style "background-image: url('${user_icon}');"
+      )
+    )
+    (box :space-evenly false :orientation "v" :valign "center" :spacing 5
+      (label :class "user_title" :text "USER" :halign "start")
+      (label :class "user_name" :text "${usr}" :halign "start" :limit-width 20 :tooltip "${usr}")
+    )
   )
 )
 
-;; Music
-(defwidget music []
-    (box :class "genwin" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
-		  
-      (box :class "genwin" :orientation "h" :space-evenly "true" :vexpand "false" :hexpand "false"
-        (box :class "album_art" :vexpand "false" :hexpand "false" :style "background-image: url('${COVER}');")
-          (box :orientation "v" :width 80
-	  	    (label :halign "center" :class "song" :wrap "true" :limit-width 20 :text SONG)
-	  	    (label :halign "center" :class "artist" :wrap "true" :limit-width 15 :text ARTIST)))
-
-		(box :orientation "h" :spacing 30 :halign "center" :space-evenly "true" :vexpand "false" :hexpand "false"
-		  (eventbox :class "btn_prev" :onclick "scripts/music --prev" :cursor "pointer"
-        (label :class "prev" :text "󰙤"))
-		  (eventbox :class "btn_play" :onclick "scripts/music --toggle" :cursor "pointer"
-        (label :class "stat" :text STATUS))
-		  (eventbox :class "btn_next" :onclick "scripts/music --next" :cursor "pointer"
-        (label :class "nxt" :text "󰙢")))))
-
-;; Sysinfo
-(defwidget sysinfo []
-  (box :class "genwin" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false"
-    (box :class "bx_sys" :space-evenly "false"
-      (label :text "System Info")
-      (box :class "bx_sys_per" :space-evenly "true" :vexpand "false" :hexpand "false"
-        (circular-progress 
-          :value {EWW_RAM.used_mem_perc} :class "sysbar" :thickness 4
-          :tooltip "USED ${round(EWW_RAM.used_mem / 1048576, 2)}MB"
-          (label :class "txt_sys" :text "RAM "))
+;; quick_access
+(defwidget _quick []
+  (box :orientation "h" :space-evenly false :vexpand false :hexpand false :width 225
+    (box :orientation "h" :space-evenly true :halign "end" :width 125)
+    (box :orientation "h" :space-evenly false :width 100
+      (box :orientation "v" :space-evenly true :valign "center" :width 50
+        (box :class "battery" :orientation "v" :spacing 5 :space-evenly false 
+             :vexpand false :hexpand false :tooltip "${battery.status}"
+          (label :class "baticon" :text "${battery.icon}")
+          (label :class "batinfo" :text "${battery.capacity}")
+        )
       )
-      (box :class "bx_sys_per" :space-evenly "true" :vexpand "false" :hexpand "false"
-        (circular-progress 
-          :value {EWW_DISK["/"].used_perc} 
-          :class "sysbar" 
-          :thickness 4
-          :limit-width 2
-          :tooltip "USED ${round(EWW_DISK["/"].used_perc, 2)}%"
-          (label :class "txt_sys" :text "DISK 󰋊"))
-      )
-      (box :class "bx_sys_per" :space-evenly "true" :vexpand "false" :hexpand "false"
-        (circular-progress 
-          :value {EWW_CPU.avg} 
-          :class "sysbar" 
-          :thickness 4
-          :limit-width 2
-          :tooltip "USED ${round(EWW_CPU.avg, 0)}%"
-          (label :class "txt_sys" :text "CPU "))
-      )
-      (box :class "bx_sys_per" :space-evenly "true" :vexpand "false" :hexpand "false"
-        (circular-progress 
-          :value {EWW_TEMPS.ACPITZ_TEMP1}
-          :class "sysbar" 
-          :thickness 4
-          :limit-width 2
-          :tooltip "${EWW_TEMPS.ACPITZ_TEMP1}󰔄"
-          (label :class "txt_sys" :text "TEMP 󱌥"))
+      (box :orientation "v" :space-evenly true :valign "center" :width 45 :spacing 3
+        (eventbox :onclick "kitty --detach --working-directory ~/.config/hypr/conf& scripts/launch_menu"
+                  :class "btn_quick" :cursor "pointer"
+                  :tooltip "Settings (CLI)"
+          (label :class "icon_settings" :text "" :halign "center")
+        )
+        (eventbox :class "btn_quick" :onclick "scripts/launch_help& scripts/launch_menu" :cursor "pointer" :tooltip "Help"
+          (label :class "icon_help" :text "" :halign "center")
+        )
+        (eventbox :onclick "sh -c '(sleep 0.5s; ${open_logout})' & disown && scripts/launch_menu"
+                  :class "btn_quick" :cursor "pointer"
+                  :tooltip "Power"
+          (label :class "icon_power" :text "" :halign "center")
+        )
       )
     )
   )
 )
 
+;; network
+(defwidget network []
+  (box :class "box_opt" :vexpand false :hexpand false :orientation "h" :space-evenly false
+    (eventbox :class "${network.type == 'Internet' && network.type != 'ethernet' ? 'disable' : 'btn_net'}" 
+              :onclick "${network.type == 'Internet' && network.type != 'ethernet' ? 'nmcli radio wifi on' : 'nmcli radio wifi off'}" 
+              :tooltip "On/Off" :cursor "pointer" :width 130
+      (box :space-evenly false :orientation "h"
+        (box :space-evenly false :orientation "v" :valign "center" :width 40
+          (label :class "network_icon" :text "${network.icon}")
+        )
+        (box :space-evenly false :orientation "v" :valign "center"
+          (label :class "network_type" :text "${network.type}" :halign "start" :limit-width 8)
+          (label :class "network_name" :text "${network.name}" :halign "start" :limit-width 10)
+        )
+      )
+    )
+    (eventbox :class "${network.type == 'Internet' && network.type != 'ethernet' ? 'disable_opt' : 'btn_net_opt'}"  
+              :tooltip "Options"
+              :onclick "pkill -x yad || scripts/wifi& scripts/launch_menu" 
+              :cursor "pointer" :width 34
+      (label :text "" :halign "center")
+    )
+  )
+)
+
+;; bluetooth
+(defwidget bluetooth []
+  (box :class "box_opt" :vexpand false :hexpand false :orientation "h" :space-evenly false
+    (eventbox :class "${bluetooth.status == 'off' ? 'disable' : 'btn_bluet'}" :cursor "pointer"
+              :tooltip "On/Off" :width 130
+              :onclick "${bluetooth.status == 'off' ? 'bluetoothctl power on' : 'bluetoothctl power off'}"
+      (box :space-evenly false :orientation "h"
+        (box :space-evenly false :orientation "v" :valign "center" :width 40
+          (label :class "blue_icon" :text "${bluetooth.icon}")
+        )
+        (box :space-evenly false :orientation "v" :valign "center"
+          (label :class "blue_type" :text "Bluetooth" :halign "start" :limit-width 8)
+          (label :class "blue_name" :text "${bluetooth.name}" :halign "start" :limit-width 10)
+        )
+      )
+    )
+    (eventbox :class "${bluetooth.status == 'off' ? 'disable_opt' : 'btn_bluet_opt'}"  
+              :tooltip "Options"
+              :onclick "pkill -x blueman-manager || blueman-manager& scripts/launch_menu" 
+              :cursor "pointer" :width 34
+      (label :text "" :halign "center")
+    )
+  )
+)
+
+;; Sysinfo
+(defwidget info_mem []
+  (box :class "bx_sys" :orientation "h" :space-evenly true 
+       :vexpand false :hexpand false :width 281 :valign "center"
+    (box :class "bx_sys_per" :space-evenly true :vexpand false :hexpand false
+      (circular-progress 
+        :value {EWW_RAM.used_mem_perc} :class "sysbar" :thickness 3
+        :tooltip "Used"
+        (label :class "txt_sys_perc" :text "${round(EWW_RAM.used_mem_perc, 0)}%")
+      )
+    )
+    (label :class "txt_sys" :text "RAM " :halign "start")
+    (box :class "bx_sys_per" :space-evenly true :vexpand false :hexpand false
+      (circular-progress 
+        :value {EWW_DISK["/"].used_perc} :class "sysbar" :thickness 3
+        :tooltip "Used"
+        (label :class "txt_sys_perc" :text "${round(EWW_DISK["/"].used_perc, 0)}%")
+      )
+    )
+    (label :class "txt_sys" :text "DISK 󰋊" :halign "start")
+  )
+)
+
+(defwidget info_cpu []
+  (box :class "bx_sys" :orientation "h" :space-evenly true 
+       :vexpand false :hexpand false :width 281 :valign "center"
+    (box :class "bx_sys_per" :space-evenly true :vexpand false :hexpand false
+      (circular-progress 
+        :value {EWW_CPU.avg} :class "sysbar" :thickness 2
+        :tooltip "Used"
+        (label :class "txt_sys_perc" :text "${round(EWW_CPU.avg, 0)}%")
+      )
+    )
+    (label :class "txt_sys" :text "CPU " :halign "start")
+    (box :class "bx_sys_per" :space-evenly true :vexpand false :hexpand false
+      (circular-progress 
+        :value {EWW_TEMPS.ACPITZ_TEMP1} :class "sysbar" :thickness 3
+        :tooltip "Grades"
+        (label :class "txt_sys_perc" :text "${EWW_TEMPS.ACPITZ_TEMP1}󰔄")
+      )
+    )
+    (label :class "txt_sys" :text "TEMP 󱌥" :halign "start")
+  )
+)
+
+(defwidget _sliders []
+  (box :orientation "v" :space-evenly true :vexpand false :hexpand false :width 300 :spacing 15
+    
+    (box :orientation "h" :space-evenly false :vexpand false :hexpand false :halign "start" :spacing 7
+      (overlay :vexpand false :hexpand false
+        (box :class "volume_bar" :orientation "h" :spacing 20 :space-evenly false :vexpand false :hexpand false
+          (scale :min 0 :max 101 :value {volume.perc} :active true :tooltip "${volume.perc}%"
+                 :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%")
+        )
+        (label :class "${volume.perc <= 10 ? 'iconvolume_empty' : 'iconvolume'}" :text "${volume.icon}" :halign "start")
+      )
+      (box :class "volume_opt" :orientation "h" :space-evenly false :vexpand false :hexpand false
+        (eventbox :width 35 :class "volume_btn_mute"
+                  :onclick "${volume.status == 'yes' ? 'pactl set-sink-mute @DEFAULT_SINK@ toggle' : 'pactl set-sink-mute @DEFAULT_SINK@ toggle' }" 
+                  :cursor "pointer" :tooltip "Mute/Unmute"
+          (label :class "iconvolume_mute" :text "${volume.icon}")
+        )
+        (eventbox :width 15 :class "volume_btn_opt"
+                  :onclick "pkill -x pavucontrol || pavucontrol -t 3& scripts/launch_menu" 
+                  :cursor "pointer" :tooltip "Options"
+          (label :class "iconvolume_opt" :text "")
+        )
+      )
+    )
+    (overlay :vexpand false :hexpand false :halign "start"
+      (box :class "bright_bar" :orientation "h" :spacing 20 :space-evenly false :vexpand false :hexpand false
+        (scale :min 0 :max 101 :value blight :active true :tooltip "${blight}%"
+               :onchange "brightnessctl -q set {}")
+      )
+      (label :width 35 :class "${blight <= 8 ? 'iconbright_empty' : 'iconbright'}" :text "" :halign "start")
+    )
+  )
+)
+
+;; Color Mode
+(defwidget _cmode []
+  (box :class "box_opt" :vexpand false :hexpand false :orientation "h" :width 160
+    (eventbox :class "btn_colorm"
+              :cursor "pointer"
+              :tooltip "Switch mode"
+              :onclick "scripts/switch-theme& eww close menu_opt music calendar help_opt"
+      (box :space-evenly false :orientation "h"
+        (box :space-evenly false :orientation "v" :valign "center" :width 40
+          (label :class "color_icon" 
+                 :text "${switcher == "1" ? '' : '󰃠'}")
+        )
+        (box :space-evenly false :orientation "v" :valign "center"
+          (label :class "color_type" :text "Color Mode" :halign "start")
+          (label :class "color_name" :halign "start"
+                 :text "${switcher == "1" ? 'Dark' : 'Light'}")
+        )
+      )
+    )
+  )
+)
+
+;;modules
+(defwidget _container []
+  (box :space-evenly false :orientation "v" :spacing 15
+    (box :orientation "h" :space-evenly false :spacing 15 :height 60
+      (_user)
+      (_quick)
+    )
+    (box :orientation "h" :space-evenly false :spacing 15
+      (box :orientation "v" :space-evenly true :spacing 15 :height 150 :halign "start"
+        (network)
+        (bluetooth)
+      )
+      (box :orientation "v" :space-evenly true :valign "start" :class "box_osd" :height 150
+        (info_mem)
+        (info_cpu)
+      )
+    )
+    (box :orientation "h" :space-evenly false
+      (box :orientation "v" :space-evenly true :height 60 :valign "start"
+        (_sliders)
+      )
+      (box :orientation "v" :space-evenly true :height 60 :valign "center"
+        (_cmode)
+      )
+    )
+    ;(box :orientation "h" :space-evenly false :spacing 15 :height 60
+    ;  (_sliders)
+    ;)
+  )
+)
+
+;;options
+(defwidget options []
+  (box :class "background_main" :space-evenly false :orientation "v"
+    (_container)
+  )
+)
+
 ;; MENU_OPT
 (defwidget _menuopt []
-  (box :class "background_mn" :space-evenly "false" :orientation "v" :spacing 15 :width 400
-    (system)
-    (music)
-    (sysinfo)))
+  (box :orientation "v" :space-evenly false :class "box_rev"
+    (revealer :transition "slidedown" :reveal open_menu :duration "200ms"
+      (options)
+    )
+  )
+)

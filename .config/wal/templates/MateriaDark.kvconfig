@@ -73,7 +73,7 @@ saturation=1.00
 shadowless_popup=false
 
 [GeneralColors]
-alt.base.color=#1e1e1e
+alt.base.color={background}
 base.color={background}
 button.color=#2e2e2e
 button.text.color=#dfdfdf

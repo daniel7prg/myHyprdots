@@ -1,0 +1,79 @@
+@import "./colors.scss";
+
+$text: lighten($background, 10);
+$text_btn: lighten($background, 10);
+$text_hover: lighten($foreground, 10);
+$background-btn: radial-gradient(farthest-side, $ncolor3 30%, $lcolor3 60%);
+
+@if (lightness($color3) < 45){
+    $text_btn: lighten($foreground, 10);
+    $text_hover: lighten($background, 10);
+}
+
+.bx_win{
+    background-color: rgba($foreground, 0.65);
+    border: 2.5px solid;
+    border-radius: 10px;
+    padding-right: 15px;
+    animation: border-move 6s linear infinite;
+}
+
+.bx_title{
+    margin: 10px 10px 15px 10px;
+}
+
+.bx_opt{
+    background-image: $background-btn;
+    margin: 2.5px;
+    border: 1px solid $text;
+    border-radius: 15px;
+}
+
+.wel_txt{
+    color: $text;
+    font-size: 40pt;
+    font-weight: 500;
+}
+
+.opt_title{
+    color: $text;
+    font-size: 20pt;
+    font-weight: 500;
+    padding: 30px 0px 15px 12px;
+}
+
+.hlp_txt{
+    color: $text;
+    font-size: 13pt;
+    padding: 0px 15px 0px 15px;
+}
+
+.hlp_txt_btn{
+    color: $text_btn;
+    font-size: 13pt;
+    padding: 0px 15px 0px 15px;
+}
+
+.btn_opt{
+    background-image: $background-btn;
+    color: $text_btn;
+    border: 1px solid $text;
+    border-radius: 15px;
+}
+
+.btn_opt:hover{
+    background-image: $background-btn;
+    color: $text_hover;
+}
+
+.btn_close{
+    background-image: $background-btn;
+    color: $text_btn;
+    border: 1px solid $text;
+    border-radius: 15px;
+}
+
+.btn_close:hover{
+    background-image: $background-btn;
+    color: $text_hover;
+}
