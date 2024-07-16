@@ -22,6 +22,7 @@ prep_stage=(
     rustup
     usleep
     yad
+    socat
 )
 
 #software for nvidia GPU only
