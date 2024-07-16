@@ -306,6 +306,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
                     echo -e "$COK - Backed up $DIR to $DIRPATH-back."
                 fi
             done
+            cp -R .config/ ~/
         else
             cp -R .config/ ~/
         fi
