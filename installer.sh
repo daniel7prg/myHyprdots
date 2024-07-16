@@ -524,7 +524,6 @@ elif [[ $TERM == "F" || $TERM == "f" ]]; then
     cp Extras/Scripts/foot-theme ~/.config/foot/scripts/
     cp shells/bash/foot* ~/.config/wal/templates/
     wal -q -i Extras/default.png
-    rm ~/.config/foot/foot.ini
     cp ~/.cache/wal/foot-dark.ini ~/.config/foot/
     mv ~/.config/foot/foot-dark.ini ~/.config/foot/foot.ini
     sed -i -e 's/#change_theme_foot/change_theme_foot/g' ~/.config/eww/scripts/switch-theme -e '11s/#source/source/' ~/.config/eww/scripts/switch-theme
@@ -591,7 +590,7 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
     elif [[ $PIC == "M" || $PIC == "m" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
         if [[ -d ~/wallpapers/ ]]; then
-            cp -R Extras/hyprWalls/wallpapers/Minimalist/ ~/wallpapers
+            cp -r Extras/hyprWalls/wallpapers/Minimalist/ ~/wallpapers
             cp Extras/default.png ~/wallpapers
         else
             mkdir -p ~/wallpapers
