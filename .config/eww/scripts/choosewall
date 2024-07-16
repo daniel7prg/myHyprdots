@@ -8,7 +8,7 @@
 source ${HOME}/.config/rofi/scripts/globalcontrol.sh
 
 # set dir wallpapers
-wallPath=~/walllpapers
+wallPath=~/wallpapers
 
 # Set current directory wallpapers
 cd $wallPath
