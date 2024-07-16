@@ -39,6 +39,8 @@ install_stage=(
     sddm-git
     kvantum
     kvantum-qt5
+    bluez
+    bluez-utils
     gtk3
     nwg-look
     python-pywal
