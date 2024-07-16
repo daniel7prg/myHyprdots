@@ -354,6 +354,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
     gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 12'
+    gsettings set org.gnome.desktop.interface color-scheme prefer-dark
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk.css
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk-dark.css
     sudo sed -i "5i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-4.0/gtk.css
