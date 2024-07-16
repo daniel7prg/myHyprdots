@@ -615,23 +615,6 @@ else
     fi
 fi
 
-### Create wallpaper cache ###
-# Wallpaper
-WAL_DEF=~/wallpapers/default.png
-
-# Monitors
-SEARCH_MON=($(grep -l -w "connected" /sys/class/drm/card0/card0-*/status))
-
-# Create dir cache
-mkdir -p ~/.cache/swww
-
-for wall_path in "${SEARCH_MON[@]}"; do
-    ACTIVE=`basename $(dirname "$wall_path")`
-    CURRENT=($ACTIVE)
-    MONITOR=($(echo "${CURRENT[@]}" | grep -oP "(?<=card0-).*"))
-    echo "$WAL_DEF" > ~/.cache/swww/${MONITOR[@]}
-done
-
 ### Script is done ###
 echo -e "$CNT - Script had completed!"
 if [[ "$ISNVIDIA" == true ]]; then 
