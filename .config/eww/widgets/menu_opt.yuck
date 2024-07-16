@@ -88,7 +88,7 @@
     )
     (eventbox :class "${bluetooth.status == 'off' ? 'disable_opt' : 'btn_bluet_opt'}"  
               :tooltip "Options"
-              :onclick "pkill -x blueman-manager || blueman-manager& scripts/launch_menu" 
+              :onclick "pkill -x blueberry || blueberry& scripts/launch_menu" 
               :cursor "pointer" :width 34
       (label :text "" :halign "center")
     )

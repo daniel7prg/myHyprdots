@@ -35,6 +35,8 @@ nvidia_stage=(
 
 #the main packages
 install_stage=(
+    eww
+    sddm-git
     kvantum
     kvantum-qt5
     gtk3
@@ -66,9 +68,7 @@ install_stage=(
     ttf-noto-nerd
     ttf-nerd-fonts-symbols
     noto-fonts-emoji
-    eww
     geticons
-    sddm-git
 )
 
 backup_files=(
@@ -314,9 +314,9 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
         echo -e "$CWR - $CONFDIR NOT found, creating..."
         # copy .config directory
         mkdir $CONFDIR
-        wal -q -i .config/swww/wallpapers/MarioDev.gif.png
+        wal -q -i Extras/default.png
         cp -R .config/ ~/
-        wal -q -i .config/swww/wallpapers/MarioDev.gif.png
+        wal -q -i Extras/default.png
     fi
     
     # setting config files
@@ -393,7 +393,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         # install theme zsh
         echo "----------------------------------"
         echo -e "$CNT Installing theme for zsh"
-        echo "----------------------------------"
+        echo -e "----------------------------------\n"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)/No(n)? (o,s,n) ' TZSH
         if [[ $TZSH == "O" || $TZSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-zsh..."
@@ -427,7 +427,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         # install theme fish
         echo "----------------------------------"
         echo -e "$CNT Installing theme for fish"
-        echo "----------------------------------"
+        echo -e "----------------------------------\n"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)/No(n)? (o,s,n) ' TFSH
         if [[ $TFSH == "O" || $TFSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-fish..."
@@ -454,7 +454,7 @@ if [[ $THEME == "Y" || $THEME == "y" ]]; then
         # Install theme bash
         echo "----------------------------------"
         echo -e "$CNT Installing theme for bash"
-        echo "----------------------------------"
+        echo -e "----------------------------------\n"
         read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)/No(n)? (o,s,n) ' TBSH
         if [[ $TBSH == "O" || $TBSH == "o" ]]; then
             echo -e "$CAC - Installing om-my-posh..."
@@ -485,7 +485,7 @@ fi
 if [[ $ISVM == *"vm"* ]]; then
     echo "---------------------------------------------------------------------------------------------------"
     echo -e "$CNT - Please note that VMs are not fully supported kitty, I recommend installing foot instead"
-    echo "---------------------------------------------------------------------------------------------------\n"
+    echo -e "---------------------------------------------------------------------------------------------------\n"
     if [[ -e ~/.config/hypr/conf/decoration.conf ]]; then
         sed -i 's|source = ~/.config/hypr/conf/layerrule.conf|#source = ~/.config/hypr/conf/layerrule.conf|' ~/.config/hypr/hyprland.conf
         sed -i 's/active_opacity = 0.93/active_opacity = 1.0/' ~/.config/hypr/conf/decoration.conf
@@ -502,7 +502,7 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
     echo -e "$CAC - Setting up componenets..."
     cp -R shells/kitty ~/.config/
     cp Extras/Configs/colors-kitty-light.conf ~/.config/wal/templates
-    wal -q -i .config/swww/wallpapers/MarioDev.gif.png
+    wal -q -i Extras/default.png
     sed -i '27, 44 s/#/ /' ~/.config/eww/scripts/switch-theme
     
     if [[ -e ~/.zshrc ]]; then
@@ -523,7 +523,7 @@ elif [[ $TERM == "F" || $TERM == "f" ]]; then
     mkdir -p ~/.config/foot/scripts
     cp Extras/Scripts/foot-theme ~/.config/foot/scripts/
     cp shells/bash/foot* ~/.config/wal/templates/
-    wal -q -i .config/swww/wallpapers/MarioDev.gif.png
+    wal -q -i Extras/default.png
     rm ~/.config/foot/foot.ini
     cp ~/.cache/wal/foot-dark.ini ~/.config/foot/
     mv ~/.config/foot/foot-dark.ini ~/.config/foot/foot.ini
@@ -535,22 +535,25 @@ elif [[ $TERM == "F" || $TERM == "f" ]]; then
 else
     echo "---------------------------------------------------------------"
     echo -e "$CNT - Please install a terminal before starting hyprland" -
-    echo "---------------------------------------------------------------"
+    echo -e "---------------------------------------------------------------\n"
 fi
 
 ## Copy wallpaper repo
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like to have wallpaper repo? (y,n) ' IMG
 if [[ $IMG == "Y" || $IMG == "y" ]]; then
+    cd Extras/
+    git clone https://github.com/daniel7prg/hyprWalls.git
+    cd ..
     read -rep $'[\e[1;33mACTION\e[0m] - Would you like copy any these Pics(p)/Gifs(g)/AnimeGirls(a)/Minimalist(m) wallpapers? (p,g,a,m,n) ' PIC
     if [[ $PIC == "P" || $PIC == "p" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
         if [[ -d ~/wallpapers/ ]]; then
             cp -r Extras/hyprWalls/wallpapers/PICs/ ~/wallpapers
-            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            cp Extras/default.png ~/wallpapers
         else
             mkdir -p ~/wallpapers
             cp -r Extras/hyprWalls/wallpapers/PICs/ ~/wallpapers
-            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            cp Extras/default.png ~/wallpapers
         fi
         echo -e "$COK - Done!!"
     elif [[ $PIC == "G" || $PIC == "g" ]]; then
@@ -558,18 +561,18 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
             echo -e "$CAC - Setting up wallpapers..."
             if [[ -d ~/wallpapers/ ]]; then
                 cp -r Extras/hyprWalls/wallpapers/Gifs ~/wallpapers
-                cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+                cp Extras/default.png ~/wallpapers
             else
                 mkdir -p ~/wallpapers
                 cp -r Extras/hyprWalls/wallpapers/Gifs ~/wallpapers
-                cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+                cp Extras/default.png ~/wallpapers
             fi
         else
             if [[ -d ~/wallpapers/ ]]; then
-                cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+                cp Extras/default.png ~/wallpapers
             else
                 mkdir -p ~/wallpapers
-                cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+                cp Extras/default.png ~/wallpapers
             fi
             echo -e "$CNT - Gifs in VM give bad performance"
         fi
@@ -578,33 +581,33 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
         if [[ -d ~/wallpapers/ ]]; then
             cp -r Extras/hyprWalls/wallpapers/Anime_Girls/ ~/wallpapers
-            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            cp Extras/default.png ~/wallpapers
         else
             mkdir -p ~/wallpapers
             cp -r Extras/hyprWalls/wallpapers/Anime_Girls/ ~/wallpapers
-            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            cp Extras/default.png ~/wallpapers
         fi
         echo -e "$COK - Done!!"
     elif [[ $PIC == "M" || $PIC == "m" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
         if [[ -d ~/wallpapers/ ]]; then
             cp -R Extras/hyprWalls/wallpapers/Minimalist/ ~/wallpapers
-            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            cp Extras/default.png ~/wallpapers
         else
             mkdir -p ~/wallpapers
             cp -r Extras/hyprWalls/wallpapers/Minimalist/ ~/wallpapers
-            cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
+            cp Extras/default.png ~/wallpapers
         fi
         echo -e "$COK - Done!!"
     fi
 else
     if [[ -d ~/wallpapers/ ]]; then
-        cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
-        wal -q -i Extras/hyprWalls/wallpapers/default.png
+        cp Extras/default.png ~/wallpapers
+        wal -q -i Extras/default.png
     else
         mkdir -p ~/wallpapers
-        cp Extras/hyprWalls/wallpapers/default.png ~/wallpapers
-        wal -q -i Extras/hyprWalls/wallpapers/default.png
+        cp Extras/default.png ~/wallpapers
+        wal -q -i Extras/default.png
     fi
 fi
 
