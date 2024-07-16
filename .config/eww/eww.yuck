@@ -41,7 +41,7 @@
 
 ;;;;;;;;;   APPNAME   ;;;;;;;;;
 (deflisten appname :initial `{"title":"","icon":""}` `scripts/appname`)
-(defvar open_apps "~/.config/rofi/scripts/rofilaunch.sh -d")
+(defvar open_apps "~/.config/rofi/scripts/rofilaunch.sh d")
 
 ;;;;;;;;;   CLOCK   ;;;;;;;;;
 (defpoll time :interval "1s"
