@@ -306,6 +306,8 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
                     echo -e "$COK - Backed up $DIR to $DIRPATH-back."
                 fi
             done
+        else
+            cp -R .config/ ~/
         fi
     else
         echo -e "$CWR - $CONFDIR NOT found, creating..."
