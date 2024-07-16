@@ -12,7 +12,7 @@ place my settings automatically. Sorry for my english, I'm still learning.
 ```
 git clone https://github.com/daniel7prg/myHyprdots.git
 cd myHyprdots
-./install.sh
+./installer.sh
 ```
 
 <h3>Update files</h3>
