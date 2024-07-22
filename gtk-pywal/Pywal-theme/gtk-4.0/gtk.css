@@ -1,8 +1,8 @@
 /***************
  * Base States *
  ***************/
+/*Colors by Pywal*/
 
-@import url('/home/Daniel-Santizo/.cache/wal/colors-waybar.css');
 
 .background {
   color: @background;

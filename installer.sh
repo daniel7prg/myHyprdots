@@ -360,7 +360,6 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk-dark.css
     sudo sed -i "5i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-4.0/gtk.css
     sudo sed -i "5i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-4.0/gtk-dark.css
-    sed -i "1i @import '${HOME}/.cache/wal/colors.scss';" ~/.config/eww/scss/colors.scss
     sudo sed -i 's/Inherits=Adwaita/Inherits=Qogir-cursors/' /usr/share/icons/default/index.theme
 fi
 
