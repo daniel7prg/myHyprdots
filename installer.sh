@@ -22,7 +22,6 @@ prep_stage=(
     rustup
     usleep
     yad
-    socat
 )
 
 #software for nvidia GPU only
@@ -37,7 +36,6 @@ nvidia_stage=(
 #the main packages
 install_stage=(
     eww
-    sddm-git
     kvantum
     kvantum-qt5
     bluez
@@ -162,8 +160,10 @@ ISVM=$(hostnamectl | grep Chassis)
 echo -e "Using $ISVM"
 if [[ $ISVM == *"vm"* ]]; then
     echo -e "$CWR - Please note that VMs are not fully supported and if you try to run this on
-    a Virtual Machine there is a high chance this will fail."
-    sleep 1
+    a Virtual Machine there is a high chance this will fail.\nSome dependencies will be installed."
+    echo -e "$CWR - Install any necessary dependencies according to your virtualization software, be it VM Ware, VirtualBox or any other."
+    install_software socat
+    sleep 2
 fi
 
 # let the user know that we will use sudo
@@ -172,10 +172,9 @@ If you are worried about entering your password then you may want to review the 
 sleep 1
 
 # give the user an option to exit out
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to continue with the install (y,n) ' CONTINST
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like to continue with the install (y,n): ' CONTINST
 if [[ $CONTINST == "Y" || $CONTINST == "y" ]]; then
     echo -e "$CNT - Setup starting..."
-    sudo touch /tmp/hyprv.tmp
 else
     echo -e "$CNT - This script will now exit, no changes were made to your system."
     exit
@@ -189,7 +188,7 @@ else
 fi
 
 ### Disable wifi powersave mode ###
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to disable WiFi powersave? (y,n) ' WIFI
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like to disable WiFi powersave? (y,n): ' WIFI
 if [[ $WIFI == "Y" || $WIFI == "y" ]]; then
     LOC="/etc/NetworkManager/conf.d/wifi-powersave.conf"
     echo -e "$CNT - The following file has been created $LOC.\n"
@@ -199,8 +198,7 @@ if [[ $WIFI == "Y" || $WIFI == "y" ]]; then
     sudo systemctl restart NetworkManager &>> $INSTLOG
     
     #wait for services to restore (looking at you DNS)
-    for i in {1..6} 
-    do
+    for i in {1..6}; do
         echo -n "."
         sleep 1
     done
@@ -233,7 +231,7 @@ if [ ! -f /sbin/yay ]; then
 fi
 
 ### Install all of the above packages ####
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n) ' INST
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n): ' INST
 if [[ $INST == "Y" || $INST == "y" ]]; then
 
     # Prep Stage - Bunch of needed items
@@ -274,24 +272,10 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
         install_software $SOFTWR 
     done
 
-    # Start the bluetooth service
-    echo -e "$CNT - Starting the Bluetooth Service..."
-    sudo systemctl enable --now bluetooth.service &>> $INSTLOG
-    sleep 2
-
-    # Enable the sddm login manager service
-    echo -e "$CNT - Enabling the SDDM Service..."
-    sudo systemctl enable sddm &>> $INSTLOG
-    sleep 2
-    
-    # Clean out other portals
-    echo -e "$CNT - Cleaning out conflicting xdg portals..."
-    yay -R --noconfirm xdg-desktop-portal-gnome &>> $INSTLOG
-
 fi
 
 ### Copy Config Files ###
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to copy config files? (y,n) ' CFG
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like to copy config files? (y,n): ' CFG
 if [[ $CFG == "Y" || $CFG == "y" ]]; then
     echo -e "$CNT - Copying config files..."
 
@@ -299,7 +283,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     CONFDIR=~/.config
     if [ -d "$CONFDIR" ]; then
         echo -e "$COK - $CONFDIR found"
-        read -rep $'[\e[1;33mACTION\e[0m] - Would you like to make a copy of your files? (y,n) ' BFG
+        read -rep $'[\e[1;33mACTION\e[0m] - Would you like to make a copy of your files? (y,n): ' BFG
         if [[ $BFG == "Y" || $BFG == "y" ]]; then
             for DIR in ${backup_files[@]}; do 
                 DIRPATH=~/.config/$DIR
@@ -331,11 +315,6 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi
 
     # Copy the SDDM theme
-    echo -e "$CNT - Setting up the login screen."
-    sudo cp -R sddm-theme/corners/ /usr/share/sddm/themes/corners/
-    mv sddm-theme/user.face.icon sddm-theme/$USER.face.icon
-    sudo cp sddm-theme/$USER.face.icon /usr/share/sddm/faces/
-    sudo cp sddm-theme/sddm.conf /etc/
     WLDIR=/usr/share/wayland-sessions
     if [ -d "$WLDIR" ]; then
         echo -e "$COK - $WLDIR found"
@@ -363,7 +342,24 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo sed -i 's/Inherits=Adwaita/Inherits=Qogir-cursors/' /usr/share/icons/default/index.theme
 fi
 
-### Install the fish shell ###
+### Install SDDM
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install Display Manager (SDDM)? (y,n): ' SDDM
+if [[ $SDDM == "Y" || $SDDM == "y" ]]; then
+    echo -e "$CAC - Installing componenets..."
+    install_software sddm-git
+    echo -e "$CAC - Setting up componenets..."
+    echo -e "$CNT - Setting up the login screen."
+    sudo cp -R sddm-theme/corners/ /usr/share/sddm/themes/corners/
+    mv sddm-theme/user.face.icon sddm-theme/$USER.face.icon
+    sudo cp sddm-theme/$USER.face.icon /usr/share/sddm/faces/
+    sudo cp sddm-theme/sddm.conf /etc/
+    echo -e "$CNT - Enabling the SDDM Service..."
+    sudo systemctl enable sddm &>> $INSTLOG
+    sleep 2
+    echo -e "$COK - Done!!"
+fi
+
+### Install shell ###
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these fish(f)/zsh(z)/No(n) shells? (f,z,n) ' FIZSH
 if [[ $FIZSH == "F" || $FIZSH == "f" ]]; then
     # install the fish shell
@@ -391,7 +387,7 @@ elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
 fi
 
 # Install themes shells
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like install theme to shell? (y,n) ' THEME
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like install theme to shell? (y,n): ' THEME
 if [[ $THEME == "Y" || $THEME == "y" ]]; then
     if [[ -e ~/.zshrc ]]; then
         # install theme zsh
@@ -542,7 +538,7 @@ else
 fi
 
 ## Copy wallpaper repo
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to have wallpaper repo? (y,n) ' IMG
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like to have wallpaper repo? (y,n): ' IMG
 if [[ $IMG == "Y" || $IMG == "y" ]]; then
     cd Extras/
     git clone https://github.com/daniel7prg/hyprWalls.git
@@ -622,7 +618,7 @@ if [[ "$ISNVIDIA" == true ]]; then
     exit
 fi
 
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like reboot now? (y,n) ' RBT
+read -rep $'[\e[1;33mACTION\e[0m] - Would you like reboot now? (y,n): ' RBT
 if [[ $RBT == "Y" || $RBT == "y" ]]; then
     exec systemctl reboot
 else

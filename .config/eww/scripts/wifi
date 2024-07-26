@@ -12,8 +12,7 @@ yad --title="Choose wifi" --list --column="<span font_style='oblique' font_stret
 # Get name of connection
 read -r chosen_id <<< "${chosen_network:3}"
 
-if [ -z "$chosen_network" ]; then
-	exit 0
+if [ -z "$chosen_network" ]; then exit 0
 else
 	# Message to show when connection is activated successfully and failed
   	success_message="󱚽  \"$chosen_id\"."
