@@ -7,7 +7,7 @@
 # Get a list of available wifi connections and morph it into a nice-looking list and select wifi
 chosen_network=$(nmcli -f "SECURITY,SSID" device wifi list | sed 1d | sed 's/  */ /g' | 
 sed -E "s/WPA*.?\S/󰤪 /g" | sed "s/^--/󱛏 /g" | sed "s/󰤪  󰤪/󰤪/g" | sed "/--/d" |
-yad --title="Choose wifi" --list --column="<span font_style='oblique' font_stretch='expanded'>Wifi Name</span>" --separator=" " --text-align=center --text="<b>WIFI LIST AVAILABLE </b>")
+yad --title="Choose item" --list --column="<span font_style='oblique' font_stretch='expanded'>Wifi Name</span>" --separator=" " --text-align=center --text="<b>WIFI LIST AVAILABLE </b>")
 
 # Get name of connection
 read -r chosen_id <<< "${chosen_network:3}"

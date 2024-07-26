@@ -32,7 +32,7 @@ check_layout(){
 
 # Select layout availables
 select_layout(){
-    layout_choose=$(echo "$layout_avl" | tr ',' '\n' | yad --title="kb layout" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Layouts</span>" --separator=" " --text-align=center --text="<b>KEYBOARD LAYOUTS LIST</b>")
+    layout_choose=$(echo "$layout_avl" | tr ',' '\n' | yad --title="Choose item" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Layouts</span>" --separator=" " --text-align=center --text="<b>KEYBOARD LAYOUTS LIST</b>")
     layout_select=$(echo "$layout_choose" | awk '{print $1}')
     lan=$(echo "$layout_choose" | awk '{print $2}')
     get_id=$(echo $json | jq -c 'select(.name=="'${layout_select}'") | .id')
@@ -42,7 +42,7 @@ select_layout(){
 # ------Add language------
 add_layout(){
     kb_list=$(sed -n '/! layout/,/! variant/ {/! layout/d;/! variant/d;p}' /usr/share/X11/xkb/rules/base.lst |
-    yad --title="kb layout" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Layout Availables (Language)</span>" --separator=" " --text-align=center --text="<b>KEYBOARD LAYOUT LIST AVAILABLE</b>")
+    yad --title="Choose item" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Layout Availables (Language)</span>" --separator=" " --text-align=center --text="<b>KEYBOARD LAYOUT LIST AVAILABLE</b>")
 
     chosen_layout=$(echo $kb_list | awk '{print $1}')
     chosen_lan=$(echo $kb_list | awk '{print $2}')
@@ -54,10 +54,10 @@ add_layout(){
             original=$(cat $conf_dir | grep 'kb_layout*')
             change=$(cat $conf_dir | grep 'kb_layout*' | sed "s/$/,$chosen_layout/")
             sed -i "s|$original|$change|g" $conf_dir
+            dunstify "t2" -a "Layout 󰌌" "<span size='large'>Add layout: $chosen_lan [$chosen_layout]</span>" -i " " -r 9125
         else
             dunstify "Layout 󰌌" "Layout already exist"
         fi
-        dunstify "t2" -a "Layout 󰌌" "<span size='large'>Add layout: $chosen_lan [$chosen_layout]</span>" -i " " -r 9125
     fi
 }
 
@@ -84,7 +84,7 @@ del_layout(){
 # ------Switcher Layout------
 swt_layout(){
     devkb_list=$(hyprctl -j devices | jq -c '.keyboards[] | .name' | sed 's/"//g' |
-    yad --title="kb layout" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Device</span>" --separator=" " --text-align=center --text="<b>KEYBOARD DEVICE LIST</b>")
+    yad --title="Choose item" --list --column="<span font_style='oblique' font_stretch='expanded'>Keyboard Device</span>" --separator=" " --text-align=center --text="<b>KEYBOARD DEVICE LIST</b>")
 
     if [[ -n "$devkb_list" ]]; then
         # Call func
