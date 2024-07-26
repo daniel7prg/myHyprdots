@@ -12,7 +12,6 @@ place my settings automatically. Sorry for my english, I'm still learning.
   
 ![GitHub last commit](https://img.shields.io/github/last-commit/daniel7prg/myHyprdots?style=for-the-badge&color=4c97af) ![GitHub repo size](https://img.shields.io/github/repo-size/daniel7prg/myHyprdots?style=for-the-badge&color=48c0d3)
 
-<br/>
 </div>
 
 <h3>Installation</h3>
