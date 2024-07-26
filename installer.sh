@@ -354,6 +354,12 @@ if [[ $SDDM == "Y" || $SDDM == "y" ]]; then
     sudo cp sddm-theme/$USER.face.icon /usr/share/sddm/faces/
     sudo cp sddm-theme/sddm.conf /etc/
     echo -e "$CNT - Enabling the SDDM Service..."
+    for login_manager in lightdm gdm lxdm lxdm-gtk3; do
+        if pacman -Qs "$login_manager" > /dev/null; then
+            echo "disabling $login_manager..."
+            sudo systemctl disable "$login_manager.service" 2>&1 | tee -a "$LOG"
+        fi
+    done
     sudo systemctl enable sddm &>> $INSTLOG
     sleep 2
     echo -e "$COK - Done!!"
