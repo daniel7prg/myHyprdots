@@ -19,9 +19,9 @@ if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
 		killall polkit-gnome-authentication-agent-1 &
 		sed -i -e "s|'./scss/bar-light.scss';|'./scss/bar.scss';|" -e "s|'./scss/bar1-light.scss';|'./scss/bar1.scss';|" ~/.config/eww/eww.scss
 		gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-		gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+		gsettings set org.gnome.desktop.interface icon-theme $iconDark
 		eww reload
-		sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=1/" -e "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=Papirus-Dark/" ~/.config/gtk-3.0/settings.ini
+		sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=1/" ~/.config/gtk-3.0/settings.ini
 		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 		killall dunst &
 		#sed -i '2s/colors-kitty-light.conf/colors-kitty.conf/' ~/.config/kitty/kitty.conf
@@ -36,9 +36,9 @@ if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
 		killall polkit-gnome-authentication-agent-1 &
 		sed -i -e "s|'./scss/bar.scss';|'./scss/bar-light.scss';|" -e "s|'./scss/bar1.scss';|'./scss/bar1-light.scss';|" ~/.config/eww/eww.scss
 		gsettings set org.gnome.desktop.interface color-scheme prefer-light
-		gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Light'
+		gsettings set org.gnome.desktop.interface icon-theme $iconLight
 		eww reload
-		sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=0/" -e "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=Papirus-Light/" ~/.config/gtk-3.0/settings.ini
+		sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=0/" ~/.config/gtk-3.0/settings.ini
 		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 		killall dunst &
 		#sed -i '2s/colors-kitty.conf/colors-kitty-light.conf/' ~/.config/kitty/kitty.conf

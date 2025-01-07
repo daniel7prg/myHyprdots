@@ -1,0 +1,105 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+	    "source": "~/.config/eww/icons/hyprland.png",
+	    "type": "kitty",
+        "width": 35,
+	    "padding": {
+		    "top": 2,
+            "left": 0,
+            "right": 2
+	    }
+    },
+    "display": {
+        "separator": "  "
+    },
+    "modules": [
+        "break",
+        {
+            "type": "custom",
+            "format": "╭──────────────────────────────────────────────────╮"
+        },
+        {
+            "type": "title",
+            "format": "│ {6}{7}{8}\t\t\t\t│",
+        },
+        {
+            "type": "custom",
+            "format": "├──────────────────────────────────────────────────┤"
+        },
+        {
+            "type": "os",
+            "key": "│ 󰌽 OS ",
+            "format": "{2}\t\t\t\t│",
+            "keyColor": "31",
+            "outputColor": "31"
+        },
+        {
+            "type": "kernel",
+            "key": "│  KER",
+            "format": "{2}\t\t\t\t│",
+            "keyColor": "32",
+            "outputColor": "32"
+        },
+        {
+            "type": "packages",
+            "key": "│ 󰏗 PKG",
+            "format": "{} (pacman)\t\t\t\t│",
+            "keyColor": "33",
+            "outputColor": "33"
+        },
+        {
+            "type": "shell",
+            "key": "│ 󰆍 SH ",
+            "format": "{3} {4}\t\t\t\t\t│",
+            "keyColor": "34",
+            "outputColor": "34"
+        },
+        {
+            "type": "terminal",
+            "key": "│  TER",
+            "format": "{3} {6}\t\t\t\t│",
+            "keyColor": "35",
+            "outputColor": "35"
+        },
+        {
+            "type": "wm",
+            "key": "│ 󱂬 WM ",
+            "format": "{1} ({3})\t\t\t│",
+            "keyColor": "36",
+            "outputColor": "36"
+        },
+        {
+            "type": "uptime",
+            "key": "│ 󰥔 UP ",
+            "format": "{2}h {3}m {4}s\t\t\t\t│",
+            "keyColor": "default"
+        },
+        {
+            "type": "cpu",
+            "key": "│  CPU",
+            "format": "{1} @ {7}\t│",
+            "keyColor": "31",
+            "outputColor": "31"
+        },
+        {
+            "type": "gpu",
+            "key": "│ 󰢮 GPU",
+            "format": "{2}\t\t\t│",
+            "keyColor": "32",
+            "outputColor": "32"           
+        },
+        {
+            "type": "memory",
+            "key": "│  MEM",
+            "format": "{1} / {2} ({3})\t\t│",
+            "keyColor": "33",
+            "outputColor": "33"  
+        },
+        {
+            "type": "custom",
+            "format": "╰──────────────────────────────────────────────────╯"
+        },
+        "break"
+    ]
+}

@@ -36,18 +36,16 @@ nvidia_stage=(
 #the main packages
 install_stage=(
     eww
+    colorz
     kvantum
     kvantum-qt5
     bluez
     bluez-utils
-    gtk3
-    nwg-look
     python-pywal
     dunst
     swww
     swaylock-effects
     rofi-wayland
-    wlogout
     firefox
     swappy
     grim
@@ -59,7 +57,7 @@ install_stage=(
     file-roller
     pavucontrol
     brightnessctl
-    blueberry
+    blueman
     playerctl
     gnome-text-editor
     papirus-icon-theme
@@ -83,7 +81,7 @@ backup_files=(
     gtk-4.0
     hypr
     Kvantum
-    neofetch
+    fastfetch
     nwg-look
     qt5ct
     qt6ct
@@ -304,6 +302,8 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
         wal -q -i Extras/default.png
         cp -R .config/ ~/
         wal -q -i Extras/default.png
+        ln -sf ~/.config/Kvantum/MateriaDark/MateriaDark.kvconfig ~/.cache/wal/MateriaDark.kvconfig
+        ln -sf ~/.config/Kvantum/MateriaLight/MateriaLight.kvconfig ~/.cache/wal/MateriaLight.kvconfig
     fi
     
     # setting config files
@@ -314,7 +314,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
         sed -i 's/env = LIBVA_DRIVER_NAME,nvidia/#env=LIBVA/' ~/.config/hypr/conf/env.conf
     fi
 
-    # Copy the SDDM theme
+    # Copy the Hyprland session
     WLDIR=/usr/share/wayland-sessions
     if [ -d "$WLDIR" ]; then
         echo -e "$COK - $WLDIR found"
@@ -335,6 +335,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
     gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 12'
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+    kvantummanager --set MateriaDark
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk.css
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk-dark.css
     sudo sed -i "5i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-4.0/gtk.css
@@ -386,7 +387,13 @@ elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
     install_software lsd
     install_software bat
     echo -e "$CAC - Set zsh by default..."
-    echo "#Create .zshrc file" > ~/.zshrc
+    if [[ -e  ~/.zshrc ]]; then
+        echo -e "$CNT Backup .zshrc file"
+        mv ~/.zshrc ~/.zshrc_backup
+        echo "#Create .zshrc file" > ~/.zshrc
+    else
+        echo "#Create .zshrc file" > ~/.zshrc
+    fi
     sudo usermod -s /usr/bin/zsh $USER
     sleep 1
     echo -e "$COK - Done!!"
@@ -533,7 +540,7 @@ elif [[ $TERM == "F" || $TERM == "f" ]]; then
     cp ~/.cache/wal/foot-dark.ini ~/.config/foot/
     mv ~/.config/foot/foot-dark.ini ~/.config/foot/foot.ini
     sed -i -e 's/#change_theme_foot/change_theme_foot/g' ~/.config/eww/scripts/switch-theme -e '11s/#source/source/' ~/.config/eww/scripts/switch-theme
-    sed -i 's/image_backend=kitty/image_backend=ascii/' ~/.config/neofetch/config.conf
+    sed -i 's/kitty/sixel/' ~/.config/fastfetch/config.jsonc
     sed -i 's/bind = $mainMod, Q, exec, kitty/bind = $mainMod, Q, exec, foot/' ~/.config/hypr/conf/binds.conf
     sleep 1
     echo -e "$COK - Done!!"
@@ -605,6 +612,7 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
         fi
         echo -e "$COK - Done!!"
     fi
+    rm -r Extras/hyprWalls/
 else
     if [[ -d ~/wallpapers/ ]]; then
         cp Extras/default.png ~/wallpapers
