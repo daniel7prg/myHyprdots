@@ -36,7 +36,6 @@ nvidia_stage=(
 #the main packages
 install_stage=(
     eww
-    colorz
     kvantum
     kvantum-qt5
     bluez
