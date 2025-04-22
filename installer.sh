@@ -40,7 +40,7 @@ install_stage=(
     kvantum-qt5
     bluez
     bluez-utils
-    python-pywal
+    matugen
     dunst
     swww
     swaylock-effects
@@ -58,7 +58,7 @@ install_stage=(
     brightnessctl
     blueman
     playerctl
-    gnome-text-editor
+    gedit
     papirus-icon-theme
     ttf-cascadia-code-nerd
     ttf-firacode-nerd
@@ -67,6 +67,8 @@ install_stage=(
     ttf-nerd-fonts-symbols
     noto-fonts-emoji
     geticons
+    power-profiles-daemon
+    nwg-clipman
 )
 
 backup_files=(
@@ -398,101 +400,6 @@ elif [[ $FIZSH == "Z" || $FIZSH == "z" ]]; then
     echo -e "$COK - Done!!"
 fi
 
-# Install themes shells
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like install theme to shell? (y,n): ' THEME
-if [[ $THEME == "Y" || $THEME == "y" ]]; then
-    if [[ -e ~/.zshrc ]]; then
-        # install theme zsh
-        echo "----------------------------------"
-        echo -e "$CNT Installing theme for zsh"
-        echo -e "----------------------------------\n"
-        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-zsh(o)/starship(s)/No(n)? (o,s,n) ' TZSH
-        if [[ $TZSH == "O" || $TZSH == "o" ]]; then
-            echo -e "$CAC - Installing om-my-zsh..."
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-            sed -i '76isource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ~/.zshrc
-            sed -i '77isource /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' ~/.zshrc
-            echo -e "\n" >> ~/.zshrc
-            echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"' >> ~/.zshrc
-            echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.zshrc
-            echo -e '\nalias hypr-keymap="~/.config/hypr/scripts/hypr-keymap.sh"' >> ~/.zshrc
-            echo -e "$CNT - You can customize theme with p10k"
-            echo -e "$CNT - See more searching power-level-10k on the official web"
-            echo -e "$COK - Done!!"
-        elif [[ $TZSH == "S" || $TZSH == "s" ]]; then
-            echo -e "$CAC - Installing starship..."
-            install_software starship
-            echo -e "$CAC - Setting up componenets..."
-            echo -e 'eval "$(starship init zsh)"\n' >> ~/.zshrc
-            echo -e "#Plugins\nsource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
-            echo -e "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> ~/.zshrc
-            echo -e '#Alias\nalias cat="bat"\nalias ls="lsd"' >> ~/.zshrc
-            echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.zshrc
-            echo -e '\nalias hypr-keymap="~/.config/hypr/scripts/hypr-keymap.sh"' >> ~/.zshrc
-            echo -e "$CNT - You can change theme with presets"
-            echo -e "$CNT - See more searching starship presets on the official web"
-            sleep 1
-            echo -e "$COK - Done!!"
-        fi
-    fi
-    if [[ -e ~/.config/fish/config.fish ]]; then
-        # install theme fish
-        echo "----------------------------------"
-        echo -e "$CNT Installing theme for fish"
-        echo -e "----------------------------------\n"
-        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-fish(o)/starship(s)/No(n)? (o,s,n) ' TFSH
-        if [[ $TFSH == "O" || $TFSH == "o" ]]; then
-            echo -e "$CAC - Installing om-my-fish..."
-            curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install
-            fish install --path=~/.local/share/omf --config=~/.config/omf --noninteractive --yes
-            cp shells/fish/config.fish ~/.config/fish/
-            echo -e "$CNT - You can change theme with command omf"
-            echo -e "$CNT - See more searching oh-my-fish on the official web"
-            echo -e "$COK - Done!!"
-        elif [[ $TFSH == "S" || $TFSH == "s" ]]; then
-            echo -e "$CAC - Installing starship..."
-            install_software starship
-            echo -e "$CAC - Setting up componenets..."
-            cp shells/fish/configS.fish ~/.config/fish/
-            rm ~/.config/fish/config.fish
-            mv ~/.config/fish/configS.fish ~/.config/fish/config.fish
-            echo -e "$CNT - You can change theme with presets"
-            echo -e "$CNT - See more searching starship presets on the official web"
-            sleep 1
-            echo -e "$COK - Done!!"
-        fi
-    fi
-    if [[ -e ~/.bashrc ]]; then
-        # Install theme bash
-        echo "----------------------------------"
-        echo -e "$CNT Installing theme for bash"
-        echo -e "----------------------------------\n"
-        read -rep $'[\e[1;33mACTION\e[0m] - Would you like install oh-my-posh(o)/starship(s)/No(n)? (o,s,n) ' TBSH
-        if [[ $TBSH == "O" || $TBSH == "o" ]]; then
-            echo -e "$CAC - Installing om-my-posh..."
-            mkdir ~/.oh-my-posh
-            curl -s https://ohmyposh.dev/install.sh | bash -s
-            sed -i '7ieval "$(oh-my-posh init bash --config ~/.cache/oh-my-posh/themes/amro.omp.json)"' ~/.bashrc
-            sed -i '10ialias cat="bat"' ~/.bashrc
-            sed -i "s/alias ls='ls --color=auto'/alias ls='lsd'/" ~/.bashrc
-            echo -e '\nalias update-cursor="~/.config/hypr/scripts/up_cursor.sh"' >> ~/.bashrc
-            echo -e '\nalias hypr-keymap="~/.config/hypr/scripts/hypr-keymap.sh"' >> ~/.bashrc
-            echo -e "$CNT - You can customize theme"
-            echo -e "$CNT - See more searching oh-my-posh (bash) on web"
-            echo -e "$COK - Done!!"
-        elif [[ $TBSH == "S" || $TBSH == "s" ]]; then
-            echo -e "$CAC - Installing starship..."
-            install_software starship
-            echo -e "$CAC - Setting up componenets..."
-            cp shells/bash/.bashrc ~/
-            echo -e "$CNT - You can change theme with presets"
-            echo -e "$CNT - See more searching starship presets on the official web"
-            sleep 1
-            echo -e "$COK - Done!!"
-        fi
-    fi
-fi
-
 ### Install termial kitty/foot
 if [[ $ISVM == *"vm"* ]]; then
     echo "---------------------------------------------------------------------------------------------------"
@@ -512,10 +419,6 @@ if [[ $TERM == "K" || $TERM == "k" ]]; then
     echo -e "$CAC - Installing kitty..."
     install_software kitty
     echo -e "$CAC - Setting up componenets..."
-    cp -R shells/kitty ~/.config/
-    cp Extras/Configs/colors-kitty-light.conf ~/.config/wal/templates
-    wal -q -i Extras/default.png
-    sed -i '27, 44 s/#/ /' ~/.config/eww/scripts/switch-theme
     
     if [[ -e ~/.zshrc ]]; then
         echo 'alias icat="kitten icat"' >> ~/.zshrc
@@ -533,14 +436,6 @@ elif [[ $TERM == "F" || $TERM == "f" ]]; then
     install_software foot
     echo -e "$CAC - Setting up componenets..."
     mkdir -p ~/.config/foot/scripts
-    cp Extras/Scripts/foot-theme ~/.config/foot/scripts/
-    cp shells/bash/foot* ~/.config/wal/templates/
-    wal -q -i Extras/default.png
-    cp ~/.cache/wal/foot-dark.ini ~/.config/foot/
-    mv ~/.config/foot/foot-dark.ini ~/.config/foot/foot.ini
-    sed -i -e 's/#change_theme_foot/change_theme_foot/g' ~/.config/eww/scripts/switch-theme -e '11s/#source/source/' ~/.config/eww/scripts/switch-theme
-    sed -i 's/kitty/sixel/' ~/.config/fastfetch/config.jsonc
-    sed -i 's/bind = $mainMod, Q, exec, kitty/bind = $mainMod, Q, exec, foot/' ~/.config/hypr/conf/binds.conf
     sleep 1
     echo -e "$COK - Done!!"
 else

@@ -18,7 +18,7 @@ place my settings automatically. Sorry for my english, I'm still learning.
 <h3>Installation</h3>
 
 ```
-git clone https://github.com/daniel7prg/myHyprdots.git
+git clone https://github.com/daniel7prg/myHyprdots.git --depth=1 -b matugen
 cd myHyprdots
 ./installer.sh
 ```
@@ -30,3 +30,8 @@ cd myHyprdots
 cd repo_dir/myHyprdots
 git stash; git pull
 ```
+<h2>Special thanks for the ideas that inspired these Dotfiles</h2>
+
+- [taylor85345](https://github.com/taylor85345) for the awesome eww config
+- [end-4](https://www.github.com/end-4) for the awesome old eww config (m3www version)
+- [linkfrg](https://github.com/linkfrg) for the awesome old eww config (change your config with ignis)
