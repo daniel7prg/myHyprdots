@@ -16,7 +16,7 @@
       (label :class "kb_txt" :text "Screen Sharing 󱒃")
     )
     (box :space-evenly false :halign "center"
-      W(_workspaces)
+      (_workspaces)
     )
     (box :space-evenly false :halign "end" :spacing 5
       (_tray)
