@@ -23,7 +23,7 @@
       (label :class "batinfo" :text "${battery.capacity}")
     )
     (box :orientation "v" :space-evenly false :valign "center" :width 25 :spacing 3
-      (eventbox :onclick "thunar ~/.config/hypr/conf && scripts/launch_menu&"
+      (eventbox :onclick "thunar ~/.config/hypr/conf& scripts/launch_menu"
                 :class "btn_quick" :cursor "pointer" :tooltip "Config Files"
         (label :class "icon_settings" :text "󰉋" :halign "center")
       )
