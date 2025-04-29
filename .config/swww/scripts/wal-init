@@ -4,11 +4,11 @@
 # | Set wallpaper on shared screen |
 #  --------------------------------
 
-# Colors pywal (path wallpaper)
-source "${HOME}/.cache/wal/colors.sh"
+# Wallpaper
+current_wal=$(cat ~/.cache/wal/colors.json | jq ".wallpaper" | sed 's/"//g')
 
-if [ "$(hyprctl monitors -j | jq '.[] | .id' | wc -l)" -ge 2 ]; then
-    swww img -o "HDMI-A-1" $wallpaper
+if [[ "$(hyprctl monitors -j | jq '.[] | .id' | wc -l)" -ge 2 ]]; then
+    swww img -o "HDMI-A-1" $current_wal
 	eww open ewwBar1
 else
     swww init

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#  ____________
+# | Night Mode |
+#  ------------
+
+night_mode(){
+	if [[ -n $(hyprctl layers | grep -o "help_layer") ]]; then
+		if [[ "$(hyprctl -j getoption decoration:screen_shader | jaq -r '.str')" == "~/.config/hypr/shaders/normalMode.frag" ]]; then
+			echo "Off"
+		else
+			echo "On"
+		fi
+	fi
+}
+
+socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | 
+while read -r event; do night_mode ; done

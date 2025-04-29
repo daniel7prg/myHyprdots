@@ -1,0 +1,47 @@
+#!/bin/bash
+
+#  ________________________
+# | Change pallette scheme |
+#  ------------------------
+
+source $HOME/.config/rofi/scripts/globalcontrol.sh
+
+normal_scheme(){
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+        matugen -q -m ${color_mode} image ${current_wal}
+        dunstctl reload
+        eww reload
+        notify-send "t2" -a "Scheme" "<span size='large'> Normal</span>" -i " " -r 91190 -t 1200 
+    else
+        notify-send -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
+    fi
+}
+
+vivid_scheme(){
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+        matugen -q -t scheme-expressive -m ${color_mode} image ${current_wal}
+        dunstctl reload
+        eww reload
+        notify-send "t2" -a "Scheme" "<span size='large'>󰊪 Vivid</span>" -i " " -r 91190 -t 1200
+    else
+        notify-send -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
+    fi
+}
+
+splash_scheme(){
+    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
+        matugen -q -t scheme-fruit-salad -m ${color_mode} image ${current_wal}
+        dunstctl reload
+        eww reload
+        notify-send "t2" -a "Scheme" "<span size='large'>󱠦 Splash</span>" -i " " -r 91190 -t 1200
+    else
+        notify-send -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
+    fi
+}
+
+case $1 in
+    -n) normal_scheme ;;
+    -v) vivid_scheme ;;
+    -s) splash_scheme ;;
+	*) exit 0;;
+esac

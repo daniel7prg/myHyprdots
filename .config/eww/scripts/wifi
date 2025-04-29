@@ -4,27 +4,48 @@
 # | Wifi Control |
 #  --------------
 
-# Get a list of available wifi connections and morph it into a nice-looking list and select wifi
-chosen_network=$(nmcli -f "SECURITY,SSID" device wifi list | sed 1d | sed 's/  */ /g' | 
-sed -E "s/WPA*.?\S/󰤪 /g" | sed "s/^--/󱛏 /g" | sed "s/󰤪  󰤪/󰤪/g" | sed "/--/d" |
-yad --title="Choose item" --list --column="<span font_style='oblique' font_stretch='expanded'>Wifi Name</span>" --separator=" " --text-align=center --text="<b>WIFI LIST AVAILABLE </b>")
+# Get current ssid
+current_ssid=$(nmcli -t -f IN-USE,SSID device wifi list | grep '*' | cut -d ":" -f2)
 
-# Get name of connection
-read -r chosen_id <<< "${chosen_network:3}"
+# Init array
+wifi_list=()
 
-if [ -z "$chosen_network" ]; then exit 0
-else
-	# Message to show when connection is activated successfully and failed
-  	success_message="󱚽  \"$chosen_id\"."
-	failed_message="󱛅  \"$chosen_id\"."
-	# Get saved connections
-	saved_connections=$(nmcli -g NAME connection)
-	if [[ $(echo "$saved_connections" | grep -w "$chosen_id") == "$chosen_id" ]]; then
-		nmcli connection up id "$chosen_id" && dunstify "$success_message" || dunstify "$failed_message"
-	else
-		if [[ "$chosen_network" =~ "󰤪" ]]; then
-			wifi_password=$(yad --title="Wifi password" --entry --entry-label=Password --ricon=gtk-clear --text-align=center --text "<span font_style='oblique' font_stretch='expanded'>Type the password 󱦄 󰌌</span>")
-		fi
-		nmcli device wifi connect "$chosen_id" password "$wifi_password" && dunstify "$success_message" || dunstify "$failed_message"
+# Save networks into array
+while read -r line; do
+    wifi_list+=("$line")
+done < <(nmcli -f "SECURITY,SSID" device wifi list | sed 1d | sed 's/  */ /g' | sed -E "s/WEP*.?\S/󰤪 /g" | sed -E "s/WPA*.?\S/󰤪 /g" | sed "s/^--/󱛏 /g" | sed "s/󰤪  󰤪/󰤪/g" | sed "/--/d" | awk '!seen[$0]++')
+
+# Sorted networks
+IFS=$'\n' sorted_wifi_list=($(printf "%s\n" "${wifi_list[@]}" | sort))
+
+# Init vars
+ids=()
+names=()
+buf=""
+
+# Read array sorted and build output
+for i in "${!sorted_wifi_list[@]}"; do
+    ssid_name=$(echo "${sorted_wifi_list[$i]}" | sed -E 's/^[^ ]+ *//')  # Limpiar el SSID
+    
+    if [[ "$ssid_name" == "$current_ssid" ]]; then
+        name="${sorted_wifi_list[$i]}"
+        icon=""
+        class="item_pnl_btn_current"
+        tooltip="Connected"
+    else
+        name="${sorted_wifi_list[$i]}"
+        icon=""
+        class="item_pnl_btn"
+        tooltip="Available"
     fi
-fi
+
+    if [[ "${name}" =~ "󰤪" ]]; then type="protected";
+    else type="open"; fi
+    
+    buf="$buf (box :orientation \"h\" :halign \"fill\" :class \"bx_pnl_item\" \
+        (label :halign \"start\" :class \"item_pnl_name\" :text \"$name\") \
+        (button :halign \"end\" :class \"$class\" :tooltip \"$tooltip\" :onclick \"./scripts/set_wifi '${ssid_name}' '${type}' '${class}'&\" \"$icon\"))"
+
+done
+
+eww update wifi_list="(box :orientation \"v\" :halign \"fill\" :valign \"start\" :vexpand true :hexpand true $buf)"

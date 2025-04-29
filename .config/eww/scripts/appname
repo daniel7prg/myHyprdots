@@ -11,11 +11,13 @@ active_win() {
     if [[ ${1:0:14} == "activewindow>>" ]]; then
         string=${1:14}
         class="${string/,*/}"
-        title=${string/,/ \| }
-        icon=$(geticons "$class" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1 2>/dev/null);
-        if [[ "$title" == " | " ]]; then unset title;
+        title="${string#*,}"
+        icon=$(geticons "$class" -t "$icontheme" --no-fallbacks | head -n 1 2>/dev/null)
+        if [[ "$title" == "" ]]; then 
+            title="Desktop"
+            icon="icons/desktop.svg"
         else 
-            if [[ -z "$icon" ]]; then icon="$HOME/.config/eww/icons/hyprland.png"; fi
+            if [[ -z "$icon" ]]; then icon="icons/hyprland.svg"; fi
         fi
         echo '{"title":"'$title'","icon":"'$icon'"}'
     fi  

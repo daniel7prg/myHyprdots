@@ -4,17 +4,20 @@
 # | Choose User Icon |
 #  ------------------
 
-user_icon=$(yad --title="Choose wallpaper" --file --image-filter=png --add-preview --large-preview --button=yad-cancel:1 --text-align=center --text "<span font_style='oblique' font_stretch='expanded'>Choose img user </span>")
+cd $HOME
+user_icon=$(yad --title="Choose wallpaper" \--file --image-filter=png --add-preview \
+            --large-preview --button=yad-cancel:1 --text-align=center \
+            --text "<span font_style='oblique' font_stretch='expanded'>Choose img user </span>")
 icon_name="${user_icon##*/}"
 
 if [[ "${icon_name}" == *".png" ]]; then
     if [ -n "${user_icon}" ] ; then
-        dunstify "User img" "Please wait..." -t 1800
+        notify-send "User img" "Please wait..." -t 1800
         cp $user_icon ~/.config/eww/icons/
         rm ~/.config/eww/icons/user.face.icon
         mv ~/.config/eww/icons/$icon_name ~/.config/eww/icons/user.face.icon
         sleep 2
-        dunstify "User img" "Login User icon" -t 1800
+        notify-send "User img" "Login User icon" -t 1800
         sleep 2
         pkexec cp ~/.config/eww/icons/user.face.icon /usr/share/sddm/faces/
         copy=$?
@@ -28,7 +31,7 @@ if [[ "${icon_name}" == *".png" ]]; then
         copy=$?
         if [[ $copy -eq 0 ]]; then
             sleep 1
-            dunstify "User img" "Done!!"
+            notify-send "User img" "Done!!"
         fi
     fi
 fi

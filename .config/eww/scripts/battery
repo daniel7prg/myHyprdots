@@ -13,17 +13,30 @@ while true; do
     BATVAL="$(cat /sys/class/power_supply/${BAT}/capacity)"
 
     if [[ "$BATSTATUS" == "Discharging" ]];then
-      if [ "$BATVAL" -gt 90 ];then ICON="󰂂"
-      elif [ "$BATVAL" -gt 80 ];then ICON="󰂁"
-      elif [ "$BATVAL" -gt 70 ];then ICON="󰂀"
-      elif [ "$BATVAL" -gt 60 ];then ICON="󰁿"
-      elif [ "$BATVAL" -gt 50 ];then ICON="󰁾"
-      elif [ "$BATVAL" -gt 40 ];then ICON="󰁽"
-      elif [ "$BATVAL" -gt 30 ];then ICON="󰁼"
-      elif [ "$BATVAL" -gt 20 ];then ICON="󰁻"
-      elif [ "$BATVAL" -gt 10 ];then ICON="󰁺"
-      elif [ "$BATVAL" -gt 0 ];then ICON="󰂎"; fi
-    else ICON="󰂄"; fi
+      if [[ "$BATVAL" -gt 95 ]];then ICON="󰁹"
+      elif [[ "$BATVAL" -gt 90 ]];then ICON="󰂂"
+      elif [[ "$BATVAL" -gt 80 ]];then ICON="󰂁"
+      elif [[ "$BATVAL" -gt 70 ]];then ICON="󰂀"
+      elif [[ "$BATVAL" -gt 60 ]];then ICON="󰁿"
+      elif [[ "$BATVAL" -gt 50 ]];then ICON="󰁾"
+      elif [[ "$BATVAL" -gt 40 ]];then ICON="󰁽"
+      elif [[ "$BATVAL" -gt 30 ]];then ICON="󰁼"
+      elif [[ "$BATVAL" -gt 20 ]];then ICON="󰁻"
+      elif [[ "$BATVAL" -gt 10 ]];then ICON="󰁺"
+      elif [[ "$BATVAL" -gt 0 ]];then ICON="󰂎"; fi
+    else 
+      if [[ "$BATVAL" -gt 95 ]];then ICON="󰂅"
+      elif [[ "$BATVAL" -gt 90 ]];then ICON="󰂋"
+      elif [[ "$BATVAL" -gt 80 ]];then ICON="󰂊"
+      elif [[ "$BATVAL" -gt 70 ]];then ICON="󰢞"
+      elif [[ "$BATVAL" -gt 60 ]];then ICON="󰂉"
+      elif [[ "$BATVAL" -gt 50 ]];then ICON="󰢝"
+      elif [[ "$BATVAL" -gt 40 ]];then ICON="󰂈"
+      elif [[ "$BATVAL" -gt 30 ]];then ICON="󰂇"
+      elif [[ "$BATVAL" -gt 20 ]];then ICON="󰂆"
+      elif [[ "$BATVAL" -gt 10 ]];then ICON="󰢜"
+      elif [[ "$BATVAL" -gt 0 ]];then ICON="󰢟"; fi
+    fi
     BATVAL="${BATVAL}%"
     sleep_duration=2
   else

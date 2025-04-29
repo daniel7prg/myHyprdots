@@ -8,11 +8,11 @@
 state=$(hyprctl layers | grep -o "music_layer")
 
 if [[ -z "$state" ]]; then
-	eww open music &
+	eww open music
 	usleep 10000
 	eww update open_music=true
 else
-	eww update open_music=false &
+	eww update open_music=false
 	usleep 180000
 	eww close music
 fi

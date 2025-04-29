@@ -1,64 +1,25 @@
-(defwidget _workspaces1 []
-  (eventbox
-    :class "workspaces"
-    :onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
-    (box
-      :orientation "h"
-      :spacing 6
-      (for ws in my-workspaces
-        (button :onclick "hyprctl dispatch workspace ${ws}"
-          (label
-            :class {
-              workspaces[ws - 1] == 1 ? "active" :
-              workspaces[ws - 1] == 2 ? "used" :
-              ""
-            }
-            :text {
-              workspaces[ws - 1] == 1 ? " 󰮯 " :
-              workspaces[ws - 1] == 2 ? " 󰊠 " :
-              "• "
-            }
-          )
-        )
-      )
-    )
-  )
-)
-
 (defwidget _clock1 []
-	(eventbox :onhover "${EWW_CMD} update rev_clock_2=true" :onhoverlost "${EWW_CMD} update rev_clock_2=false"
-    (box :orientation "h" :space-evenly "false" :class "time"
-      (label :text "󰥔" :class "clock_icon")
-      (label :text "${time.hour}:${time.min} ")
-      (revealer :transition "slideright" :reveal rev_clock_2 :duration "350ms"
-        (label :text "- ${time.day} ${time.mouth} ${time.week}")
-      )
-      (revealer :transition "slideright" :reveal rev_clock_2 :duration "350ms"
-        (label :text " " :class "cal_icon")
+  (eventbox :onhover "${EWW_CMD} update rev_clock_2=true" :onhoverlost "${EWW_CMD} update rev_clock_2=false" 
+       :class "clock_btn" :tooltip " Clock"
+    (box :orientation "h" :space-evenly false :class "clock_container"
+      (label :text " ${time.hour}:${time.min} ")
+      (revealer :transition "slideright" :reveal rev_clock_2 :duration "425ms"
+        (label :text "| ${time.day}-${time.mouth}-${time.year} 󰸗 ")
       )
     )
   )
 )
 
 (defwidget bar1 []
-  (box
-    :class "bar1"
-    :orientation "h"
-    (box
-      :class "info"
-      :space-evenly false
-      :halign "start"
-      (label :class "bx_center" :text "Screen Sharing 󱒃 ")
+  (centerbox :class "bar1" :orientation "h"
+    (box :class "kb_btn" :tooltip "󱒃 Screen Sharing" :halign "start"
+      (label :class "kb_txt" :text "Screen Sharing 󱒃")
     )
-    (box
-      :class "wrkspaces"
-      :space-evenly false
-      :halign "center"
-      (_workspaces1)
+    (box :space-evenly false :halign "center"
+      W(_workspaces)
     )
-    (box
-      :space-evenly false
-      :halign "end"
+    (box :space-evenly false :halign "end" :spacing 5
+      (_tray)
       (_clock1)
     )
   )

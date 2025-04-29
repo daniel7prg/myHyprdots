@@ -1,0 +1,102 @@
+#!/bin/bash
+
+# __________________________
+# | Select cursor/icon theme |
+# --------------------------
+
+# Notificación inicial
+notify-send -a "Setting Theme " "Getting your config" -t 2500
+sleep 3s
+
+# Función para obtener valores actuales
+get_current_value() {
+    grep -o "$1.*" "$2" | cut -d "=" -f 2 | sed "s/'//g"
+}
+
+# Valores actuales
+current_theme=$(get_current_value "gtk-application" ~/.config/gtk-3.0/settings.ini)
+currentIconD=$(get_current_value "iconDark" ~/.config/rofi/scripts/globalcontrol.sh)
+currentIconL=$(get_current_value "iconLight" ~/.config/rofi/scripts/globalcontrol.sh)
+currentCursorT=$(get_current_value "gtk-cursor-theme-name" ~/.config/gtk-3.0/settings.ini)
+currentCursorS=$(get_current_value "gtk-cursor-theme-size" ~/.config/gtk-3.0/settings.ini)
+
+# Listar temas de iconos y cursores
+iconTheme=$(find /usr/share/icons -type f -name "index.theme" \
+            -exec grep -l -i "director*" {} \; | grep -v "/hicolor/" | awk -F'/' '{print $(NF-1)}' | sort -u)
+cursorTheme=$(find /usr/share/icons \( -type d -o -type l \) -name "cursors" | awk -F'/' '{print $(NF-1)}' | sort -u)
+
+# Ordenar listas por valores actuales
+sort_list() {
+    echo "$1" | grep "^$2$"
+    echo "$1" | grep -v "^$2$"
+}
+sortedIconThemeD=$(sort_list "$iconTheme" "$currentIconD" | tr '\n' '!')
+sortedIconThemeL=$(sort_list "$iconTheme" "$currentIconL" | tr '\n' '!')
+sortedCursorTheme=$(sort_list "$cursorTheme" "$currentCursorT" | tr '\n' '!')
+cursorSize=$(printf "16\n20\n22\n24\n28\n32\n40\n48\n56\n64\n72\n80\n88\n96")
+sortedCursorSize=$(sort_list "$cursorSize" "$currentCursorS" | tr '\n' '!')
+
+# Mostrar opciones con Yad
+options=$(yad --title="Theme Settings" --text-align=center --text="<b>THEME SETTINGS 󰉦</b>" --form \
+    --field="Icon Dark Theme ::CB" "$sortedIconThemeD" --field="Icon Light Theme ::CB" "$sortedIconThemeL" \
+    --field="Cursor Theme ::CB" "$sortedCursorTheme" --field="Cursor Size ::CB" "$sortedCursorSize")
+
+[[ -z $options ]] && exit 0
+
+# Extraer opciones seleccionadas
+IFS="|" read -r iconDark iconLight cursorT cursorS <<< "$options"
+
+# Validaciones comunes
+apply_theme() {
+    local config_file="$1"
+    local key="$2"
+    local value="$3"
+    sed -i "s/$key=.*/$key=$value/" "$config_file"
+}
+
+notify_and_exit() {
+    notify-send -u critical -a "$1" "Warning" "$2"
+    exit 0
+}
+
+# Light Theme
+if [[ "$currentIconL" != "$iconLight" && "$current_theme" -eq 0 ]]; then
+    yad --image="dialog-question" --title "Alert" --text "Apply light icon theme ?" --button="yad-ok:0" --button="yad-cancel:1" || exit 0
+    killall dunst
+    sed -i "s/icon_theme = .*/icon_theme = \"${iconLight}\"/" ~/.config/dunst/dunstrc
+    apply_theme ~/.config/gtk-3.0/settings.ini "gtk-icon-theme-name" "$iconLight"
+    gsettings set org.gnome.desktop.interface icon-theme "'$iconLight'"
+    sed -i "s/iconLight=.*/iconLight='$iconLight'/" ~/.config/rofi/scripts/globalcontrol.sh
+    eww reload
+    notify-send -a "Icon Theme " "Apply Light Theme" "$iconLight"
+fi
+
+# Dark Theme
+if [[ "$currentIconD" != "$iconDark" && "$current_theme" -eq 1 ]]; then
+    yad --image="dialog-question" --title "Alert" --text "Apply dark icon theme ?" --button="yad-ok:0" --button="yad-cancel:1" || exit 0
+    killall dunst
+    sed -i "s/icon_theme = .*/icon_theme = \"${iconDark}\"/" ~/.config/dunst/dunstrc
+    apply_theme ~/.config/gtk-3.0/settings.ini "gtk-icon-theme-name" "$iconDark"
+    gsettings set org.gnome.desktop.interface icon-theme "'$iconDark'"
+    sed -i "s/iconDark=.*/iconDark='$iconDark'/" ~/.config/rofi/scripts/globalcontrol.sh
+    eww reload
+    notify-send -a "Icon Theme " "Apply Dark Theme" "$iconDark"
+fi
+
+if [[ "$currentCursorT" != "$cursorT" ]]; then
+    yad --image="dialog-question" --title "Alert" --text "Apply cursor theme ?" --button="yad-ok:0" --button="yad-cancel:1" || exit 0
+    gsettings set org.gnome.desktop.interface cursor-theme "'$cursorT'"
+    apply_theme ~/.config/gtk-3.0/settings.ini "gtk-cursor-theme-name" "$cursorT"
+    pkexec sed -i "s/Inherits=.*/Inherits=$cursorT/" /usr/share/icons/default/index.theme
+    notify-send -a "Cursor Theme " "DONE" "Reboot or logout to apply changes"
+fi
+
+if [[ "$currentCursorS" != "$cursorS" ]]; then
+    yad --image="dialog-question" --title "Alert" --text "Apply cursor size 󰆿?" --button="yad-ok:0" --button="yad-cancel:1" || exit 0
+    echo "$cursorS"
+    gsettings set org.gnome.desktop.interface cursor-size $cursorS
+    apply_theme ~/.config/gtk-3.0/settings.ini "gtk-cursor-theme-size" "$cursorS"
+    sed -i -e "s/env = XCURSOR_SIZE,.*/env = XCURSOR_SIZE,$cursorS/" -e "s/env = HYPRCURSOR_SIZE,.*/env = HYPRCURSOR_SIZE,$cursorS/" ~/.config/hypr/conf/env.conf
+    pkexec sed -i "s/CursorSize=.*/CursorSize=$cursorS/" /etc/sddm.conf
+    notify-send -a "Cursor Theme " "DONE" "Reboot or logout to apply changes"
+fi

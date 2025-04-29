@@ -1,0 +1,53 @@
+#!/bin/bash
+
+#  ________________
+# | Power Profiles |
+#  ----------------
+
+confDir=~/.config/hypr/conf/decoration.conf
+confDirAnim=~/.config/hypr/conf/animation.conf
+status=$(powerprofilesctl get)
+icontheme=$(grep -o "gtk-icon-theme-name.*" ~/.config/gtk-3.0/settings.ini | cut -d "=" -f 2)
+
+upower_profiles_per(){
+    powerprofilesctl set performance
+    icon=$(geticons "power-profile-performance-symbolic" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+    if [[ -z "$icon" ]]; then
+        icon=$(geticons "$icon" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+    fi
+    sed -i -e "s|active_opacity = .*|active_opacity = 0.93|" -e "s|enabled = .*|enabled = true|" $confDir
+    sed -i "s|enabled = .*|enabled = true|" $confDirAnim
+    hyprctl -q reload
+}
+
+upower_profiles_bal(){
+    powerprofilesctl set balanced
+    icon=$(geticons "power-profile-balanced-symbolic" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+    if [[ -z "$icon" ]]; then
+        icon=$(geticons "$icon" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+    fi
+    sed -i -e "s|active_opacity = .*|active_opacity = 0.93|" -e "s|enabled = .*|enabled = true|" $confDir
+    sed -i "s|enabled = .*|enabled = true|" $confDirAnim
+    hyprctl -q reload
+}
+
+upower_profiles_save(){
+    powerprofilesctl set power-saver
+    icon=$(geticons "power-profile-power-saver-symbolic" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+    if [[ -z "$icon" ]]; then
+        icon=$(geticons "$icon" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+    fi
+    sed -i -e "s|active_opacity = .*|active_opacity = 1.0|" -e "s|enabled = .*|enabled = false|" $confDir
+    sed -i "s|enabled = .*|enabled = false|" $confDirAnim
+    hyprctl -q reload
+}
+
+case $1 in
+    -p) upower_profiles_per
+        notify-send "t2" -a "Power-Profile" "<big>Performance</big>" -i $icon -r 91190 -t 1200 ;;
+    -b) upower_profiles_bal
+        notify-send "t2" -a "Power-Profile" "<big>Balanced</big>" -i $icon -r 91190 -t 1200 ;;
+    -s) upower_profiles_save
+        notify-send "t2" -a "Power-Profile" "<big>Power Saver</big>" -i $icon -r 91190 -t 1200 ;;
+	*) exit 0;;
+esac

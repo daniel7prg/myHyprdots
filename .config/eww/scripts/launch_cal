@@ -8,12 +8,11 @@
 state=$(hyprctl layers | grep -o "calendar_layer")
 
 if [[ -z "$state" ]]; then
-	eww open calendar &
-	echo $!
+	eww open calendar
 	usleep 10000
 	eww update open_cal=true
 else
-	eww update open_cal=false &
+	eww update open_cal=false
 	usleep 180000
 	eww close calendar
 fi

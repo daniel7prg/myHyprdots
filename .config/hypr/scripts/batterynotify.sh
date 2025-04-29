@@ -15,10 +15,10 @@ BATICON=$(geticons "battery" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n
 
 if [[ "$BATSTATUS" == "Discharging" ]];then
     if [ "$BATVAL" -lt 40 ];then
-        dunstify -i $BATICON "Battery Level" "Battery less than 40% 󰁾 - Please connect your laptop"
+        notify-send -i $BATICON "Battery Level" "Battery less than 40% 󰁾 - Please connect your laptop"
     elif [ "$BATVAL" -lt 25 ];then
-        dunstify -u low -i $BATICON "Battery Level" "Battery less than 25% 󰁺 - Please connect your laptop"
+        notify-send -u low -i $BATICON "Battery Level" "Battery less than 25% 󰁺 - Please connect your laptop"
     elif [ "$BATVAL" -lt 10 ];then
-        dunstify -u critical -i $BATICON "Battery Level" "Battery less than 10% 󰁺 - Please connect your laptop"
+        notify-send -u critical -i $BATICON "Battery Level" "Battery less than 10% 󰁺 - Please connect your laptop"
     fi
 fi

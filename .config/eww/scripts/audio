@@ -16,7 +16,7 @@ pactl subscribe | rg --line-buffered "on sink" | while read -r line; do
         ICON="󰋋"
       else
         SNK="S" 
-        ICON="" 
+        ICON=""
       fi
     else
       if [[ "$SNK" == "analog-output-headphones" ]]; then ICON="󰟎"

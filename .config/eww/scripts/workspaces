@@ -5,22 +5,28 @@
 #  --------------------
 
 move_ws(){
+    # Get activeID y usedIDs 
     activeID=$(hyprctl -j activeworkspace | jaq -c '.id')
-    usedIDs=($(hyprctl -j workspaces | jaq -c '.[] | .id'))
-    totalws=(0 0 0 0 0 0 0 0 0 0) #default ws 10
-    #dynamicws=$(hyprctl workspaces -j | jq -c 'length') #Dynamic open ws
+    usedIDs=($(hyprctl -j workspaces | jaq -c '.[] | select(.id>0) | .id' | sort -n))
 
+    # Init total workspaces (10 workspaces by default)
+    totalws=(0 0 0 0 0 0 0 0 0 0)
+
+    # Update totalws according to the IDs used
     for ws_id in "${usedIDs[@]}"; do
-        if [ $ws_id -le 10 ]; then
-            totalws[$(( ws_id - 1 ))]=2
+        if [ "$ws_id" -le 10 ]; then
+            totalws[$((ws_id - 1))]=2
         fi
     done
 
-    totalws[$(( activeID - 1 ))]=1
+    # Check active workspace
+    totalws[$((activeID - 1))]=1
 
-    JSON_STRING=$(printf '%s\n' "${totalws[@]}" |
-    jaq -R -s -c 'split("\n") | map(select(length > 0) | tonumber)')
-    echo $JSON_STRING
+    # Build arrays JSON with jq
+    TOTAL_ARRAY=$(jq -n --argjson ws "$(printf '%s\n' "${totalws[@]}" | jaq -R -s -c 'split("\n") | map(select(length > 0) | tonumber)')" '$ws')
+    ACTIVE_ARRAY=$(jq -n --argjson ids "$(printf '%s\n' "${usedIDs[@]}" | jaq -R -s -c 'split("\n") | map(select(length > 0) | tonumber)')" '$ids')
+
+    echo '{"total":"'$TOTAL_ARRAY'","active":"'$ACTIVE_ARRAY'","current":"'$activeID'"}'
 }
 
 socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | 

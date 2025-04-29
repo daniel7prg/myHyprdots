@@ -6,10 +6,8 @@
 
 case $5 in
     LOW) paplay ~/.config/dunst/sounds/low.ogg ;;
-    NORMAL) vol=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}'| sed 's/%//')
-            bright=$(brightnessctl get)
-            if [[ "$1" == "Vol: $vol%" || "$1" == "Bri: $bright%" ]]; then
-                paplay ~/.config/dunst/sounds/control.ogg
+    NORMAL) if [[ "$1" == "Vol:" || "$1" == "Bri:" ]]; then
+                exit 1
             else
                 paplay ~/.config/dunst/sounds/normal.ogg
             fi ;;

@@ -1,7 +1,7 @@
 ;; Help Options
 
 (defwidget help_opt []
-  (box :orientation "v" :space-evenly false :class "bx_win" :width 900 :height 770
+  (box :orientation "v" :space-evenly false :class "helpwin" :width 900 :height 770
     (box :orientation "v" :space-evenly false :width 900 :height 700
       (box :orientation "v" :space-evenly false :class "bx_title"
         (label :class "wel_txt" :text "Welcome to Hyprland ")
@@ -10,156 +10,190 @@
       (scroll :vscroll true :vexpand true
         (box :orientation "v" :space-evenly false :class "bx_title"
           ;; Keybinds Section
-          (label :class "opt_title" :text "󰌌 Main Keybinds (Default)" :halign "start")
           (box :orientation "v" :space-evenly false :class "bx_title" :halign "start" :spacing 10
-            (box :orientation "h" :space-evenly false :class "bx_bd"
-              (box :orientation "h" :space-evenly false :class "bx_opt" 
-                (label :class "hlp_txt_btn" :text "SUPER  ")
+            (label :class "opt_title" :text "󰌌 Main Keybinds (Default)" :halign "start")
+            (label :class "adv_txt" :text " ADV: 'SUPER ' key on Windows keyboard is '' an Mac is 'Option 󰘵'" :halign "start"
+                   :tooltip "'SUPER ' key is usually '' the key in Windows while on Apple PC's (Mac) it's the key 'Option 󰘵'")
+            (box :orientation "h" :space-evenly false 
+              (button :orientation "h" :space-evenly false :class "bx_opt" 
+                (label :class "hlp_txt_btn" :text "SUPER ")
               )
-              (label :class "hlp_txt" :text "+")
-              (box :orientation "h" :space-evenly false :class "bx_opt"
+              (label :class "hlp_nml_txt" :text "+")
+              (button :orientation "h" :space-evenly false :class "bx_opt"
                 (label :class "hlp_txt_btn" :text "Q")
               )
-              (label :class "hlp_txt" :text "= Terminal  ")
+              (label :class "hlp_nml_txt" :text "= Terminal ")
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
-              (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "SUPER  ")
+            (box :orientation "h" :space-evenly false 
+              (box :orientation "h" :space-evenly false :class "bx_opt" 
+                (label :class "hlp_txt_btn" :text "SUPER ")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
+              (box :orientation "h" :space-evenly false :class "bx_opt"
+                (label :class "hlp_txt_btn" :text "C")
+              )
+              (label :class "hlp_nml_txt" :text "= Clipboard Manager 󱉥")
+            )
+            (box :orientation "h" :space-evenly false 
+              (box :orientation "h" :space-evenly false :class "bx_opt"
+                (label :class "hlp_txt_btn" :text "SUPER ")
+              )
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
                 (label :class "hlp_txt_btn" :text "SPACE 󱁐")
               )
-              (label :class "hlp_txt" :text "= App Launcher  ")
+              (label :class "hlp_nml_txt" :text "= App Launcher ")
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
+            (box :orientation "h" :space-evenly false 
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "SUPER  ")
+                (label :class "hlp_txt_btn" :text "SUPER ")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
                 (label :class "hlp_txt_btn" :text "F4")
               )
-              (label :class "hlp_txt" :text "= Close Window 󰱝")
+              (label :class "hlp_nml_txt" :text "= Close Window 󰱝")
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
+            (box :orientation "h" :space-evenly false 
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "SUPER  ")
+                (label :class "hlp_txt_btn" :text "SUPER ")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
                 (label :class "hlp_txt_btn" :text "TAB ")
               )
-              (label :class "hlp_txt" :text "= Active Windows  ")
+              (label :class "hlp_nml_txt" :text "= Active Windows ")
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
+            (box :orientation "h" :space-evenly false 
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "SUPER  ")
+                (label :class "hlp_txt_btn" :text "SUPER ")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
                 (label :class "hlp_txt_btn" :text "NUMBER ")
               )
-              (label :class "hlp_txt" :text "= Switch Workspace 󰮯 ")
+              (label :class "hlp_nml_txt" :text "= Switch Workspace 󰙅")
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
+            (box :orientation "h" :space-evenly false 
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "SUPER  ")
+                (label :class "hlp_txt_btn" :text "SUPER ")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
                 (label :class "hlp_txt_btn" :text "SHIFT 󰘶")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
+              (box :orientation "h" :space-evenly false :class "bx_opt"
+                (label :class "hlp_txt_btn" :text "S")
+              )
+              (label :class "hlp_nml_txt" :text "= Screenshot 󰩬")
+            )
+            (box :orientation "h" :space-evenly false 
+              (box :orientation "h" :space-evenly false :class "bx_opt"
+                (label :class "hlp_txt_btn" :text "SUPER ")
+              )
+              (label :class "hlp_nml_txt" :text "+")
+              (box :orientation "h" :space-evenly false :class "bx_opt"
+                (label :class "hlp_txt_btn" :text "SHIFT 󰘶")
+              )
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
                 (label :class "hlp_txt_btn" :text "T")
               )
-              (label :class "hlp_txt" :text "= Switch to Float/Tile Win 󱂬")
+              (label :class "hlp_nml_txt" :text "= Switch to Float/Tile Win 󱂬")
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
+            (box :orientation "h" :space-evenly false 
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "SUPER  ")
+                (label :class "hlp_txt_btn" :text "SUPER ")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "Z 󰄶")
+                (label :class "hlp_txt_btn" :text "Z")
               )
-              (label :class "hlp_txt" :text "= Fullscreen Win Mode 󰊓")
+              (label :class "hlp_nml_txt" :text "= Fullscreen Win Mode 󰹑")
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
+            (box :orientation "h" :space-evenly false 
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "SUPER  ")
+                (label :class "hlp_txt_btn" :text "SUPER ")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "A 󰄶")
+                (label :class "hlp_txt_btn" :text "A")
               )
-              (label :class "hlp_txt" :text "= Focus Win Mode 󰼀")
+              (label :class "hlp_nml_txt" :text "= Focus Win Mode 󱣵")
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
+            (box :orientation "h" :space-evenly false 
               (box :orientation "h" :space-evenly false :class "bx_opt"
-                (label :class "hlp_txt_btn" :text "ALT 󰄶")
+                (label :class "hlp_txt_btn" :text "ALT")
               )
-              (label :class "hlp_txt" :text "+")
+              (label :class "hlp_nml_txt" :text "+")
               (box :orientation "h" :space-evenly false :class "bx_opt"
                 (label :class "hlp_txt_btn" :text "SPACE 󱁐")
               )
-              (label :class "hlp_txt" :text "= Switch Keyboard Layout 󰌌")
+              (label :class "hlp_nml_txt" :text "= Switch Keyboard Layout 󰌌 - Add layout first!")
             )
           )
 
           ;; Theme Section
-          (label :class "opt_title" :text "󰉦 Theme Configuration" :halign "start")
           (box :orientation "v" :space-evenly false :class "bx_title" :halign "start" :spacing 10
-            (label :class "hlp_txt" :text " ADV: Update if cursor theme is changed" :halign "start")
-            (box :orientation "h" :space-evenly false :class "bx_bd"
-              (label :class "hlp_txt" :text "Update Cursor Theme  " :limit-width 50)
-              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 100
-                        :onclick "eww close help_opt; ~/.config/hypr/scripts/up_cursor.sh -g&"
-                (label :text "Update ")
+            (label :class "opt_title" :text "󰉦 Theme Configuration" :halign "start")
+            (label :class "adv_txt" :text " ADV: Font Propo is Recommended" :halign "start"
+                   :tooltip "Not all fonts support the icons used in widgets, and using them can cause desing errors")
+            (box :orientation "h" :space-evenly false 
+              (label :class "hlp_txt" :text "Config icons & cursor options ")
+              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 110
+                        :onclick "pkill -x yad || scripts/list_themes& eww close help_opt"
+                (label :text "Theme ")
               )
             )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
-              (label :class "hlp_txt" :text "GTK Settings  ")
-              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 100
-                        :onclick "pkill -x nwg-look || nwg-look&"
-                (label :text " Theme")
-              )
-            )
-            (box :orientation "h" :space-evenly false :class "bx_bd"
-              (label :class "hlp_txt" :text "QT Settings  ")
-              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 100
-                        :onclick "pkill -x kvantummanager || kvantummanager&"
-                (label :text "  Theme")
-              )
-            )
-            (label :class "hlp_txt" :text " ADV: Not all fonts are compatible" :halign "start")
-            (box :orientation "h" :space-evenly false :class "bx_bd"
-              (label :class "hlp_txt" :text "Bar & Widgets Font  ")
-              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 100
+            (box :orientation "h" :space-evenly false 
+              (label :class "hlp_txt" :text "Config font family ")
+              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 115
                         :onclick "pkill -x yad || scripts/font_chooser& eww close help_opt"
-                (label :text " Select")
+                (label :text "Fonts 󰬵")
+              )
+            )
+            (box :orientation "h" :space-evenly false 
+              (label :class "hlp_txt" :text "Set eye comfort shield 󰴅")
+              (button  :onclick "scripts/night-mode&" :tooltip "Off/On"
+                       :class "${nightMode == 'Off' ? 'night_btn_off' : 'night_btn_on'}"
+                (label :halign "${nightMode == 'Off' ? 'start' : 'end'}" :text "")
+              )
+            )
+            (box :orientation "h" :space-evenly false  :spacing 10
+              (label :class "hlp_txt" :text "Change color pallete " :limit-width 50)
+              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 115
+                        :onclick "scripts/switch-scheme -n&"
+                (label :text "Normal ")
+              )
+              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 110
+                        :onclick "scripts/switch-scheme -v&"
+                (label :text "Vivid 󰊪")
+              )
+              (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 120
+                        :onclick "scripts/switch-scheme -s&"
+                (label :text "Splash 󱠦")
               )
             )
           )
 
           ;; Keyboard  Section
-          (label :class "opt_title" :text "  Keyboard Layout" :halign "start")
           (box :orientation "v" :space-evenly false :class "bx_title" :halign "start" :spacing 15
-            (label :class "hlp_txt" :text " NOTE-1: Open the terminal and type 'hypr-keymap' for search your keyboard name" :halign "start")
-            (label :class "hlp_txt" :text " NOTE-2: Press 'Alt' + 'Space' for print keyboard info when execute 'hypr-keymap'" :halign "start")
-            (box :orientation "h" :space-evenly false :class "bx_bd" :spacing 10
+            (label :class "opt_title" :text "  Keyboard Layout" :halign "start")
+            (label :class "adv_txt" :text " ADV: Open the terminal and type 'hypr-keymap' for search your keyboard name" :halign "start"
+                   :tooltip "'hypr-keymap' command will display info about the keyboard currently being used, showing its name, current layout, and available layouts")
+            (box :orientation "h" :space-evenly false  :spacing 10
               (label :class "hlp_txt" :text "Add/Delete/Switch your keyboard layout 󰌌" :limit-width 50)
               (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 100
-                        :onclick "eww close help_opt; scripts/kb_layout -a&"
+                        :onclick "eww close help_opt && scripts/kb_layout -a&"
                 (label :text "Add ")
               )
               (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 100
-                        :onclick "eww close help_opt; scripts/kb_layout  -d&"
+                        :onclick "eww close help_opt && scripts/kb_layout -d&"
                 (label :text "Del 󰮈")
               )
               (eventbox :cursor "pointer" :halign "center" :class "btn_opt" :width 100
-                        :onclick "eww close help_opt; scripts/kb_layout  -s&"
+                        :onclick "eww close help_opt && scripts/kb_layout -s&"
                 (label :text "Swt 󰿢")
               )
             )
@@ -167,9 +201,6 @@
         )
       )
     )
-    (eventbox :cursor "pointer" :halign "end" :class "btn_close" :width 100
-              :onclick "eww close help_opt"
-        (label :text "Close")
-    )
+    (eventbox :cursor "pointer" :halign "end" :class "btn_opt" :width 75 :onclick "eww close help_opt" "Close")
   )
 )

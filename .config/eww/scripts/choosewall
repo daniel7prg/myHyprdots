@@ -11,7 +11,7 @@ source ${HOME}/.config/rofi/scripts/globalcontrol.sh
 wallPath=~/wallpapers
 
 # Set current directory wallpapers
-cd $wallPath
+cd $wallPath || exit
 
 # Get path wallpaper selected
 WalSel=$(yad --title="Choose wallpaper" --file --image-filter --add-preview --large-preview --button=yad-cancel:1 --text-align=center --text "<span font_style='oblique' font_stretch='expanded'>Choose wallpaper </span>")
@@ -21,20 +21,19 @@ walname="${WalSel##*/}"
 walname="${walname%.*}"
 
 # apply wallpaper
-if [ -n "${WalSel}" ] ; then
-    if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')"]; then
-        swww img ${WalSel} --transition-type fade --transition-bezier 1,-0.2,0.65,1.35 --transition-duration 4
-        wal -q -i "$WalSel"
-        killall dunst
-        eww reload
-        killall polkit-gnome-authentication-agent-1
-        dunst -conf "$dunst_theme" &
-        killall xdg-desktop-portal-gtk
+if [[ -n "${WalSel}" ]] ; then
+    if [[ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]]; then
+        killall polkit-gnome-authentication-agent-1 &> /dev/null
+        eww close menu_opt music calendar &> /dev/null
+	    eww update open_music=false open_cal=false open_menu=false &> /dev/null
+        matugen -q -m ${color_mode} image ${WalSel}
+        killall dunst &> /dev/null
+        sed -i "s/icon_theme = .*/icon_theme = \"${current_icon}\"/" ~/.config/dunst/dunstrc
+        killall xdg-desktop-portal-gtk &> /dev/null
         /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-        dunstify "t1" -a "${walname} 󰲍" -i "$WalSel" -r 91190 -t 2200
-        eww reload
+        notify-send "t1" -a "${walname} 󰲍" -i "$WalSel" -r 91190 -t 2200
     else
-        dunstify -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
+        notify-send -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
     fi
 fi
 

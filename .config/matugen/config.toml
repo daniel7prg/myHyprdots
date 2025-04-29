@@ -1,0 +1,73 @@
+[config.wallpaper]
+command = "swww"
+arguments = ["img", "-t", "fade", "--transition-bezier", "1,-0.2,0.65,1.35", "--transition-duration", "4" ]
+
+[templates.eww]
+input_path = './templates/colors-eww.scss'
+output_path = '~/.config/eww/scss/colors.scss'
+post_hook = 'eww reload'
+
+[templates.dunst]
+input_path = './templates/dunstrc'
+output_path = '~/.config/dunst/dunstrc'
+
+[templates.swaylock]
+input_path = './templates/config-swaylock'
+output_path = '~/.config/swaylock/config'
+
+[templates.rofi]
+input_path = './templates/colors-rofi.rasi'
+output_path = '~/.config/rofi/conf/colors-rofi.rasi'
+
+[templates.kitty]
+input_path = './templates/colors-kitty.conf'
+output_path = '~/.config/kitty/themes/colors-kitty.conf'
+
+[templates.hyprland]
+input_path = './templates/colors-hyprland.conf'
+output_path = '~/.config/hypr/conf/colors-hyprland.conf'
+post_hook = 'hyprctl -q reload'
+
+[templates.code]
+input_path = './templates/colors-code'
+output_path = '~/.cache/wal/colors'
+
+[templates.code_json]
+input_path = './templates/colors-code.json'
+output_path = '~/.cache/wal/colors.json'
+
+[templates.gtk]
+input_path = './templates/colors-gtk.css'
+output_path = '~/.cache/wal/colors-gtk.css'
+
+[templates.qt]
+input_path = './templates/MaQterial-U.kvconfig'
+output_path = '~/.config/Kvantum/MaQterial-U/MaQterial-U.kvconfig'
+
+[templates.qt_kvantum]
+input_path = './templates/MaQterial-U.svg'
+output_path = '~/.config/Kvantum/MaQterial-U/MaQterial-U.svg'
+
+[templates.qt5ct]
+input_path = './templates/qtct-colors.conf'
+output_path = '~/.config/qt5ct/colors/matugen.conf'
+
+[templates.qt6ct]
+input_path = './templates/qtct-colors.conf'
+output_path = '~/.config/qt6ct/colors/matugen.conf'
+
+[templates.hypr_logo]
+input_path = './templates/hyprland.svg'
+output_path = '~/.config/eww/icons/hyprland.svg'
+
+[templates.desk_logo]
+input_path = './templates/desktop.svg'
+output_path = '~/.config/eww/icons/desktop.svg'
+
+[templates.hypr_logo_dunst]
+input_path = './templates/hypr.svg'
+output_path = '~/.config/dunst/icons/hyprland.svg'
+
+[templates.music]
+input_path = './templates/music.svg'
+output_path = '~/.config/eww/icons/music.svg'

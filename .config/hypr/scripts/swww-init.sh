@@ -5,11 +5,19 @@
 #  ---------------
 
 ## Default
-WAL_DEF=~/wallpapers/default.png
+WAL_DEF=~/wallpapers/waiting.jpeg
 
-#$ Set wallpaper
-if [[ -d ~/.cache/swww ]]; then swww-daemon&
+## Set wallpaper
+if [[ -d ~/.cache/swww ]]; then 
+    swww-daemon&
 else
     swww-daemon&
-    swww img $WAL_DEF
+    SEARCH=($(grep -l -w "connected" /sys/class/drm/card0/card0-*/status))
+
+    for ruta in "${SEARCH[@]}"; do
+        ACTIVE=`basename $(dirname "$ruta")`
+        CURRENT=($ACTIVE)
+        MONITOR=($(echo "${CURRENT[@]}" | grep -oP "(?<=card0-).*"))
+        swww img -o "${MONITOR[@]}" $WAL_DEF
+    done
 fi

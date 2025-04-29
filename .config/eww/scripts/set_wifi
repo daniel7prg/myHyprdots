@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#  _____________
+# | Wifi Setter |
+#  -------------
+
+ssid="${1}"
+type="${2}"
+current="${3}"
+
+if [[ -z "$ssid" || -z "$type" || -z "$current" ]]; then exit 0
+else
+	# Message to show when connection is activated successfully and failed
+  	success_message=" Connected to \"${ssid}\"."
+	failed_message=" Failed to connect to \"${ssid}\"."
+	# Get saved connections
+	saved_connections=$(nmcli -g NAME connection)
+    if [[ "$current" == "item_pnl_btn_current" ]]; then
+        notify-send -a "WI-FI" "${ssid}" "You already connect"
+	elif [[ "$(echo "$saved_connections" | grep -w "$ssid")" == "$ssid" ]]; then
+		nmcli connection up id "${ssid}" && notify-send -a "WI-FI" "$success_message" || notify-send -a "WI-FI" "$failed_message"
+    else
+        if [[ "$type" == "protected" ]]; then
+            wifi_password=$(pkill -x rofi || rofi -dmenu -p "󰟵 Password" -config ~/.config/rofi/conf/password.rasi)
+            if [[ -z "$wifi_password" ]]; then exit 0; fi
+            nmcli device wifi connect "${ssid}" password "$wifi_password" && \
+            notify-send -a "WI-FI" "$success_message" || notify-send -a "WI-FI" "$failed_message"
+        else
+            nmcli device wifi connect "${ssid}" && \
+            notify-send -a "WI-FI" "$success_message" || notify-send -a "WI-FI" "$failed_message"
+        fi
+    fi
+fi

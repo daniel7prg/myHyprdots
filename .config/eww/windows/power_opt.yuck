@@ -1,0 +1,54 @@
+(defwindow power
+    :stacking "fg"
+    :monitor 0
+    :namespace "power_layer"
+	:geometry (geometry
+        :x "0%" 
+	    :y "30%"
+        :anchor "top right")
+    (power)
+)
+
+(defwindow reboot
+    :stacking "fg"
+    :monitor 0
+    :namespace "power_layer"
+	:geometry (geometry
+        :x "0%" 
+	    :y "35%"
+        :anchor "top right")
+    (reboot)
+)
+
+(defwindow logout
+    :stacking "fg"
+    :monitor 0
+    :namespace "power_layer"
+	:geometry (geometry
+        :x "0%" 
+	    :y "40%"
+        :anchor "top right")
+    (logout)
+)
+
+(defwindow lock
+    :stacking "fg"
+    :monitor 0
+    :namespace "power_layer"
+	:geometry (geometry
+        :x "0%" 
+	    :y "45%"
+        :anchor "top right")
+    (lock)
+)
+
+(defwindow cancel
+    :stacking "fg"
+    :monitor 0
+    :namespace "power_layer"
+	:geometry (geometry
+        :x "0%" 
+	    :y "50%"
+        :anchor "top right")
+    (cancel)
+)

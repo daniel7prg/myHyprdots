@@ -1,79 +1,96 @@
-@import "./colors.scss";
-
-$text: lighten($foreground, 10);
-$text_btn: lighten($background, 10);
-$text_hover: lighten($foreground, 10);
-$background-btn: radial-gradient(farthest-side, $ncolor3 30%, $lcolor3 60%);
-
-@if (lightness($color3) < 45){
-    $text_btn: lighten($foreground, 10);
-    $text_hover: lighten($background, 10);
-}
-
-.bx_win{
+/***Main Window***/
+.helpwin{
     background-color: rgba($background, 0.9);
-    border: 1px solid;
-    border-radius: 10px;
-    padding-right: 15px;
+    border: 0.1rem solid $primary;
+    border-radius: 1rem;
+    padding-right: 0.8rem;
     animation: border-move 6s linear infinite;
 }
 
+/** Generic box ***********************************/
+@mixin generic_text ($txt_clr, $fnt_size, $fnt_weight, $pd_tb, $pd_lr){
+    color: $txt_clr;
+    font-size: $fnt_size;
+    font-weight: $fnt_weight;
+    padding: $pd_tb $pd_lr;
+}
+
+@mixin generic_btn_common($bg_color, $txt_color, $pd, $mg, $bg_color_hv, $txt_color_hv){
+    background-color: $bg_color;
+    color: $txt_color;
+    padding: 0 $pd;
+    margin: 0 $mg;
+    border: 0.1rem solid $txt_color;
+    border-radius: 0.5rem;
+    transition: all 450ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
+
+    &:hover{
+        background-color: $bg_color_hv;
+        color: $txt_color_hv;
+        border-color: $txt_color_hv;
+        border-radius: 1rem;
+    }
+}
+
+.bx_content{
+    min-width: 30rem;
+    min-height: 35rem;
+}
+
 .bx_title{
-    margin: 10px 10px 15px 10px;
+    margin: 0.8rem;
 }
 
 .bx_opt{
-    background-image: $background-btn;
-    margin: 2.5px;
-    border: 1px solid $text;
-    border-radius: 15px;
+    background-color: $surface_container;
+    border: 0.1rem solid $on_surface;
+    border-radius: 0.8rem;
+    padding: 0 0.8rem;
+    margin: 0 0.8rem;
 }
 
 .wel_txt{
-    color: $text;
-    font-size: 40pt;
-    font-weight: 500;
+    @include generic_text ($primary, 3em, normal, 0, 0);
 }
 
 .opt_title{
-    color: $text;
-    font-size: 20pt;
-    font-weight: 500;
-    padding: 30px 0px 15px 12px;
+    @include generic_text ($secondary, 1.5em, bold, 0, 0.8rem);
+}
+
+.adv_txt{
+    @include generic_text ($tertiary, 1em, normal, 0, 0.8rem);
 }
 
 .hlp_txt{
-    color: $text;
-    font-size: 13pt;
-    padding: 0px 15px 0px 15px;
+    @include generic_text ($on_background, 1em, normal, 0, 0.8rem);
+}
+
+.hlp_nml_txt{
+    @include generic_text ($on_background, 1em, normal, 0, 0);
 }
 
 .hlp_txt_btn{
-    color: $text_btn;
-    font-size: 13pt;
-    padding: 0px 15px 0px 15px;
+    @include generic_text ($on_surface, 1em, normal, 0, 0.2rem);
 }
 
 .btn_opt{
-    background-image: $background-btn;
-    color: $text_btn;
-    border: 1px solid $text;
-    border-radius: 15px;
+    @include generic_btn_common($primary, $on_primary, 0, 0, $primary_container, $on_primary_container);
 }
 
-.btn_opt:hover{
-    background-image: $background-btn;
-    color: $text_hover;
+.txt_btn{
+    padding: 0 0.8rem;
 }
 
-.btn_close{
-    background-image: $background-btn;
-    color: $text_btn;
-    border: 1px solid $text;
-    border-radius: 15px;
+.hlp_txt_night{
+    @include generic_text ($on_background, 1em, normal, 0, 0.8rem);
 }
 
-.btn_close:hover{
-    background-image: $background-btn;
-    color: $text_hover;
+.night_btn_on{
+    @include generic_btn_common($primary, $on_primary, 0.2rem, 0, $primary_container, $on_primary_container);
+    min-width: 2rem;
+}
+
+.night_btn_off{
+    @include generic_btn_common($outline, $on_surface, 0.2rem, 0, $secondary, $on_secondary);
+    min-width: 2rem;
 }

@@ -6,6 +6,15 @@
 
 ## Get Brightness
 udevadm monitor | rg --line-buffered "backlight" | while read -r line; do
-    echo $(brightnessctl get)
+    PERCENT=$(brightnessctl -p get)
+    if [[ "$PERCENT" -gt 95 ]];then ICON="󰪥"
+    elif [[ "$PERCENT" -gt 85 ]];then ICON="󰪤"
+    elif [[ "$PERCENT" -gt 75 ]];then ICON="󰪣"
+    elif [[ "$PERCENT" -gt 60 ]];then ICON="󰪢"
+    elif [[ "$PERCENT" -gt 45 ]];then ICON="󰪡"
+    elif [[ "$PERCENT" -gt 30 ]];then ICON="󰪠"
+    elif [[ "$PERCENT" -gt 15 ]];then ICON="󰪟"
+    elif [[ "$PERCENT" -gt 0 ]];then ICON="󰪞"; fi
+    echo '{"percent":"'$PERCENT'","icon":"'$ICON'"}'
 done
 

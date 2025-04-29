@@ -1,0 +1,76 @@
+;; POWER MENU
+
+(defwidget power []
+    (eventbox :orientation "v" :space-evenly false :class "power_item" :cursor "pointer" :height 50
+              :onhover "${EWW_CMD} update rev_power=true" :onhoverlost "${EWW_CMD} update rev_power=false" 
+              :onclick "scripts/power -p&"
+        (box :space-evenly false :orientation "h"
+            (label :class "item_icon" :text "󰤆" :valign "center" :width 40)
+            (revealer :transition "slideright" :reveal rev_power :duration "350ms"
+                (box :orientation "h" :space-evenly false :vexpand false :hexpand false :width 100 
+                    (label :class "item_name" :text "Shutdown" :halign "start")
+                )
+            )
+        )
+    )
+)
+
+(defwidget reboot []
+    (eventbox :orientation "v" :space-evenly false :class "power_item" :cursor "pointer" :height 50
+              :onhover "${EWW_CMD} update rev_reboot=true" :onhoverlost "${EWW_CMD} update rev_reboot=false"
+              :onclick "scripts/power -r&" 
+        (box :space-evenly false :orientation "h"
+            (label :class "item_icon" :text "" :valign "center" :width 40)
+            (revealer :transition "slideright" :reveal rev_reboot :duration "350ms"
+                (box :orientation "h" :space-evenly false :vexpand false :hexpand false :width 100 
+                    (label :class "item_name" :text "Reboot" :halign "start")
+                )
+            )
+        )
+    )
+)
+
+(defwidget logout []
+    (eventbox :orientation "v" :space-evenly false :class "power_item" :cursor "pointer" :height 50
+              :onhover "${EWW_CMD} update rev_logout=true" :onhoverlost "${EWW_CMD} update rev_logout=false"
+              :onclick "scripts/power -l&" 
+        (box :space-evenly false :orientation "h"
+            (label :class "item_icon" :text "󰗽" :valign "center" :width 40)
+            (revealer :transition "slideright" :reveal rev_logout :duration "350ms"
+                (box :orientation "h" :space-evenly false :vexpand false :hexpand false :width 100 
+                    (label :class "item_name" :text "Logout" :halign "start")
+                )
+            )
+        )
+    )
+)
+
+(defwidget lock []
+    (eventbox :orientation "v" :space-evenly false :class "power_item" :cursor "pointer" :height 50
+              :onhover "${EWW_CMD} update rev_lock=true" :onhoverlost "${EWW_CMD} update rev_lock=false"
+              :onclick "sh -c '(sleep 0.7s; swaylock)' & disown && scripts/power -c"
+        (box :space-evenly false :orientation "h"
+            (label :class "item_icon" :text "󰌾" :valign "center" :width 40)
+            (revealer :transition "slideright" :reveal rev_lock :duration "350ms"
+                (box :orientation "h" :space-evenly false :vexpand false :hexpand false :width 100 
+                    (label :class "item_name" :text "Lock" :halign "start")
+                )
+            )
+        )
+    )
+)
+
+(defwidget cancel []
+    (eventbox :orientation "v" :space-evenly false :class "power_item" :cursor "pointer" :height 50
+              :onhover "${EWW_CMD} update rev_cancel=true" :onhoverlost "${EWW_CMD} update rev_cancel=false"
+              :onclick "scripts/power -c&"
+        (box :space-evenly false :orientation "h"
+            (label :class "item_icon" :text "" :valign "center" :width 40)
+            (revealer :transition "slideright" :reveal rev_cancel :duration "350ms"
+                (box :orientation "h" :space-evenly false :vexpand false :hexpand false :width 100 
+                    (label :class "item_name" :text "Cancel" :halign "start")
+                )
+            )
+        )
+    )
+)

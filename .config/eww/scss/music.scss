@@ -1,113 +1,213 @@
-@import "./colors.scss";
+// Variables
+$background-bars: linear-gradient(to right, $primary 20%, lighten($primary, 10) 80%);
 
-$ncolor5:lighten($color5,15);
-$ncolor3:lighten($color3,15);
-
+/*Music Window*/
 .musicwin {
 	background-color: rgba($background, 0.9);
-	border: 2px solid;
-	border-radius: 16px;
-	box-shadow: 0 0 2px 1px rgba($background, 0.9);
+	border: 0.1rem solid $primary;
+	border-radius: 0.8rem;
+	box-shadow: 0 0 3px 2px rgba($shadow, 0.9);
 	margin: 0.4rem;
 	animation: border-move 6s linear infinite;
 }
 
+/** --- Mixins ---**/
+/** Generic cava ***********************************/
+@mixin generic_cava ($background_clr, $border_clr, $bar_size) {
+	background-color: rgba($background_clr, 0.4);
+	border: 0.1rem solid rgba($border_clr, 0.2);
+	border-radius: 5rem;
+	margin: $bar_size 0.25rem;
+	transition: all 500ms ease-in-out;
+}
+
+/** Generic info music ***********************************/
+@mixin generic_info ($txt_clr, $fnt_size, $fnt_weight) {
+	color: $txt_clr;
+	font-size: $fnt_size;
+	font-weight: $fnt_weight;
+}
+
+/** Generic button shift ***********************************/
+@mixin btn_shifts ($background_clr, $border_clr, $bg_hv_clr, $bd_hv_clr){
+	background-color: $background_clr;
+	border: 0.1rem solid $border_clr;
+	transition: all 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
+
+	&:hover {
+		background-color: $bg_hv_clr;
+		border: 0.1rem solid $bd_hv_clr;
+	}
+}
+
+.bx_player{
+	margin: 0.5rem 0 -1.2rem 0.8rem;
+	padding: 0 0.6rem;
+	border-radius: 1rem;
+	background-color: $primary_container;
+}
+
+.player {
+	@include generic_info ($on_primary_container, 1em, bold);
+}
+
+.bx_shifts{
+	margin: 0.5rem 8.5rem -1.2rem 2rem;
+}
+
+.shift, .unshift{
+	@include generic_info ($on_surface, 1em, normal);
+	padding: 0 0.5rem;
+}
+
+.btn_unshift {
+	@include btn_shifts ($surface_container_high, $outline_variant, $surface_container_highest, $on_surface);
+	border-right: none;
+	border-radius: 0.8rem 0 0 0.8rem;
+}
+
+.btn_shift {
+	@include btn_shifts ($surface_container_high, $outline_variant, $surface_container_highest, $on_surface);
+	border-radius: 0 0.8rem 0.8rem 0;
+	border-left: none;
+}
+
 .info_music{
-	padding: 10px 20px 0px;
+	padding: 0 1rem 0.1rem 1rem;
 }
 
 .cava_module{
-	color: rgba($color6, 0.4);
-	font-size: 28px;
-	letter-spacing: 10px;
-	margin-top: 60px;
-	animation: cava-color 3s linear infinite;
+	padding: 1rem 1rem 0.1rem 1rem;
+}
+
+.cava_lvl_0 {
+	@include generic_cava($tertiary_container, $on_tertiary_container, 3.2rem);
+}
+
+.cava_lvl_1 {
+	@include generic_cava($tertiary_container, $on_tertiary_container, 2.8rem);
+}
+
+.cava_lvl_2 {
+	@include generic_cava($tertiary_container, $on_tertiary_container, 2.4rem);
+}
+
+.cava_lvl_3 {
+	@include generic_cava($tertiary_container, $on_tertiary_container, 2rem);
+}
+
+.cava_lvl_4 {
+	@include generic_cava($tertiary_container, $on_tertiary_container, 1.6rem);
+}
+
+.cava_lvl_5 {
+	@include generic_cava($tertiary_container, $on_tertiary_container, 1.2rem);
+}
+
+.cava_lvl_6 {
+	@include generic_cava($tertiary_container, $on_tertiary_container, 0.8rem);
+}
+
+.cava_lvl_7 {
+	@include generic_cava($tertiary_container, $on_primary_container, 0.4rem);
 }
 
 .album_art {
-	background-size: 100%;
-	min-width: 100px;
-	min-height: 100px;
-	margin: 20px 15px 20px 0px;
-	border-radius: 14px;
-	box-shadow: 0px 0px 2px 1px rgba($background, 0.7);
+	background-color: $background;
+	background-size: 95%;
+	background-repeat: no-repeat;
+	background-position: center;
+	min-width: 7rem;
+	min-height: 7rem;
+	margin: 0.2rem 1rem 0.5rem 0;
+	border: 0.1rem solid $primary;
+	border-radius: 0.5rem;
+	transition: all 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
+
+	&:hover{
+		background-size: 100%;
+		border-width: 0.05rem;
+		border-radius: 1rem;
+		min-width: 7.15rem;
+		min-height: 7.15rem;
+	}
 }
 
 .song {
-	color: darken($color7, 13);
-	font-size : 18px;
-	font-weight : bold;
-	margin-top: 25px;
+	@include generic_info ($secondary, 1.2em, bold);
+	margin-top: 1.5rem;
 }
 
 .artist {
-	color: lighten($foreground, 13);
-	font-size : 16px;
-	font-weight : normal;
-	margin-bottom: 15px;
+	@include generic_info ($on_background, 1em, normal);
+	margin-bottom: 1rem;
 }
 
 .info_song{
-	padding: 0px 15px 10px 15px;
+	padding: 0 0.8rem 0.5rem 0.8rem;
 }
 
-scale.scale_music slider {                                                                                      
-    background-color: $background;
-	border: 2px solid;
-	border-radius: 16px;
-	min-height: 18px;
-	min-width: 18px;
-	margin: -8px;
-	animation: border-move 6s linear infinite;                               
+scale.scale_music slider {      
+	all: unset;                                                                                
+    background-color: transparent;
+	border: 0.1rem solid transparent;
+	border-radius: 0.8rem;
+	min-height: 0.4rem;
+	min-width: 0.4rem;
+	transition: all 250ms ease-in-out;
+	
+	&:hover{
+		background-color: $primary_container;
+		border: 0.1rem solid $primary;
+		border-radius: 0.8rem;
+		margin: -0.5rem;
+	}
 }
 
 scale.scale_music trough {
 	all: unset;
-	background-color: rgba(#ffffff, 0.2);
-	border: 2px solid;
-	border-radius: 16px;
-	min-height: 10px;
-	animation: border-move 6s linear infinite;
+	background-color: $surface_variant;
+	border-radius: 1rem;
+	min-height: 0.4rem;
 }
 
 scale.scale_music trough highlight {
 	all: unset;
-	border-radius: 16px;
-	background-image: linear-gradient(to right, $ncolor5 30%, $color5 100%);
+	border-radius: 1rem;
+	background-image: $background-bars;
 }
 
-.time_init{
-	color: lighten($foreground, 13);
-	padding-left: 5px;
-}
-
-.time_end{
-	color: lighten($foreground, 13);
-	padding-right: 6px;
+.time_init, .time_end{
+	color: $on_background;
 }
 
 .msc_ctl{
-	margin-top: -30px;
-	margin-bottom: 10px;
-	padding: 0px 8px;
-	background-color: rgba($background, 0.7);
-	border: 2px solid;
-	border-radius: 35px;
-	box-shadow: 0px 0px 5px 2px rgba($background, 0.7);
+	margin-top: -1.7rem;
+	margin-bottom: 0.5rem;
+	padding: 0.5rem 0.5rem;
+	background-color: $secondary_container;
+	border: 0.1rem solid $on_secondary_container;
+	border-radius: 5rem;
 	animation: border-move 3s linear infinite;
 }
 
-.prev, .stat, .nxt{
-	font-size: 34px;
-	padding-right: 8px;
+.prev, .nxt{
+	font-size: 1.5rem;
+	margin: 0 1rem;
+}
+
+.stat{
+	font-size: 1.3rem;
+	margin: 0 1rem;
 }
 
 .btn_prev, .btn_play, .btn_next{
-	color: lighten($foreground, 10);
-}
+	color: $on_secondary_container;
+	transition: all 300ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
 
-.btn_prev, .btn_play, .btn_next{
 	&:hover{
-		animation: color-move 3s linear infinite;
+		background-color: $secondary;
+		color: $on_secondary;
+		border-radius: 1rem;
 	}
 }

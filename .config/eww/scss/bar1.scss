@@ -1,34 +1,7 @@
 /*Bar for screen share*/
 
 .bar1{
-    padding: 1px;
-    background-color: rgba($background, 0.6);
-    border: 2px solid rgba($background, 0.6);
-    margin: 0px;
-}
-
-.time{
-    background-color: rgba($background, 0.93);
-    padding-left: 8px;
-    border: 1.5px solid $color6;
-    border-radius: 10px;
-    color: lighten($foreground, 10);
-    margin-right: 2px;
-}
-
-.wrkspaces{
-    padding: 0 11.5px 0 16px;
-    background-color: rgba($background, 0.93);
-    border: 1.5px solid $color6;
-    border-radius: 10px;
-    color: lighten($foreground, 10);
-}
-
-.info{
-    padding: 0 14px 0 14px;
-    background-color: rgba($background, 0.93);
-    border: 1.5px solid $color6;
-    border-radius: 10px;
-    color: lighten($foreground, 10);
-    margin-left: 2px;
+    padding: 0.5rem 1rem;
+    background-color: rgba($background, 0.7);
+    border: none;
 }

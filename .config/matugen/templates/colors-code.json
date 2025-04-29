@@ -1,0 +1,27 @@
+{
+  "wallpaper": "{{image}}",
+  "alpha": "100",
+  "special": {
+    "background": "{{colors.background.default.hex}}",
+    "foreground": "{{colors.on_background.default.hex}}",
+    "cursor": "{{colors.on_background.default.hex}}"
+   },
+  "colors": {
+    "color0": "{{colors.background.default.hex}}",
+    "color1": "{{colors.primary.default.hex}}",
+    "color2": "{{colors.primary.default.hex}}",
+    "color3": "{{colors.tertiary.default.hex}}",
+    "color4": "{{colors.on_primary_container.default.hex}}",
+    "color5": "{{colors.on_secondary_container.default.hex}}",
+    "color6": "{{colors.on_tertiary_container.default.hex}}",
+    "color7": "{{colors.on_background.default.hex}}",
+    "color8": "{{colors.on_background.default.hex}}",
+    "color9": "{{colors.primary.default.hex}}",
+    "color10": "{{colors.primary.default.hex}}",
+    "color11": "{{colors.tertiary.default.hex}}",
+    "color12": "{{colors.on_primary_container.default.hex}}",
+    "color13": "{{colors.on_secondary_container.default.hex}}",
+    "color14": "{{colors.on_tertiary_container.default.hex}}",
+    "color15": "{{colors.on_background.default.hex}}"
+  }
+}

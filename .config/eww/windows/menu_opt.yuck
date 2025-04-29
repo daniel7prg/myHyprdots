@@ -3,9 +3,9 @@
     :monitor 0
     :namespace "menu_layer"
 	:geometry (geometry
-        :x "10px"
-        :y "2px"
-        :width "450px"
+        :x "0.5%"
+        :y "1%"
+        :width "29%"
         :anchor "top right")
    (_menuopt)
 )

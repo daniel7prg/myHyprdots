@@ -83,15 +83,13 @@ backup_files=(
     hypr
     Kvantum
     fastfetch
-    nwg-look
     qt5ct
     qt6ct
     rofi
     swappy
     swaylock
     swww
-    wal
-    wlogout
+    matugen
 )
 
 for str in ${myArray[@]}; do
@@ -300,11 +298,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
         echo -e "$CWR - $CONFDIR NOT found, creating..."
         # copy .config directory
         mkdir $CONFDIR
-        wal -q -i Extras/default.png
         cp -R .config/ ~/
-        wal -q -i Extras/default.png
-        ln -sf ~/.config/Kvantum/MateriaDark/MateriaDark.kvconfig ~/.cache/wal/MateriaDark.kvconfig
-        ln -sf ~/.config/Kvantum/MateriaLight/MateriaLight.kvconfig ~/.cache/wal/MateriaLight.kvconfig
     fi
     
     # setting config files
@@ -328,19 +322,17 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo cp Extras/hyprland.desktop /usr/share/wayland-sessions/
 
     # setup the first look and feel as dark
-    sudo cp -R gtk-pywal/Pywal-theme/ /usr/share/themes/Pywal-theme/
-    sudo cp -R gtk-pywal/Qogir-cursors/ /usr/share/icons/Qogir-cursors/
-    sudo cp -R gtk-pywal/Qogir-white-cursors/ /usr/share/icons/Qogir-white-cursors/
-    gsettings set org.gnome.desktop.interface gtk-theme Pywal-theme
+    sudo cp -R Extras/Material-U/ /usr/share/themes/Material-U/
+    sudo cp -R Extras/Qogir-cursors/ /usr/share/icons/Qogir-cursors/
+    sudo cp -R Extras/Qogir-white-cursors/ /usr/share/icons/Qogir-white-cursors/
+    gsettings set org.gnome.desktop.interface gtk-theme Material-U
     gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
-    gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 12'
+    gsettings set org.gnome.desktop.interface font-name 'JetBrainsMonoNL Nerd Font Propo Semi-Bold 13'
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-    kvantummanager --set MateriaDark
-    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk.css
-    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-3.0/gtk-dark.css
-    sudo sed -i "5i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-4.0/gtk.css
-    sudo sed -i "5i @import '${HOME}/.cache/wal/colors-waybar.css';" /usr/share/themes/Pywal-theme/gtk-4.0/gtk-dark.css
+    kvantummanager --set MaQterial-U
+    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-gtk.css';" /usr/share/themes/Material-U/gtk-3.0/gtk-dark.css
+    sudo sed -i "2i @import '${HOME}/.cache/wal/colors-gtk.css';" /usr/share/themes/Material-U/gtk-4.0/gtk-dark.css
     sudo sed -i 's/Inherits=Adwaita/Inherits=Qogir-cursors/' /usr/share/icons/default/index.theme
 fi
 
@@ -436,6 +428,7 @@ elif [[ $TERM == "F" || $TERM == "f" ]]; then
     install_software foot
     echo -e "$CAC - Setting up componenets..."
     mkdir -p ~/.config/foot/scripts
+    cp Extras/foot.ini ~/.config/foot/scripts
     sleep 1
     echo -e "$COK - Done!!"
 else
@@ -455,11 +448,11 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
         if [[ -d ~/wallpapers/ ]]; then
             cp -r Extras/hyprWalls/wallpapers/PICs/ ~/wallpapers
-            cp Extras/default.png ~/wallpapers
+            cp Extras/waiting.jpeg ~/wallpapers
         else
             mkdir -p ~/wallpapers
             cp -r Extras/hyprWalls/wallpapers/PICs/ ~/wallpapers
-            cp Extras/default.png ~/wallpapers
+            cp Extras/waiting.jpeg ~/wallpapers
         fi
         echo -e "$COK - Done!!"
     elif [[ $PIC == "G" || $PIC == "g" ]]; then
@@ -467,18 +460,18 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
             echo -e "$CAC - Setting up wallpapers..."
             if [[ -d ~/wallpapers/ ]]; then
                 cp -r Extras/hyprWalls/wallpapers/Gifs ~/wallpapers
-                cp Extras/default.png ~/wallpapers
+                cp Extras/waiting.jpeg ~/wallpapers
             else
                 mkdir -p ~/wallpapers
                 cp -r Extras/hyprWalls/wallpapers/Gifs ~/wallpapers
-                cp Extras/default.png ~/wallpapers
+                cp Extras/waiting.jpeg ~/wallpapers
             fi
         else
             if [[ -d ~/wallpapers/ ]]; then
-                cp Extras/default.png ~/wallpapers
+                cp Extras/waiting.jpeg ~/wallpapers
             else
                 mkdir -p ~/wallpapers
-                cp Extras/default.png ~/wallpapers
+                cp Extras/waiting.jpeg ~/wallpapers
             fi
             echo -e "$CNT - Gifs in VM give bad performance"
         fi
@@ -487,34 +480,32 @@ if [[ $IMG == "Y" || $IMG == "y" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
         if [[ -d ~/wallpapers/ ]]; then
             cp -r Extras/hyprWalls/wallpapers/Anime_Girls/ ~/wallpapers
-            cp Extras/default.png ~/wallpapers
+            cp Extras/waiting.jpeg ~/wallpapers
         else
             mkdir -p ~/wallpapers
             cp -r Extras/hyprWalls/wallpapers/Anime_Girls/ ~/wallpapers
-            cp Extras/default.png ~/wallpapers
+            cp Extras/waiting.jpeg ~/wallpapers
         fi
         echo -e "$COK - Done!!"
     elif [[ $PIC == "M" || $PIC == "m" ]]; then
         echo -e "$CAC - Setting up wallpapers..."
         if [[ -d ~/wallpapers/ ]]; then
             cp -r Extras/hyprWalls/wallpapers/Minimalist/ ~/wallpapers
-            cp Extras/default.png ~/wallpapers
+            cp Extras/waiting.jpeg ~/wallpapers
         else
             mkdir -p ~/wallpapers
             cp -r Extras/hyprWalls/wallpapers/Minimalist/ ~/wallpapers
-            cp Extras/default.png ~/wallpapers
+            cp Extras/waiting.jpeg ~/wallpapers
         fi
         echo -e "$COK - Done!!"
     fi
     rm -r Extras/hyprWalls/
 else
     if [[ -d ~/wallpapers/ ]]; then
-        cp Extras/default.png ~/wallpapers
-        wal -q -i Extras/default.png
+        cp Extras/waiting.jpeg ~/wallpapers
     else
         mkdir -p ~/wallpapers
-        cp Extras/default.png ~/wallpapers
-        wal -q -i Extras/default.png
+        cp Extras/waiting.jpeg ~/wallpapers
     fi
 fi
 

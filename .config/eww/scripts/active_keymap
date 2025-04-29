@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#  ________________
+# | Current Keymap |
+#  ----------------
+
+active_lay(){
+    currentLayoutEx=$(hyprctl -j devices | jq -c '.keyboards.[] | select(.main==true) | .active_keymap' | sed 's/"//g')
+    #currentLayout=$(sed -n '/! layout/,/! variant/ {/! layout/d;/! variant/d;p}' /usr/share/X11/xkb/rules/base.lst | grep -w "${currentLayoutEx}")
+    currentLayout=$(echo "$currentLayoutEx" | awk '{print toupper(substr($1, 1, 1)) tolower(substr($1, 2, 2))}')
+
+    # Json format
+    echo '{"layEx":"'$currentLayoutEx'","lay":"'${currentLayout} '"}'
+}
+
+socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | 
+while read -r event; do active_lay ; done

@@ -7,48 +7,20 @@
 ## Global vars
 source $HOME/.config/rofi/scripts/globalcontrol.sh
 
-## For foot terminal
-#source $HOME/.config/foot/scripts/foot-theme
-
-## For VSCODE theme
-#source $HOME/.config/code_switch
-
 if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
-	if [[ "$current_theme" -eq 0 ]]; then
-		sed -i 's/gtk.css/gtk-dark.css/' ~/.config/gtk-4.0/gtk.css
-		killall polkit-gnome-authentication-agent-1 &
-		sed -i -e "s|'./scss/bar-light.scss';|'./scss/bar.scss';|" -e "s|'./scss/bar1-light.scss';|'./scss/bar1.scss';|" ~/.config/eww/eww.scss
-		gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-		gsettings set org.gnome.desktop.interface icon-theme $iconDark
-		eww reload
-		sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=1/" ~/.config/gtk-3.0/settings.ini
-		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-		killall dunst &
-		#sed -i '2s/colors-kitty-light.conf/colors-kitty.conf/' ~/.config/kitty/kitty.conf
-		killall xdg-desktop-portal-gtk &
-		sed -i '2s/MateriaLight/MateriaDark/' ~/.config/Kvantum/kvantum.kvconfig
-		dunst -conf "~/.cache/wal/dunstrc-dark" &
-		#change_theme_foot
-		#change_theme_code
-		dunstify "t1" -a "${CHANGE_MS} ${MODE_MS}  " -i "${wallpaper}" -t 2200
-	else
-		sed -i 's/gtk-dark.css/gtk.css/' ~/.config/gtk-4.0/gtk.css
-		killall polkit-gnome-authentication-agent-1 &
-		sed -i -e "s|'./scss/bar.scss';|'./scss/bar-light.scss';|" -e "s|'./scss/bar1.scss';|'./scss/bar1-light.scss';|" ~/.config/eww/eww.scss
-		gsettings set org.gnome.desktop.interface color-scheme prefer-light
-		gsettings set org.gnome.desktop.interface icon-theme $iconLight
-		eww reload
-		sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=0/" ~/.config/gtk-3.0/settings.ini
-		/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-		killall dunst &
-		#sed -i '2s/colors-kitty.conf/colors-kitty-light.conf/' ~/.config/kitty/kitty.conf
-		killall xdg-desktop-portal-gtk &
-		sed -i '2s/MateriaDark/MateriaLight/' ~/.config/Kvantum/kvantum.kvconfig
-		dunst -conf "~/.cache/wal/dunstrc-light" &
-		#change_theme_foot
-		#change_theme_code
-		dunstify "t1" -a "${CHANGE_MS} ${MODE_MS}  " -i "${wallpaper}" -t 2200
-	fi
+	eww close menu_opt music calendar &> /dev/null
+	eww update open_music=false open_cal=false open_menu=false &> /dev/null
+	killall polkit-gnome-authentication-agent-1 &> /dev/null
+	matugen -q -m ${swt_color_mode} image ${current_wal}
+	gsettings set org.gnome.desktop.interface color-scheme $swt_color_scheme
+	gsettings set org.gnome.desktop.interface icon-theme $swt_current_icon
+	killall dunst &> /dev/null
+	killall xdg-desktop-portal-gtk &> /dev/null
+	sed -i "s/icon_theme = .*/icon_theme = \"${swt_current_icon}\"/" ~/.config/dunst/dunstrc
+	sed -i "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=$swt_current_icon/" ~/.config/gtk-3.0/settings.ini
+	sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=$set_scheme/" ~/.config/gtk-3.0/settings.ini
+	/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+	notify-send "t1" -a "${CHANGE_MS} ${MODE_MS}  " -i "${current_wal}" -t 2200
 else
-	dunstify -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
+	notify-send -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
 fi

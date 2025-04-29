@@ -1,11 +1,11 @@
 (defwindow music
-    :stacking "overlay"
+    :stacking "fg"
     :monitor 0
     :namespace "music_layer"
 	:geometry (geometry
-        :x "190px" 
-	    :y "2px" 
-	    :width "350px"
+        :x "11%" 
+	    :y "1%" 
+	    :width "20%"
         :anchor "top right")
     (music)
 )

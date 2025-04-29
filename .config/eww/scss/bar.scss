@@ -1,228 +1,201 @@
 @import "./calendar.scss";
+@import "./music.scss";
 @import "./menu_opt.scss";
-@import "./help_opt.scss";
 @import "./systray.scss";
+@import "./wifi_panel_ctl.scss";
 
-$background-alt: radial-gradient(farthest-side, $ncolor3 30%, $lcolor3 60%);
-$border_clr: darken($foreground, 45);
-$text_opt: lighten($background, 5);
-$text_icn: lighten($background, 5);
-$background-opc: rgba($background, 0.8);
-
-@if (lightness($color3) < 45){
-    $text_opt: lighten($foreground, 10);
-    $text_icn: lighten($foreground, 5);
-}
-
+/***Style Bar***/
 .bar{
-    padding: 12px 13px;
-    border: 2.5px solid $color6;
-    border-radius: 50px;
-    background-color: $background-opc;
-    margin: 4px 4px 0px 4px;
+    padding: 0.6rem 0.8rem;
+    border: 0.1rem solid;
+    border-radius: 1rem;
+    background-color: rgba($background, 0.9);
+    margin: 0.5rem 0.3rem 0 0.3rem;
+    box-shadow: 0 0 3px 2px rgba($shadow, 0.9);
     animation: border-move 6s linear infinite;
 }
 
-.bx_apps{
-    background-image: $background-alt;
-    margin-right: 5px;
-    border: 1px solid $border_clr;
-    border-radius: 15px;
+/** --- Mixins ---**/
+/** Generic button ***********************************/
+@mixin generic_button ($bg_clr, $txt_clr, $border_clr, $radius, $bg_clr_hv, $txt_clr_hv) {
+	background-color: $bg_clr;
+	color: $txt_clr;
+    border: 0.1rem solid $border_clr;
+	border-radius: $radius;
+	transition: all 425ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
+
+    &:hover{
+        background-color: $bg_clr_hv;
+        color: $txt_clr_hv;
+    }
 }
 
-.app_icon{
-    padding: 0px 11px 0px 8px;
-    color: $text_opt;
+/** Generic box ***********************************/
+@mixin generic_box ($bg_clr, $txt_clr, $border_clr, $radius){
+    background-color: $bg_clr;
+    color: $txt_clr;
+    border: 0.1rem solid $border_clr;
+    border-radius: $radius;
+}
+
+/** Generic workspace button ***********************************/
+@mixin wk_btn_common ($bg_clr, $txt_clr, $mg-tb, $mg-lr, $pd-tb, $pd-lr, $fnt_wgt, $radius, $bg_clr_hv, $txt_clr_hv, $radius_hv){
+    background-color: $bg_clr;
+    color: $txt_clr;
+    margin: $mg-tb $mg-lr;
+    padding: $pd-tb $pd-lr;
+    font-weight: $fnt_wgt;
+    border-radius: $radius;
+    transition: all 600ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
+
+    &:hover{
+        background-color: $primary_container;
+        color: $on_primary_container;
+        border-radius: $radius_hv;
+    }
+}
+
+/****Modules****/
+//---Left----
+//__Menu app__
+.apps_btn{
+    @include generic_button ($surface_container_highest, $on_surface, $outline_variant, 0.5rem, $primary, $on_primary);
+}
+
+//__Workspaces__
+.workspaces{
+    border: 0.1rem solid $outline_variant;
+    border-radius: 0.5rem;
+    background-color: $surface_container_highest;
+}
+
+//-----IF you want change color workspaces icons------
+.active_wk_btn{
+    @include wk_btn_common (transparent, $primary, 0, 0, 0, 0.2rem, normal, 5rem, $primary_container, $on_primary_container, 5rem);
+}
+
+.used_wk_btn{
+    @include wk_btn_common (transparent, $secondary, 0, 0, 0, 0.2rem, normal, 5rem, $primary_container, $on_primary_container, 5rem);
+}
+
+.empty_wk_btn{
+    @include wk_btn_common (transparent, $tertiary, 0, 0, 0, 0.2rem, normal, 5rem, $primary_container, $on_primary_container, 5rem);
+}
+
+// Dynamic workspaces
+.active_wk_btn_dyn{
+    @include wk_btn_common ($primary, $on_primary, 0.25rem, 0, 0, 1rem, bolder, 0.3rem, $primary_container, $on_primary_container, 5rem);
+}
+
+.used_wk_btn_dyn{
+    @include wk_btn_common ($secondary, $on_secondary, 0.25rem, 0, 0, 0.5rem, bolder, 0.3rem, $primary_container, $on_primary_container, 5rem);
+}
+
+//__Wallpaper Icon__
+.wallpaper_btn{
+    @include generic_button ($surface_container_highest, $on_surface, $outline_variant, 0.5rem, $primary, $on_primary);
+}
+
+//__KeyBoard Lan__
+.kb_txt{
+    font-weight: 600;
+    margin: 0.2rem 0.6rem 0.2rem 0.5rem;
+}
+
+.kb_btn{
+    @include generic_button ($surface_container_highest, $on_surface, $outline_variant, 0.5rem, $primary, $on_primary);
+}
+
+//---Center----
+//__Active window name__
+.app_box{
+    @include generic_box ($surface_container_highest, $on_surface, $outline_variant, 0.5rem);
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
 }
 
 .app_img{
     background-size: 100%;
-	min-width: 17px;
-	min-height: 17px;
+	min-width: 1rem;
+	min-height: 1rem;
     background-repeat: no-repeat;
 }
 
-.app_name{
-    font-weight: 600;
-    color: $text_opt;
+//---Right----
+//__Tray icon center__
+.tray_box{
+    @include generic_box ($surface_container_highest, $on_surface, $outline_variant, 0.5rem);
 }
 
-.opt_txt{
-    padding-right: 8px;
-    color: $text_opt;
+//__Music__
+.music_btn{
+    @include generic_button ($surface_container_highest, $on_surface, $outline_variant, 0.5rem, $primary, $on_primary);
 }
 
-.bx_workspace{
-    background-image: $background-alt;
-    padding: 0 8px 0 12px;
-    border: 1px solid $border_clr;
-    border-radius: 15px;
-}
-
-//-----IF you want change color workspaces icons------
-.active_btn{
-    color: $text_icn;
-    transition: color 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
-}
-
-.active_btn:hover{
-    background-color: $background;
-    border-radius: 35px;
-    margin-left: -5px;
-    padding-left: 5px;
-    animation: color-move 3s linear infinite;
-    transition: background 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
-}
-
-.used_btn{
-    color: mix($text_icn, $color5, 70);
-}
-
-.used_btn:hover{
-    background-color: $background;
-    border-radius: 35px;
-    margin-left: -6px;
-    padding-left: 6px;
-    animation: color-move 3s linear infinite;
-    transition: background 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
-}
-
-.empty_btn{
-    color: mix($text_opt, $color6, 65);
-}
-
-.empty_btn:hover{
-    background-color: $background;
-    border-radius: 35px;
-    margin-left: -5px;
-    padding-left: 6px;
-    animation: color-move 3s linear infinite;
-    transition: background 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
-}
-//------------------------------------------------------
-
-.bx_appname{
-    background-image: $background-alt;
-    padding: 0 16px 0 14px;
-    border: 1px solid $border_clr;
-    border-radius: 15px;
-    color: $text_opt;
-}
-
-.app-icon{
-    padding-right: 5px;
-    padding-left: 0px;
-}
-
-.app-name{
-    padding-left: 5px;
-}
-
-.bx_tray{
-    background-image: $background-alt;
-    border: 1px solid $border_clr;
-    border-radius: 15px;
-    padding-left: 7px;
-    padding-right: 7px;
-    margin-right: 5px;
-}
-
-.tray_icon {
-    color: $text_opt;
-}
-
-.bx_msc{
-    background-image: $background-alt;
-    border: 1px solid $border_clr;
-    border-radius: 15px;
-    padding-left: 6px;
-    padding-right: 6px;
-    margin-right: 5px;
-}
-
-.bx_wal{
-    background-image: $background-alt;
-    border: 1px solid $border_clr;
-    border-radius: 15px;
-    padding-left: 7px;
-    margin-left: 5px;
+.music_btn_toggle{
+    @include generic_button ($primary_container, $on_primary_container, $on_primary_container, 5rem, $primary_container, $on_primary_container);
 }
 
 .music_prg{
-    color: $text_opt;
-    background-color: rgba($text_opt, 0.2);
+    background-color: $outline;
+    color: $on_surface;
 }
-    
+
 .music_icon{
-    font-size: 10px;
-    margin: 7px;
-    color: $text_opt;
+    font-size: 0.5rem;
+    margin: 0.5rem;
 }
 
-.music_title{
-    padding-left: 5px;
-    color: $text_opt;
+//__Clock & Date__
+.clock_btn{
+    @include generic_button ($surface_container_highest, $on_surface, $outline_variant, 0.5rem, $primary, $on_primary);
 }
 
-.wal_icon{
-    padding-right: 12px;
-    color: $text_opt;
+.clock_btn_toggle{
+    @include generic_button ($primary_container, $on_primary_container, $on_primary_container, 5rem, $primary_container, $on_primary_container);
 }
 
-.clock_icon{
-    padding-right: 8px;
-    color: $text_opt;
+//__Menu Options__
+.menu_btn{
+    @include generic_button ($surface_container_highest, $on_surface, $outline_variant, 0.5rem, $primary, $on_primary);
 }
 
-.cal_icon{
-    padding-left: 8px;
-    padding-right: 6px;
-    color: $text_opt;
+.menu_btn_toggle{
+    @include generic_button ($primary_container, $on_primary_container, $on_primary_container, 5rem, $primary_container, $on_primary_container);
 }
 
-.bx_clock{
-    background-image: $background-alt;
-    padding-left: 8px;
-    border: 1px solid $border_clr;
-    border-radius: 15px;
-    color: $text_opt;
+/***Containers***/
+.clock_container{
+    padding: 0.2rem 0 0.2rem 0.6rem;
 }
 
-.bx_options{
-    background-image: $background-alt;
-    border: 1px solid $border_clr;
-    margin-left: 5px;
-    border-radius: 15px;
+.music_container{
+    padding: 0.2rem 0.6rem 0.2rem 0.5rem;
 }
 
-.iconmenu_volS{
-    color: $text_opt;
-    padding: 0px 6px 0px 8px;
+.app_container, .wal_container{
+    padding: 0.2rem 0.2rem 0.2rem 0.15rem;
 }
 
-.iconmenu_volH{
-    color: $text_opt;
-    padding: 0px 3px 0px 10px;
+.app_txt, .wal_txt{
+    font-weight: 600;
+    margin: 0.2rem 0.3rem 0.2rem 0;
 }
 
-.iconmenu_bat, .iconmenu_bth{
-    color: $text_opt;
+.menu_container, .wks_container{
+    padding: 0.2rem 0.6rem;
 }
 
-.iconmenu_wf{
-    color: $text_opt;
-    padding-right: 4px;
+.tray_container{
+    margin: 0.2rem 0.4rem 0.2rem 0;
 }
 
-.iconmenu{
-    color: $text_opt;
-    padding-right: 15px;
-}
-
+/***Style tooltip***/
 tooltip{
-    background-color: rgba($background, 0.7);
-    border: 1px solid $color6;
-    border-radius: 15px;
+    background-color: rgba($background, 0.85);
+    color: $on_background;
+    border: 0.1rem solid $on_background;
+    border-radius: 0.5rem;
     animation: border-move 6s linear infinite;
 }
 

@@ -1,0 +1,33 @@
+(defwidget wifi_panel_ctl []
+  (box :class "panelwin" :orientation "v" :space-evenly false :vexpand false :hexpand false
+    (box :orientation "h" :halign "fill" :valign "center" :space-evenly true :vexpand false :hexpand false
+         :class "bx_panel_container"
+      (box :orientation "h" :space-evenly true :vexpand false :hexpand false :class "bx_panel_title"
+        (label :class "panel_title" :halign "start" :text "WI-FI List ")
+      )
+      (box :orientation "h" :space-evenly true :vexpand false :hexpand false :class "bx_panel_actions"
+        (box :orientation "h" :space-evenly true :halign "end" :spacing 5
+          (eventbox :onclick "pkill -x -f nm-connection-editor || nm-connection-editor&" :tooltip "Advanced" :class "panel_btn" :cursor "pointer"
+            (label :halign "center" :text "")
+          )
+          (eventbox :onclick "scripts/wifi&" :tooltip "Reload" :class "panel_btn" :cursor "pointer"
+                    :visible "${network.type == 'WI-FI' ? true : false}"
+            (label :halign "center" :text "󰑓")
+          )
+          (button  :onclick "${network.type == 'Internet' && network.type != 'ethernet' ? 'nmcli radio wifi on' : 'nmcli radio wifi off'}" 
+                   :class "${network.type == 'Internet' && network.type != 'ethernet' ? 'panel_btn_off' : 'panel_btn_on'}"
+                   :visible "${network.type == 'ethernet' ? false : true}"
+                   :tooltip "Off/On"
+            (label :halign "${network.type == 'Internet' && network.type != 'ethernet' ? 'start' : 'end'}" :text "")
+          )
+          (button :onclick "${EWW_CMD} close wifi_panel_ctl" :tooltip "Close" :class "panel_btn_close" :cursor "pointer"
+            (label :halign "center" :text "")
+          )
+        )
+      )
+    )
+    (scroll :vscroll true :vexpand true :visible "${network.type == 'WI-FI' ? true : false}" :class "bx_pnl_items"
+      (literal :content {wifi_list})
+    )
+  )
+)

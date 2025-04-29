@@ -3,12 +3,13 @@
 configuration {
     modi:                        "window";
     show-icons:                  true;
-    window-format:               "{t:20}...";
+    display-window:              " Windows";
+    window-format:               "<span weight='light' size='small'><i>{t:8}...</i></span> | <span weight='bold'>{c}</span>";
     font:                        "JetBrainsMono Nerd Font 12";
 }
 
 /*****----- Global Properties -----*****/
-@theme "~/.cache/wal/colors-rofi.rasi"
+@theme "./conf/colors-rofi.rasi"
 
 /*****----- Main Window -----*****/
 window {
@@ -16,16 +17,14 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       700px;
-    x-offset:                    0px;
-    y-offset:                    0px;
+    width:                       75%;
+    x-offset:                    0;
+    y-offset:                    0;
 
     enabled:                     true;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      2px solid;
-    border-radius:               20px;
-    border-color:                @color6;
+    border:                      0.1em solid;
+    border-radius:               1em;
+    border-color:                @outline-variant;
     cursor:                      "default";
     background-color:            @background;
 }
@@ -33,123 +32,112 @@ window {
 /*****----- Main Box -----*****/
 mainbox {
     enabled:                     true;
-    spacing:                     20px;
-    margin:                      0px;
-    padding:                     20px;
-    border:                      0px solid;
-    border-radius:               0px 0px 0px 0px;
-    border-color:                @color6;
+    spacing:                     1em;
+    padding:                     1em;
     background-color:            transparent;
-    children:                    [ "textbox-prompt-colon", "listview" ];
+    children:                    [ "inputbar", "listview" ];
 }
 
 /*****----- Inputbar -----*****/
 inputbar {
-    enabled:                     false;
-    spacing:                     10px;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                @color6;
-    background-color:            @background;
-    text-color:                  @foreground;
-    children:                    [ "entry" ];
+    enabled:                     true;
+    spacing:                     0;
+    padding:                     0;
+    background-color:            transparent;
+    text-color:                  transparent;
+    children:                    [ "dummy", "prompt", "entry", "dummy" ];
 }
-
 prompt {
     enabled:                     true;
-    background-color:            inherit;
-    text-color:                  @foreground;
-    
-}
-textbox-prompt-colon {
-    enabled:                     true;
-    expand:                      false;
-    str:                         "Active Windows  ";
-    background-color:            inherit;
-    text-color:                  @foreground;
-    horizontal-align:		     0.5;
+    padding:                     0.5em;
+    border:                      0.1em solid;
+    border-color:                @primary-container;
+    border-radius:               0.5em 0 0 0.5em;
+    background-color:            @primary-container;
+    text-color:                  @on-primary-container;
 }
 entry {
     enabled:                     true;
-    background-color:            inherit;
-    text-color:                  inherit;
+    padding:                     0.5em;
+    border:                      0.1em solid;
+    border-color:                @primary-container;
+    border-radius:               0 0.5em 0.5em 0;
+    background-color:            @outline-variant;
+    text-color:                  @on-surface;
     cursor:                      text;
     placeholder:                 "Search...";
-    placeholder-color:           inherit;
-    vertical-align:              0.5;
-    horizontal-align:            0.5;
+    placeholder-color:           @on-surface;
+}
+
+dummy {
+    expand:                      true;
+    background-color:            transparent;
 }
 
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
-    columns:                     2;
+    columns:                     5;
     lines:                       1;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
-    layout:                      vertical;
+    flow:                        horizontal;
     reverse:                     false;
     fixed-height:                true;
     fixed-columns:               true;
     
-    spacing:                     10px;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                @color6;
+    spacing:                     0.5em;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  @on-background;
     cursor:                      "default";
-}
-scrollbar {
-    handle-width:                5px ;
-    handle-color:                @color6;
-    border-radius:               0px;
-    background-color:            @color5;
 }
 
 /*****----- Elements -----*****/
 element {
     enabled:                     true;
-    spacing:                     15px;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               20px;
-    border-color:                @color6;
-    background-color:            transparent;
-    text-color:                  @foreground;
+    spacing:                     1em;
+    padding:                     1.5em 0.5em;
+    border:                      0.1em;
+    border-radius:               0.5em;
+    border-color:                @outline-variant;
+    background-color:            @surface-container;
+    text-color:                  @on-surface;
     orientation:                 vertical;
     cursor:                      pointer;
 }
 element normal.normal {
-    background-color:            transparent;
-    text-color:                  @foreground;
+    border:                      0.1em;
+    border-color:                @outline-variant;
+    background-color:            @surface-container;
+    text-color:                  @on-surface;
 }
 
 element normal.active {
-    background-color:            @color6;
-    text-color:                  @background;
+    border:                      0.1em;
+    border-color:                @secondary;
+    background-color:            @secondary-container;
+    text-color:                  @on-secondary-container;
 }
 
 element selected.normal {
-    background-color:            @color5;
-    text-color:                  @background;
+    border:                      0.1em;
+    border-color:                @primary;
+    background-color:            @primary-container;
+    text-color:                  @on-primary-container;
 }
 
 element selected.active {
-    background-color:            transparent;
-    text-color:                  @background;
+    border:                      0.1em;
+    border-color:                @tertiary;
+    background-color:            @tertiary-container;
+    text-color:                  @on-tertiary-container;
 }
 
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        128px;
+    size:                        2.5em;
     cursor:                      inherit;
 }
 element-text {

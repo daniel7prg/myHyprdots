@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#  ____________
+# | Night Mode |
+#  ------------
+
+confDir=~/.config/hypr/conf/decoration.conf
+state=$(hyprctl -j getoption decoration:screen_shader | jq -r '.str')
+
+if [[ "$state" == "~/.config/hypr/shaders/normalMode.frag" ]]; then
+	sed -i "s|screen_shader = .*|screen_shader = ~/.config/hypr/shaders/nightMode.frag|" $confDir
+	hyprctl -q reload
+else
+	sed -i "s|screen_shader = .*|screen_shader = ~/.config/hypr/shaders/normalMode.frag|" $confDir
+	hyprctl -q reload
+fi

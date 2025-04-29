@@ -3,9 +3,9 @@
     :monitor 0
     :namespace "calendar_layer"
 	:geometry (geometry
-        :x "140px" 
-	    :y "2px"
-	    :width "280px"
+        :x "7%" 
+	    :y "1%"
+	    :width "20%"
         :anchor "top right")
     (cal)
 )

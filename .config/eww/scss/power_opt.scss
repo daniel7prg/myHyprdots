@@ -1,0 +1,23 @@
+.item_icon {
+	font-size: 1.4em;
+}
+
+.item_name{
+	font-size: 1.2em;
+	font-weight: bolder;
+}
+
+.power_item{
+	background-color: $background;
+	color: $on_background;
+    border: 0.1rem solid $primary;
+	border-right: none;
+	border-radius: 5rem 0 0 5rem;
+	transition: all 400ms cubic-bezier(0.92, -0.21, 0.04, 0.71);
+
+	&:hover{
+		background-color: $primary;
+		color: $on_primary;
+		border-color: $on_primary;
+	}
+}

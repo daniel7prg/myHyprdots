@@ -8,11 +8,11 @@
 state=$(hyprctl layers | grep -o "menu_layer")
 
 if [[ -z "$state" ]]; then
-	eww open menu_opt &
+	eww open menu_opt
 	usleep 10000
 	eww update open_menu=true
 else
-	eww update open_menu=false &
+	eww update open_menu=false
 	usleep 180000
 	eww close menu_opt
 fi

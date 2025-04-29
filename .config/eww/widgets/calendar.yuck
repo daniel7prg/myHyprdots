@@ -1,8 +1,11 @@
 (defwidget cal []
 	(box :orientation "v" :space-evenly false :class "box_rev"
 		(revealer :transition "slidedown" :reveal open_cal :duration "200ms"
-			(box :class "cal" :orientation "v"
-				(calendar :day {time.day} :year {time.year})
+			(box :class "cal" :orientation "v" :space-evenly false
+				(calendar)
+				(box :orientation "h" :class "today" :tooltip " ${time.week}, ${time.day} ${time.mouth_c} ${time.year}"
+					(label :text " ${time.week}, ${time.day} ${time.mouth_c} ${time.year}")
+				)
 			)
 		)
 	)

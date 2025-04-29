@@ -18,7 +18,7 @@ icon_mic="microphone-sensitivity"
 icon_mic_state="muted"
 
 # Search icon
-iconpath=$(geticons "${icon_vol}-${icon_vol_lvl}" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
+iconpath=$(geticons "${icon_vol}-${icon_vol_lvl}" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
     
 if [[ -z "$iconpath" ]]; then
     icon_vol="audio-volume"
@@ -29,20 +29,36 @@ notify_vol (){
 
     # Vol icons
     if [[ "$sink_vol" == "analog-output-headphones" ]]; then 
-        iconpath_vol=$(geticons "audio-headphones" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
+        iconpath_vol=$(geticons "audio-headphones" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+        if [[ -z "$iconpath_vol" ]]; then
+            iconpath_vol=$(geticons "audio-headset" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+            if [[ -z "$iconpath_vol" ]]; then
+                iconpath_vol=$(geticons "audio-headphones" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+            fi
+        fi
     else
         if [[ $vol_level -gt 60 ]]; then
             icon_vol_lvl="high"
-            iconpath_vol=$(geticons "${icon_vol}-${icon_vol_lvl}" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
+            iconpath_vol=$(geticons "${icon_vol}-${icon_vol_lvl}" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+            if [[ -z "$iconpath_vol" ]]; then
+                iconpath_vol=$(geticons "audio-volume-high-symbolic" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+            fi
         elif [[ $vol_level -gt 40 ]]; then
             icon_vol_lvl="medium"
-            iconpath_vol=$(geticons "${icon_vol}-${icon_vol_lvl}" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
+            iconpath_vol=$(geticons "${icon_vol}-${icon_vol_lvl}" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+            if [[ -z "$iconpath_vol" ]]; then
+                iconpath_vol=$(geticons "audio-volume-medium-symbolic" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+            fi
         elif [[ $vol_level -ge 0 ]]; then
             icon_vol_lvl="low"
-            iconpath_vol=$(geticons "${icon_vol}-${icon_vol_lvl}" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
+            iconpath_vol=$(geticons "${icon_vol}-${icon_vol_lvl}" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+            if [[ -z "$iconpath_vol" ]]; then
+                iconpath_vol=$(geticons "audio-volume-low-symbolic" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+            fi
         fi
     fi
-    dunstify "t2" -a "Vol: ${vol_level}%" -h int:value:$vol_level -i $iconpath_vol -r 91190 -t 800 
+    
+    notify-send "t3" -a "Vol:" "${vol_level}%" -h int:value:$vol_level -i ${iconpath_vol} -r 91190 -t 800 
 }
 
 notify_mute_vol (){
@@ -50,13 +66,18 @@ notify_mute_vol (){
 
     # Mute vol
     if [[ "$status_vol" == "yes" ]]; then
-        iconpath_vol_mtd=$(geticons "${icon_vol}-${icon_vol_state}" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
-        dunstify "t2" -a "Muted" "<big>Volume</big>" -i $iconpath_vol_mtd -r 91190 -t 800 
+        iconpath_vol_mtd=$(geticons "${icon_vol}-${icon_vol_state}" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+        if [[ -z "$iconpath_vol_mtd" ]]; then
+            iconpath_vol_mtd=$(geticons "audio-volume-muted-symbolic" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+        fi
+        notify-send "t2" -a "Muted" "<big>On</big>" -i $iconpath_vol_mtd -r 91190 -t 800 
     elif [[ "$status_vol" == "no" ]]; then
         icon_vol_state="high"
-        iconpath_vol_mtd=$(geticons "${icon_vol}-${icon_vol_state}" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
-        echo $iconpath_vol_mtd
-        dunstify "t2" -a "Unmuted" "<big>Volume</big>" -i $iconpath_vol_mtd -r 91190 -t 800 
+        iconpath_vol_mtd=$(geticons "${icon_vol}-${icon_vol_state}" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+        if [[ -z "$iconpath_vol_mtd" ]]; then
+            iconpath_vol_mtd=$(geticons "audio-volume-high-symbolic" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+        fi
+        notify-send "t2" -a "Muted" "<big>Off</big>" -i $iconpath_vol_mtd -r 91190 -t 800 
     fi
 }
 
@@ -65,12 +86,18 @@ notify_mute_mic (){
 
     # Mute mic
     if [[ "$status_mic" == "yes" ]]; then
-        iconpath_mic_mtd=$(geticons "${icon_mic}-${icon_mic_state}" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
-        dunstify "t2" -a "MuteD" "<big>Microphone</big>" -i $iconpath_mic_mtd -r 91190 -t 800 
+        iconpath_mic_mtd=$(geticons "${icon_mic}-${icon_mic_state}" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+        if [[ -z "$iconpath_mic_mtd" ]]; then
+            iconpath_mic_mtd=$(geticons "audio-volume-muted-symbolic" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+        fi
+        notify-send "t2" -a "Muted-Mic" "<big>On</big>" -i $iconpath_mic_mtd -r 91190 -t 800 
     elif [[ "$status_mic" == "no" ]]; then
         icon_mic_state="high"
-        iconpath_mic_mtd=$(geticons "${icon_mic}-${icon_mic_state}" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
-        dunstify "t2" -a "Unmuted" "<big>Microphone</big>" -i $iconpath_mic_mtd -r 91190 -t 800 
+        iconpath_mic_mtd=$(geticons "${icon_mic}-${icon_mic_state}" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+        if [[ -z "$iconpath_mic_mtd" ]]; then
+            iconpath_mic_mtd=$(geticons "audio-volume-high-symbolic" -s 16 -t "Adwaita" --no-fallbacks | head -n 1)
+        fi
+        notify-send "t2" -a "Muted-Mic" "<big>Off</big>" -i $iconpath_mic_mtd -r 91190 -t 800 
     fi
 }
 

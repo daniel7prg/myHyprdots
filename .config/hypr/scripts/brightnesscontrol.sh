@@ -8,8 +8,15 @@ icontheme=$(grep -o "gtk-icon-theme-name.*" ~/.config/gtk-3.0/settings.ini | cut
 
 notify_brgt (){
     bright_level=$(brightnessctl get)
-    bright_icon=$(geticons "brightnesssettings" -s 16 -c 1 -t "$icontheme" --no-fallbacks | head -n 1)
-    dunstify "t2" -a "Bri: ${bright_level}%" -h int:value:$bright_level -i $bright_icon -r 91190 -t 800
+    if [[ $bright_level -gt 50 ]]; then icon="brightness-high"
+    else icon="brightness-low"; fi
+    bright_icon=$(geticons "$icon" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+    if [[ -z "$bright_icon" ]]; then
+        bright_icon=$(geticons "display-brightness-symbolic" -s 16 -t "$icontheme" --no-fallbacks | head -n 1)
+        if [[ -z "$bright_icon" ]]; then
+            bright_icon=$(geticons "display-brightness-symbolic" -s 16 -t "Adwaita" --no-fallbacks | head -n 1); fi
+    fi
+    notify-send "t3" -a "Bri:" "${bright_level}%" -h int:value:$bright_level -i $bright_icon -r 91190 -t 800
 }
 
 if [[ "$1" == "-i" ]]; then
