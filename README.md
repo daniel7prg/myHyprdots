@@ -11,7 +11,7 @@ place my settings automatically. Sorry for my english, I'm still learning.
 <div align="center">
 <br/>
   
-![GitHub last commit](https://img.shields.io/github/last-commit/daniel7prg/myHyprdots?style=for-the-badge&color=4c97af) ![GitHub repo size](https://img.shields.io/github/repo-size/daniel7prg/myHyprdots?style=for-the-badge&color=48c0d3)
+![GitHub last commit](https://img.shields.io/github/last-commit/daniel7prg/myHyprdots/matugen?style=for-the-badge&color=8cd5b3) ![GitHub repo size](https://img.shields.io/github/repo-size/daniel7prg/myHyprdots?style=for-the-badge&color=8cd5b3)
 
 </div>
 
