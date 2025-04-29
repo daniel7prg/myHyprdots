@@ -5,3 +5,15 @@
     background-color: rgba($background, 0.7);
     border: none;
 }
+
+.screen_share_txt{
+    font-weight: 600;
+    margin: 0.2rem 0.6rem 0.2rem 0.5rem;
+}
+
+.screen_share{
+    background-color: $surface_container_highest;
+    color: $on_surface;
+    border: 0.1rem solid $outline_variant;
+    border-radius: 0.5rem;
+}

@@ -12,11 +12,11 @@
 
 (defwidget bar1 []
   (centerbox :class "bar1" :orientation "h"
-    (box :class "kb_btn" :tooltip "󱒃 Screen Sharing" :halign "start"
-      (label :class "kb_txt" :text "Screen Sharing 󱒃")
+    (box :class "screen_share" :tooltip "󱒃 Screen Sharing" :halign "start"
+      (label :class "screen_share_txt" :text "Screen Sharing 󱒃")
     )
     (box :space-evenly false :halign "center"
-      (_workspaces)
+      (_appnames)
     )
     (box :space-evenly false :halign "end" :spacing 5
       (_tray)
