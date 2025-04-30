@@ -164,7 +164,7 @@
 ;; Color Mode
 (defwidget _cmode []
   (eventbox :class "btn_colorm" :cursor "pointer" :tooltip "Switch mode" :halign "end" :hexpand true
-            :onclick "eww close menu_opt music calendar && scripts/switch-theme&" :width 152
+            :onclick "scripts/switch-theme&" :width 152
     (box :space-evenly false :orientation "h"
       (label :class "color_icon" :text "${switcher == "1" ? '' : ''}" :width 40)
       (box :space-evenly false :orientation "v" :valign "center"
