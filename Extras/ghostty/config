@@ -1,0 +1,14 @@
+theme=material-u
+font-family=CaskaydiaCove Nerd Font Propo
+font-size=15
+window-padding-x=20
+window-padding-y=20
+window-decoration=server
+font-style=true
+shell-integration-features=no-cursor
+cursor-style=underline
+confirm-close-surface=false
+keybind=alt+tab=toggle_tab_overview
+keybind=ctrl+r=reload_config
+keybind=ctrl+t=new_tab
+keybind=ctrl+w=close_surface
