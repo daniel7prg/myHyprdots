@@ -1,6 +1,6 @@
 (defwindow ewwBar
    :monitor 0
-   :stacking "bg"
+   :stacking "bottom"
    :exclusive "true"
    :namespace "bar1_layer"
    :geometry (geometry :width "99%" :height "1%" :anchor "top center")
