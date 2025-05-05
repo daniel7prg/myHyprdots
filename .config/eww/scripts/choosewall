@@ -23,14 +23,14 @@ walname="${walname%.*}"
 # apply wallpaper
 if [[ -n "${WalSel}" ]] ; then
     if [[ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]]; then
-        killall polkit-gnome-authentication-agent-1 &> /dev/null
+        killall io.elementary.desktop.agent-polkit &> /dev/null
         eww close menu_opt music calendar &> /dev/null
 	    eww update open_music=false open_cal=false open_menu=false &> /dev/null
         matugen -q -m ${color_mode} image ${WalSel}
         killall dunst &> /dev/null
         sed -i "s/icon_theme = .*/icon_theme = \"${current_icon}\"/" ~/.config/dunst/dunstrc
         killall xdg-desktop-portal-gtk &> /dev/null
-        /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+        /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit &
         notify-send "t1" -a "${walname} 󰲍" -i "$WalSel" -r 91190 -t 2200
     else
         notify-send -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600

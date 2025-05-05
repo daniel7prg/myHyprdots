@@ -8,7 +8,7 @@ prep_stage=(
     wireplumber
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-gtk
-    polkit-gnome
+    pantheon-polkit-agent
     qt5-wayland
     qt5ct
     qt6-wayland

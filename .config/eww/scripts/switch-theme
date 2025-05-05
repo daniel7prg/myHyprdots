@@ -10,7 +10,7 @@ source $HOME/.config/rofi/scripts/globalcontrol.sh
 if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
 	eww close menu_opt music calendar &> /dev/null
 	eww update open_music=false open_cal=false open_menu=false &> /dev/null
-	killall polkit-gnome-authentication-agent-1 &> /dev/null
+	killall io.elementary.desktop.agent-polkit &> /dev/null
 	matugen -q -m ${swt_color_mode} image ${current_wal}
 	gsettings set org.gnome.desktop.interface color-scheme $swt_color_scheme
 	gsettings set org.gnome.desktop.interface icon-theme $swt_current_icon
@@ -19,7 +19,7 @@ if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
 	sed -i "s/icon_theme = .*/icon_theme = \"${swt_current_icon}\"/" ~/.config/dunst/dunstrc
 	sed -i "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=$swt_current_icon/" ~/.config/gtk-3.0/settings.ini
 	sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=$set_scheme/" ~/.config/gtk-3.0/settings.ini
-	/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+	/usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit &
 	notify-send "t1" -a "${CHANGE_MS} ${MODE_MS}  " -i "${current_wal}" -t 2200
 else
 	notify-send -u critical "${WARNING_TL}" "${WARNING_MS}" -t 3600
