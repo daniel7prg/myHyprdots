@@ -90,7 +90,7 @@
     (box :class "bx_sys_per" :space-evenly true :vexpand false :hexpand false
       (circular-progress 
         :value {EWW_RAM.used_mem_perc} :class "sysbar" :thickness 3
-        :tooltip "Used"
+        :tooltip "${round((EWW_RAM.used_mem / 1073741824), 2)}GiB used / ${round((EWW_RAM.total_mem / 1073741824), 2)}GiB total"
         (label :class "txt_sys_perc" :text "${round(EWW_RAM.used_mem_perc, 0)}%")
       )
     )
@@ -98,7 +98,7 @@
     (box :class "bx_sys_per" :space-evenly true :vexpand false :hexpand false
       (circular-progress 
         :value {EWW_DISK["/"].used_perc} :class "sysbar" :thickness 3
-        :tooltip "Used"
+        :tooltip "${round((EWW_DISK["/"].used / 1073741824), 2)}GiB used / ${round((EWW_DISK["/"].total / 1073741824), 2)}GiB total"
         (label :class "txt_sys_perc" :text "${round(EWW_DISK["/"].used_perc, 0)}%")
       )
     )
