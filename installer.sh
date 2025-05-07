@@ -321,6 +321,19 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     # stage the .desktop file
     sudo cp Extras/hyprland.desktop /usr/share/wayland-sessions/
 
+    # copy custom commands
+    CMDDIR=~/.local/bin
+    if [ -d "$CMDDIR" ]; then
+        echo -e "$COK - $CMDDIR found"
+    else
+        echo -e "$CWR - $CMDDIR NOT found, creating..."
+        sudo mkdir $CMDDIR
+    fi
+
+    # new command tools
+    cp Extras/hypr_keymap ~/.local/bin/
+    cp Extras/update_cursor ~/.local/bin/
+
     # setup the first look and feel as dark
     sudo cp -R Extras/Material-U/ /usr/share/themes/Material-U/
     sudo cp -R Extras/Qogir-cursors/ /usr/share/icons/Qogir-cursors/
