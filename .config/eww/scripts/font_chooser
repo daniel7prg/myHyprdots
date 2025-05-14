@@ -9,8 +9,14 @@ currentFont=$(grep -o "gtk-font-name.*" ~/.config/gtk-3.0/settings.ini | cut -d 
 
 # Select font
 font_select=$(yad --font --title="Font Chooser" --fontname="$currentFont")
+font_name=$(echo $font_select | sed 's/ [0-9]\+$//')
 
 if [[ -n "$font_select" ]]; then
     gsettings set org.gnome.desktop.interface font-name "'$font_select'"
     sed -i "s/gtk-font-name=.*/gtk-font-name=$font_select/" ~/.config/gtk-3.0/settings.ini
+    killall dunst &> /dev/null
+	sed -i "s/font = .*/font = \"${font_select}\"/" ~/.config/dunst/dunstrc
+    sed -i "s/font = .*/font = \"${font_select}\"/" ~/.config/matugen/templates/dunstrc
+    sed -i "s/font=.*/font=$font_name/" ~/.config/swaylock/config
+    sed -i "s/font=.*/font=$font_name/" ~/.config/matugen/templates/config-swaylock
 fi
