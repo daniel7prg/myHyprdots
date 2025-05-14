@@ -17,9 +17,9 @@
             :onclick "scripts/launch_cal&" :class "${open_cal ? 'clock_btn_toggle' : 'clock_btn'}"
             :tooltip " Clock" :cursor "pointer"
     (box :orientation "h" :space-evenly false :class "clock_container"
-      (label :text " ${time.hour}:${time.min} ")
+      (label :text " ${time.hour}:${time.min}")
       (revealer :transition "slideright" :reveal rev_clock :duration "425ms"
-        (label :text "| ${time.day}-${time.mouth}-${time.year} 󰸗 ")
+        (label :text "| ${time.day}-${time.mouth}-${time.year} 󰸗")
       )
     )
   )
