@@ -137,7 +137,7 @@
           ;; Theme Section
           (box :orientation "v" :space-evenly false :class "bx_title" :halign "start" :spacing 10
             (label :class "opt_title" :text "󰉦 Theme Configuration" :halign "start")
-            (label :class "adv_txt" :text " ADV: Font Propo is Recommended" :halign "start"
+            (label :class "adv_txt" :text " ADV: Nerd Font Propo is Recommended" :halign "start"
                    :tooltip "Not all fonts support the icons used in widgets, and using them can cause desing errors")
             (box :orientation "h" :space-evenly false 
               (label :class "hlp_txt" :text "Config icons & cursor options ")

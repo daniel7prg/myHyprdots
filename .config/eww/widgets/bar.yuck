@@ -16,10 +16,13 @@
   (eventbox :onhover "${EWW_CMD} update rev_clock=true" :onhoverlost "${EWW_CMD} update rev_clock=false" 
             :onclick "scripts/launch_cal&" :class "${open_cal ? 'clock_btn_toggle' : 'clock_btn'}"
             :tooltip " Clock" :cursor "pointer"
-    (box :orientation "h" :space-evenly false :class "clock_container"
+    (box :orientation "h" :space-evenly false :class "clock_container" :spacing 5
       (label :text " ${time.hour}:${time.min}")
       (revealer :transition "slideright" :reveal rev_clock :duration "425ms"
-        (label :text "| ${time.day}-${time.mouth}-${time.year} 󰸗")
+        (box :space-evenly false :orientation "h" :spacing 5
+          (label :text "|")
+          (label :text "${time.day}-${time.mouth}-${time.year} 󰸗")
+        )
       )
     )
   )
