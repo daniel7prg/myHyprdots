@@ -18,5 +18,5 @@ if [[ -n "$font_select" ]]; then
 	sed -i "s/font = .*/font = \"${font_select}\"/" ~/.config/dunst/dunstrc
     sed -i "s/font = .*/font = \"${font_select}\"/" ~/.config/matugen/templates/dunstrc
     sed -i "s/font=.*/font=$font_name/" ~/.config/swaylock/config
-    sed -i "s/font=.*/font=$font_name/" ~/.config/matugen/templates/config-swaylock
+    sed -i "s/font = .*/font = $font_name/" ~/.config/hypr/hyprlock.conf
 fi

@@ -43,7 +43,7 @@ install_stage=(
     matugen
     dunst
     swww
-    swaylock-effects
+    hyprlock
     rofi-wayland
     firefox
     swappy
@@ -87,7 +87,6 @@ backup_files=(
     qt6ct
     rofi
     swappy
-    swaylock
     swww
     matugen
 )

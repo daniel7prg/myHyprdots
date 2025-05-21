@@ -48,7 +48,7 @@
 (defwidget lock []
     (eventbox :orientation "v" :space-evenly false :class "power_item" :cursor "pointer" :height 50
               :onhover "${EWW_CMD} update rev_lock=true" :onhoverlost "${EWW_CMD} update rev_lock=false"
-              :onclick "sh -c '(sleep 0.7s; swaylock)' & disown && scripts/power -c"
+              :onclick "sh -c '(sleep 0.7s; hyprlock -q)' & disown && scripts/power -c"
         (box :space-evenly false :orientation "h"
             (label :class "item_icon" :text "󰌾" :valign "center" :width 40)
             (revealer :transition "slideright" :reveal rev_lock :duration "350ms"
