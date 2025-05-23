@@ -69,6 +69,7 @@ install_stage=(
     geticons-git
     power-profiles-daemon
     nwg-clipman
+    fastfetch
 )
 
 backup_files=(
@@ -170,6 +171,10 @@ sleep 1
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like to continue with the install (y,n): ' CONTINST
 if [[ $CONTINST == "Y" || $CONTINST == "y" ]]; then
     echo -e "$CNT - Setup starting..."
+    echo -e "$CAT - Please type your sudo password..."
+    sudo echo -e "$CNT - Checking..."
+    sleep 2s
+    echo -e "$COK - Correct! Installing..."
 else
     echo -e "$CNT - This script will now exit, no changes were made to your system."
     exit

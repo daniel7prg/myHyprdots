@@ -55,7 +55,7 @@ Item {
             width: parent.width
             enabled: user != "" && password != "" ? true : false
             hoverEnabled: true
-            text: "Type..."
+            text: "Enter Pass..."
             onClicked: {
                 sddm.login(user, password, session);
             }
