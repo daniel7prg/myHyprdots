@@ -17,8 +17,8 @@ swt_color_scheme="prefer-light"
 
 # Current theme
 current_theme=`grep -o "gtk-application.*" ~/.config/gtk-3.0/settings.ini | cut -d "=" -f 2`
-iconDark='Colloid-Teal-Gruvbox-Dark'
-iconLight='Colloid-Teal-Gruvbox-Light'
+iconDark='Papirus-Dark'
+iconLight='Papirus-Light'
 current_wal=$(cat ~/.cache/wal/colors.json | jq ".wallpaper" | sed 's/"//g')
 current_icon=$iconDark
 swt_current_icon=$iconLight
