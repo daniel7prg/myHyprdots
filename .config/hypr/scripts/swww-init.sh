@@ -20,4 +20,6 @@ else
         MONITOR=($(echo "${CURRENT[@]}" | grep -oP "(?<=card0-).*"))
         swww img -o "${MONITOR[@]}" $WAL_DEF
     done
+    sleep 5s
+    matugen -q -m dark image ${WAL_DEF}
 fi

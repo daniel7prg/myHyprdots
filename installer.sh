@@ -66,7 +66,7 @@ install_stage=(
     ttf-noto-nerd
     ttf-nerd-fonts-symbols
     noto-fonts-emoji
-    geticons
+    geticons-git
     power-profiles-daemon
     nwg-clipman
 )
@@ -158,7 +158,6 @@ if [[ $ISVM == *"vm"* ]]; then
     echo -e "$CWR - Please note that VMs are not fully supported and if you try to run this on
     a Virtual Machine there is a high chance this will fail.\nSome dependencies will be installed."
     echo -e "$CWR - Install any necessary dependencies according to your virtualization software, be it VM Ware, VirtualBox or any other."
-    install_software socat
     sleep 2
 fi
 
@@ -337,6 +336,8 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     sudo cp -R Extras/Material-U/ /usr/share/themes/Material-U/
     sudo cp -R Extras/Qogir-cursors/ /usr/share/icons/Qogir-cursors/
     sudo cp -R Extras/Qogir-white-cursors/ /usr/share/icons/Qogir-white-cursors/
+    sed -i "s|color_scheme_path=.*|color_scheme_path=${HOME}/.config/qt5ct/colors/matugen.conf|" ~/.config/qt5ct/qt5ct.conf
+    sed -i "s|color_scheme_path=.*|color_scheme_path=${HOME}/.config/qt6ct/colors/matugen.conf|" ~/.config/qt6ct/qt6ct.conf
     gsettings set org.gnome.desktop.interface gtk-theme Material-U
     gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
@@ -414,6 +415,8 @@ if [[ $ISVM == *"vm"* ]]; then
         sed -i 's/enabled = true/enabled = false/' ~/.config/hypr/conf/decoration.conf
     fi
     sleep 1
+    echo -e "$CAC - Installing important tool for VM..."
+    install_software socat
 fi
 
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like install any these kitty(k)/foot(f)/No(n) terminals? (k,f,n) ' TERM
