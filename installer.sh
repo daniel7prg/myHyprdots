@@ -330,8 +330,8 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     fi
 
     # new command tools
-    cp Extras/hypr_keymap ~/.local/bin/
-    cp Extras/update_cursor ~/.local/bin/
+    sudo cp Extras/hypr_keymap ~/.local/bin/
+    sudo cp Extras/update_cursor ~/.local/bin/
 
     # setup the first look and feel as dark
     sudo cp -R Extras/Material-U/ /usr/share/themes/Material-U/
@@ -342,7 +342,6 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     gsettings set org.gnome.desktop.interface cursor-theme Qogir-cursors
     gsettings set org.gnome.desktop.interface font-name 'JetBrainsMonoNL Nerd Font Propo Semi-Bold 13'
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-    kvantummanager --set MaQterial-U
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-gtk.css';" /usr/share/themes/Material-U/gtk-3.0/gtk-dark.css
     sudo sed -i "2i @import '${HOME}/.cache/wal/colors-gtk.css';" /usr/share/themes/Material-U/gtk-4.0/gtk-dark.css
     sudo sed -i 's/Inherits=Adwaita/Inherits=Qogir-cursors/' /usr/share/icons/default/index.theme

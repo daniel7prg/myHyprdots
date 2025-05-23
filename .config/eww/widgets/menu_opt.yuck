@@ -119,9 +119,9 @@
     (label :class "txt_sys" :text "CPU " :halign "start")
     (box :class "bx_sys_per" :space-evenly true :vexpand false :hexpand false
       (circular-progress 
-        :value {EWW_TEMPS.ACPITZ_TEMP1} :class "sysbar" :thickness 3
+        :value {EWW_TEMPS.ACPITZ_TEMP1 == 'null' ? '0' : EWW_TEMPS.ACPITZ_TEMP1} :class "sysbar" :thickness 3
         :tooltip "Grades"
-        (label :class "txt_sys_perc" :text "${EWW_TEMPS.ACPITZ_TEMP1}󰔄")
+        (label :class "txt_sys_perc" :text "${EWW_TEMPS.ACPITZ_TEMP1 == 'null' ? '0' : EWW_TEMPS.ACPITZ_TEMP1}󰔄")
       )
     )
     (label :class "txt_sys" :text "TEMP 󱌥" :halign "start")
