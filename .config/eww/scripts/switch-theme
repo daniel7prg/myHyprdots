@@ -19,6 +19,8 @@ if [ -z "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
 	sed -i "s/icon_theme = .*/icon_theme = \"${swt_current_icon}\"/" ~/.config/dunst/dunstrc
 	sed -i "s/icon_theme = .*/icon_theme = \"${swt_current_icon}\"/" ~/.config/matugen/templates/dunstrc
 	sed -i "s/gtk-icon-theme-name=.*/gtk-icon-theme-name=$swt_current_icon/" ~/.config/gtk-3.0/settings.ini
+	sed -i "s/icon_theme=.*/icon_theme=$swt_current_icon/" ~/.config/qt5ct/qt5ct.conf
+	sed -i "s/icon_theme=.*/icon_theme=$swt_current_icon/" ~/.config/qt6ct/qt6ct.conf
 	sed -i -e "s/gtk-application-prefer-dark-theme=.*/gtk-application-prefer-dark-theme=$set_scheme/" ~/.config/gtk-3.0/settings.ini
 	/usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit &
 	notify-send "t1" -a "${CHANGE_MS} ${MODE_MS}  " -i "${current_wal}" -t 2200
