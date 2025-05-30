@@ -1,16 +1,16 @@
 {{colors.background.default.hex}}
-{{colors.primary.default.hex}}
-{{colors.primary.default.hex}}
-{{colors.tertiary.default.hex}}
-{{colors.on_primary_container.default.hex}}
-{{colors.on_secondary_container.default.hex}}
-{{colors.on_tertiary_container.default.hex}}
+{{colors.primary.default.hex | auto_lightness: 10.0}}
+{{colors.on_primary_container.default.hex | auto_lightness: 10.0}}
+{{colors.secondary.default.hex | auto_lightness: 10.0}}
+{{colors.on_secondary_container.default.hex | auto_lightness: 10.0}}
+{{colors.tertiary.default.hex | auto_lightness: 10.0}}
+{{colors.on_tertiary_container.default.hex | auto_lightness: 10.0}}
 {{colors.on_background.default.hex}}
 {{colors.on_background.default.hex}}
-{{colors.primary.default.hex}}
-{{colors.primary.default.hex}}
-{{colors.tertiary.default.hex}}
-{{colors.on_primary_container.default.hex}}
-{{colors.on_secondary_container.default.hex}}
-{{colors.on_tertiary_container.default.hex}}
+{{colors.primary.default.hex | auto_lightness: 10.0}}
+{{colors.on_primary_container.default.hex | auto_lightness: 10.0}}
+{{colors.secondary.default.hex | auto_lightness: 10.0}}
+{{colors.on_secondary_container.default.hex | auto_lightness: 10.0}}
+{{colors.tertiary.default.hex | auto_lightness: 10.0}}
+{{colors.on_tertiary_container.default.hex | auto_lightness: 10.0}}
 {{colors.on_background.default.hex}}
