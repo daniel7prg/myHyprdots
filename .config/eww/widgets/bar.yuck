@@ -102,17 +102,17 @@
     (box :orientation "h" :space-evenly false :spacing 5 :class "wks_container"
       (for ws in my-workspaces
         (button :onclick "hyprctl dispatch workspace ${ws}"
+          :tooltip {
+              workspaces.total[ws - 1] == 1 ? "Active" :
+              workspaces.total[ws - 1] == 2 ? "Used" :
+              "Empty"
+          }
           :class {
               workspaces.total[ws - 1] == 1 ? "active_wk_btn" :
               workspaces.total[ws - 1] == 2 ? "used_wk_btn" :
               "empty_wk_btn"
           }
           (label
-            :tooltip {
-              workspaces.total[ws - 1] == 1 ? "Active" :
-              workspaces.total[ws - 1] == 2 ? "Used" :
-              "Empty"
-            }
             :text {
               workspaces.total[ws - 1] == 1 ? "󰮯" :
               workspaces.total[ws - 1] == 2 ? "" :
