@@ -15,7 +15,7 @@
       }
     </style>
     <linearGradient id="linear-gradient" x1="8.93" y1="572.38" x2="572.68" y2="102.08" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="{{colors.on_primary_container.default.hex}}" />
+      <stop offset="0" stop-color="{{colors.primary.default.hex | auto_lightness: 10.0}}" />
       <stop offset="1" stop-color="{{colors.primary.default.hex}}" />
     </linearGradient>
   </defs>
