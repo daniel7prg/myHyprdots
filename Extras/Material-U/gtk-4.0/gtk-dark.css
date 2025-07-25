@@ -3002,7 +3002,7 @@ scrollbar.overlay-indicator:not(.dragging):not(.hovering).vertical button {
 }
 
 scrollbar.overlay-indicator.dragging, scrollbar.overlay-indicator.hovering {
-  background-color: rgba(18, 18, 18, 0.9);
+  background-color: @surface_container;
 }
 
 scrollbar.overlay-indicator.dragging > range > trough, scrollbar.overlay-indicator.hovering > range > trough {
