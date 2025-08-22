@@ -1,12 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 
 #  ______________
 # | Open Bar EWW |
 #  --------------
 
+STATUS_FILE=/tmp/eww_status
+
 ## Run eww daemon if not running already
-if [[ ! $(pidof eww) ]]; then
-    eww daemon
-    sleep 2
-    eww open ewwBar
+if [[ ! -f $STATUS_FILE ]]; then
+	touch $STATUS_FILE
+	eww daemon
+	sleep 2s
+	eww open ewwBar
 fi

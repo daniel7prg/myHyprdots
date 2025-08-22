@@ -11,29 +11,10 @@ _verify(){
     if [ -n "$(hyprctl -j clients | jaq -c '.[].workspace.id')" ]; then
         notify-send -u critical "${WARNING_TL}" "${WARNING_MS}"
         exit 0
+    else
+	    eww close power reboot logout lock cancel &> /dev/null
+        sleep 0.1
     fi
-}
-
-_poweroff(){
-    _verify
-    eww close power reboot logout lock cancel &> /dev/null
-    sleep 0.1
-    systemctl poweroff
-}
-
-_reboot(){
-    _verify
-    eww close power reboot logout lock cancel &> /dev/null
-    sleep 0.1
-    systemctl reboot
-}
-
-_logout(){
-    _verify
-    eww close power reboot logout lock cancel &> /dev/null
-    sleep 0.1
-    hyprctl dispatch exit
-    # loginctl kill-session $XDG_SESSION_ID
 }
 
 _close(){
@@ -50,9 +31,9 @@ _open(){
 }
 
 case $1 in
-    -r)  _reboot ;;
-    -l)  _logout ;;
+    -r)  _verify && systemctl reboot ;;
+    -l)  _verify && hyprctl dispatch exit ;;
     -c)  _close ;;
-    -p)  _poweroff ;;
+    -p)  _verify && systemctl poweroff ;;
     *)  _open ;;
 esac
