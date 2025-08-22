@@ -4,7 +4,7 @@
 # | Simple Screenshot |
 #  -------------------
 temp_file=$(mktemp)
-grim -g "$(slurp)" - > $temp_file 
+pkill -x slurp || grim -g "$(slurp)" - > $temp_file 
 file_name=$(date +'screenshot-%Y%m%d-%H%M.png')
 swappy -f $temp_file -o "$file_name"
 rm $temp_file
