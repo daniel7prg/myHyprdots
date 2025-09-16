@@ -5535,7 +5535,8 @@ popover.entry-completion > contents {
 .nautilus-window .sidebar-pane > toolbarview > placessidebar > scrolledwindow {
   margin: 0 0 8px 8px;
   border-radius: 12px;
-  background-color: alpha(@primary_fixed_dim, 0.15);
+  /* background-color: alpha(@primary_fixed_dim, 0.15); */
+  background-color: alpha(@secondary, 0.15);
 }
 
 .nautilus-window flap.unfolded > placessidebar > scrolledwindow > overshoot.top, .nautilus-window flap.unfolded > placessidebar > scrolledwindow > undershoot.top,
@@ -5650,7 +5651,7 @@ popover.entry-completion > contents {
 .nautilus-window flap.unfolded > placessidebar > scrolledwindow > viewport > list.navigation-sidebar > row.activatable:selected image.sidebar-icon, .nautilus-window flap.unfolded > placessidebar > scrolledwindow > viewport > list.navigation-sidebar > row.activatable:selected label.sidebar-label,
 .nautilus-window .sidebar-pane > toolbarview > placessidebar > scrolledwindow > viewport > list.navigation-sidebar > row.activatable:selected image.sidebar-icon,
 .nautilus-window .sidebar-pane > toolbarview > placessidebar > scrolledwindow > viewport > list.navigation-sidebar > row.activatable:selected label.sidebar-label {
-  color: @primary;
+  color: @secondary;
 }
 
 .nautilus-window flap.unfolded > placessidebar > scrolledwindow > viewport > list.navigation-sidebar > row.activatable:selected button.sidebar-button,
@@ -5660,6 +5661,7 @@ popover.entry-completion > contents {
 
 .nautilus-window flap.unfolded > placessidebar > scrolledwindow > viewport > list.navigation-sidebar > row.activatable:selected > revealer > box,
 .nautilus-window .sidebar-pane > toolbarview > placessidebar > scrolledwindow > viewport > list.navigation-sidebar > row.activatable:selected > revealer > box {
+  transition: 200ms cubic-bezier(0, 0, 0.2, 1);
   border: none;
   /* border-image-width: 16px 9px 16px 46px;
   border-image-slice: 16 9 16 46;
