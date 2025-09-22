@@ -5,7 +5,7 @@
 #  -----------
 
 # Conf stdout
-conf="[general]\nframerate=60\nbars = 7\n[output]\nmethod = raw\nraw_target = /dev/stdout\ndata_format = ascii\nascii_max_range = 7\n"
+conf="[general]\nframerate=60\nbars = 10\n[output]\nmethod = raw\nraw_target = /dev/stdout\ndata_format = ascii\nascii_max_range = 7\n"
 
 echo -en "$conf" | cava -p /dev/stdin | awk -F';' '{
   NF--;  # Delete last char
