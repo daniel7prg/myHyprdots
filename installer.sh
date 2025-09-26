@@ -86,7 +86,7 @@ backup_files=(
     qt5ct
     qt6ct
     rofi
-    swappy
+    satty
     swww
     matugen
 )
