@@ -46,7 +46,7 @@ install_stage=(
     hyprlock
     rofi-wayland
     firefox
-    swappy
+    satty
     grim
     slurp
     thunar
