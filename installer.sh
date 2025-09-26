@@ -356,7 +356,7 @@ fi
 read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install Display Manager (SDDM)? (y,n): ' SDDM
 if [[ $SDDM == "Y" || $SDDM == "y" ]]; then
     echo -e "$CAC - Installing componenets..."
-    install_software sddm-git
+    install_software sddm
     echo -e "$CAC - Setting up componenets..."
     echo -e "$CNT - Setting up the login screen."
     sudo cp -R sddm-theme/corners/ /usr/share/sddm/themes/corners/
