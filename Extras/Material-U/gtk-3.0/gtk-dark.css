@@ -6263,10 +6263,6 @@ window.background.chromium > button:disabled {
   color: @surface_bright;
 }
 
-window.background.chromium menubar, window.background.chromium headerbar {
-  color: alpha(@on_surface, 0.65);
-}
-
 window.background.chromium menu {
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -6279,6 +6275,8 @@ window.background.chromium menu menuitem {
 
 window.background.chromium headerbar {
   padding: 0 8px;
+  background-color: @surface_container_lowest;
+  color: @on_surface_variant;
 }
 
 window.background.chromium spinner {
