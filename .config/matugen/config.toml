@@ -48,13 +48,9 @@ output_path = '~/.config/Kvantum/MaQterial-U/MaQterial-U.kvconfig'
 input_path = './templates/MaQterial-U.svg'
 output_path = '~/.config/Kvantum/MaQterial-U/MaQterial-U.svg'
 
-[templates.qt5ct]
-input_path = './templates/qtct-colors.conf'
-output_path = '~/.config/qt5ct/colors/matugen.conf'
-
-[templates.qt6ct]
-input_path = './templates/qtct-colors.conf'
-output_path = '~/.config/qt6ct/colors/matugen.conf'
+[templates.qtct]
+input_path = './templates/Matugen.colors'
+output_path = '~/.local/share/color-schemes/Matugen.colors'
 
 [templates.hypr_logo]
 input_path = './templates/hyprland.svg'
