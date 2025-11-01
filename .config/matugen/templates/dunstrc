@@ -465,7 +465,7 @@
 	background = "{{colors.background.default.hex}}e6"
     foreground = "{{colors.on_background.default.hex}}"
     frame_color = "{{colors.primary.default.hex}}" #Border
-    highlight = "{{colors.primary.default.hex}}, {{colors.primary.default.hex | set_lightness: 20.0}}" # Color for progress bar
+    highlight = "{{colors.primary.default.hex}}, {{colors.primary.default.hex | auto_lightness: 20.0}}" # Color for progress bar
     default_icon = "~/.config/dunst/icons/hyprland.svg"
     timeout = 5
 

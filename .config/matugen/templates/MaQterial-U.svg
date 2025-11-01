@@ -6441,7 +6441,7 @@
   </g>
   <g
      id="tab-focused-bottomleft"
-     fill="{{colors.primary.default.hex | set_lightness: -5.0}}"
+     fill="{{colors.primary.default.hex | auto_lightness: -5.0}}"
      transform="matrix(0 .11538 .99999 0 213 665.88)">
     <rect
        x="1"
@@ -6453,7 +6453,7 @@
   </g>
   <g
      id="tab-focused-bottomright"
-     fill="{{colors.primary.default.hex | set_lightness: -5.0}}"
+     fill="{{colors.primary.default.hex | auto_lightness: -5.0}}"
      transform="matrix(0 .11538 -.99999 0 91.001 665.88)">
     <rect
        x="1"
@@ -6465,7 +6465,7 @@
   </g>
   <g
      id="tab-focused-bottom"
-     fill="{{colors.primary.default.hex | set_lightness: -5.0}}"
+     fill="{{colors.primary.default.hex | auto_lightness: -5.0}}"
      transform="matrix(.99999 0 0 .11539 138 674.54)">
     <rect
        x="1"
