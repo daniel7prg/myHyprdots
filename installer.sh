@@ -332,6 +332,15 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
         sudo mkdir $CMDDIR
     fi
 
+    # Verify colorscheme directory
+    CLRDIR=~/.local/share/color-schemes
+    if [ -d "$CLRDIR" ]; then
+        echo -e "$COK - $CLRDIR found"
+    else
+        echo -e "$CWR - $CLRDIR NOT found, creating..."
+        sudo mkdir $CLRDIR
+    fi
+
     # new command tools
     sudo cp Extras/hypr_keymap ~/.local/bin/
     sudo cp Extras/update_cursor ~/.local/bin/
