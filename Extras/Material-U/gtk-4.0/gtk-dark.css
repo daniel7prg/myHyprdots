@@ -98,7 +98,7 @@
    ----------------
    use responsibly! */
 @define-color accent_bg_color @primary;
-@define-color accent_fg_color @on_background;
+@define-color accent_fg_color @on_primary;
 @define-color accent_color @primary;
 @define-color destructive_bg_color @error;
 @define-color destructive_fg_color @on_background;
@@ -1026,8 +1026,8 @@ button.suggested-action {
 }
 
 button.suggested-action:disabled {
-  color: rgba(255, 255, 255, 0.45);
-  background-color: rgba(50, 129, 234, 0.25);
+  color: @on_background;
+  background-color: @surface_container_highest;
 }
 
 button.suggested-action:hover {
@@ -1046,7 +1046,7 @@ button.suggested-action:checked {
 }
 
 button.suggested-action:focus {
-  box-shadow: 0 0 0 2px rgba(50, 129, 234, 0.35);
+  box-shadow: 0 0 0 2px darker(@primary);
 }
 
 button.suggested-action.flat {
@@ -1060,7 +1060,7 @@ button.suggested-action.flat:disabled {
 }
 
 button.suggested-action.flat:checked {
-  background-color: rgba(50, 129, 234, 0.3);
+  background-color: darker(@primary_container);
 }
 
 button.destructive-action {
@@ -2289,7 +2289,7 @@ treeview.view.expander:selected {
 
 columnview.view.expander:selected:hover,
 treeview.view.expander:selected:hover {
-  color: rgba(50, 129, 234, 0.65);
+  color: @secondary;
 }
 
 columnview.view.expander:disabled,
@@ -3397,7 +3397,7 @@ scale > trough > slider, scale > trough > slider:focus, scale > trough > slider:
 }
 
 scale > trough > slider {
-  /* background-image: -gtk-scaled(url("assets/scale-slider-dark.png"), url("assets/scale-slider-dark@2.png")), radial-gradient(circle, transparent 10%, transparent 0%); */
+  /* background-image: -gtk-scaled(url("./assets/scale-slider-dark.png"), url("./assets/scale-slider-dark@2.png")), radial-gradient(circle, transparent 10%, transparent 0%); */
   background-image: radial-gradient(circle, @primary 30%, @on_primary_container 70%);
 }
 
@@ -5995,7 +5995,7 @@ window > widget leaflet > box > scrolledwindow > viewport > widget > stack {
 }
 
 .night .clock-time {
-  color: #1A73E8;
+  color: @primary;
   background-color: alpha(@primary, 0.25);
 }
 
@@ -6557,16 +6557,16 @@ screenshot-carousel box.frame.view {
 
 /* Styling for specific category buttons. */
 .category-tile.category-create {
-  background: linear-gradient(180deg, #ce8cd7 0%, #2861c6 100%);
+  background: linear-gradient(180deg, @primary 0%, @primary 100%);
   color: @on_background;
 }
 
 .category-tile.category-create:hover {
-  background: linear-gradient(180deg, shade(#ce8cd7, 1.07) 0%, shade(#2861c6, 1.1) 100%);
+  background: linear-gradient(180deg, shade(@primary, 1.07) 0%, shade(@primary, 1.1) 100%);
 }
 
 .category-tile.category-create:active {
-  background: linear-gradient(180deg, shade(#ce8cd7, 0.95) 0%, shade(#2861c6, 0.95) 100%);
+  background: linear-gradient(180deg, shade(@primary, 0.95) 0%, shade(@primary, 0.95) 100%);
 }
 
 .category-tile.category-develop {
@@ -6747,8 +6747,8 @@ scrolledwindow.inline undershoot.top {
 }
 
 .search-view {
-  background-color: #1A73E8;
-  color: @on_background;
+  background-color: @primary;
+  color: @on_primary;
 }
 
 .search-view menubutton button:focus:focus-visible {
@@ -7187,8 +7187,8 @@ styleselector checkbutton > radio:checked, styleselector checkbutton > radio:che
 
 .note-window.style-blue popover > arrow,
 .note-window.style-blue popover > contents {
-  background-color: #609def;
-  color: @on_background;
+  background-color: @primary;
+  color: @on_primary;
 }
 
 .note-window.style-gray, .note-window.style-gray .text-view.view, .note-window.style-gray .text-view.view > text, .note-window.style-gray headerbar {
