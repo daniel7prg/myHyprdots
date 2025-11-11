@@ -6247,7 +6247,7 @@ notebook.meld-notebook > stack {
  * Chromium *
  ************/
 window.background.chromium {
-  background-color: @surface_dim;
+  background-color: @surface_container;
 }
 
 window.background.chromium entry,
