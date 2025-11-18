@@ -1026,8 +1026,8 @@ button.suggested-action {
 }
 
 button.suggested-action:disabled {
-  color: @on_background;
-  background-color: @surface_container_highest;
+  color: @on_primary_container;
+  background-color: alpha(@primary, 0.25);
 }
 
 button.suggested-action:hover {
@@ -1046,7 +1046,7 @@ button.suggested-action:checked {
 }
 
 button.suggested-action:focus {
-  box-shadow: 0 0 0 2px darker(@primary);
+  box-shadow: 0 0 0 2px alpha(@primary, 0.35);
 }
 
 button.suggested-action.flat {
@@ -1060,7 +1060,7 @@ button.suggested-action.flat:disabled {
 }
 
 button.suggested-action.flat:checked {
-  background-color: darker(@primary_container);
+  background-color: alpha(@primary, 0.3);
 }
 
 button.destructive-action {
