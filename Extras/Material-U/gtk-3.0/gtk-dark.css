@@ -6284,7 +6284,7 @@ window.background.chromium spinner {
 }
 
 window.background.chromium textview.view {
-  background-color: transparent;
+  background-color: @surface_container_lowest;
 }
 
 window.background.chromium treeview.view.cell:selected:focus {
