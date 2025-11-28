@@ -1,10 +1,11 @@
+/*Alternative theme (Default)*/
+
 // Config //
 configuration {
     modi:                        "drun";
     show-icons:                  true;
-    display-drun:                "Apps";
     drun-display-format:         "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
-    font:                        "JetBrainsMono Nerd Font 12";
+    font:                        "JetBrainsMono Nerd Font 13";
 }
 
 /*****----- Global Properties -----*****/
@@ -17,15 +18,15 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       30%;
+    width:                       40%;
     x-offset:                    0;
     y-offset:                    0;
 
     /* properties for all widgets */
     enabled:                     true;
     border:                      0.1em solid;
-    border-radius:               1em;
-    border-color:                @outline-variant;
+    border-radius:               0.5em;
+    border-color:                @surface-container-high;
     cursor:                      "default";
     background-color:            @background;
 }
@@ -33,8 +34,8 @@ window {
 /*****----- Main Box -----*****/
 mainbox {
     enabled:                     true;
-    spacing:                     1em;
-    padding:                     1em;
+    spacing:                     0.5em;
+    padding:                     0;
     background-color:            transparent;
     children:                    [ "inputbar", "listview" ];
 }
@@ -43,51 +44,47 @@ mainbox {
 inputbar {
     enabled:                     true;
     spacing:                     0;
-    border:                      0.1em solid;
-    border-color:                @primary-container;
-    border-radius:               0.5em;
     padding:                     0;
-    background-color:            @outline-variant;
+    background-color:            @surface-container-low;
     text-color:                  @on-surface;
-    children:                    ["prompt","entry"];
+    children:                    ["entry"];
 }
-prompt {
-    enabled:                     true;
-    padding:                     0.5em;
-    border-radius:               0.5em 0 0 0.5em;
-    background-color:            @primary-container;
-    text-color:                  @on-primary-container;
-}
+
 entry {
     enabled:                     true;
-    padding:                     0.5em;
+    padding:                     0.75em;
+    margin:                      0;
+    border:                      0 0 0.1em 0 solid;
+    border-color:                @surface-container-high;
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "Search...";
+    placeholder:                 "<i>Search...</i>";
     placeholder-color:           inherit;
+    placeholder-markup:          true;
 }
 
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       5;
+    lines:                       6;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   true;
     layout:                      vertical;
     reverse:                     false;
-    fixed-height:                true;
+    fixed-height:                false;
     fixed-columns:               true;
     
     spacing:                     0.5em;
+    margin:                      0 0 0.75em 0.25em;
     background-color:            transparent;
     text-color:                  @on-surface;
     cursor:                      "default";
 }
-
 scrollbar {
+    margin:                      0 0.3em 0 0;
     handle-width:                0.25em;
     handle-color:                @primary;
     background-color:            @surface-container;
@@ -98,26 +95,28 @@ scrollbar {
 element {
     enabled:                     true;
     spacing:                     0.5em;
-    padding:                     0.5em;
+    margin:                      0 -0.25em 0 0;
+    padding:                     0.25em 0.5em;
     border:                      0.1em solid;
     border-radius:               0.5em;
-    border-color:                @outline-variant;
-    background-color:            @surface-container;
+    border-color:                @surface;
+    background-color:            @surface;
     text-color:                  @on-surface;
     cursor:                      pointer;
 }
 element normal.normal {
-    background-color:            @surface-container;
-    text-color:                  @on-surface;
+    background-color:            inherit;
+    text-color:                  inherit;
 }
+
 element selected.normal {
-    background-color:            @primary;
-    text-color:                  @on-primary;
+    background-color:            @primary-container;
+    text-color:                  @on-primary-container;
 }
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        2em;
+    size:                        1.75em;
     cursor:                      inherit;
 }
 element-text {

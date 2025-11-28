@@ -3,8 +3,8 @@
 configuration {
     modi:                        "window";
     show-icons:                  true;
-    display-window:              " Windows";
-    window-format:               "<span weight='light' size='small'><i>{t:8}...</i></span> | <span weight='bold'>{c}</span>";
+    display-window:              "Windows";
+    window-format:               "<span weight='light' size='small'><i>{t:10}...</i></span> | <span weight='bold'>{c}</span>";
     font:                        "JetBrainsMono Nerd Font 12";
 }
 
@@ -137,7 +137,7 @@ element selected.active {
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        2.5em;
+    size:                        2em;
     cursor:                      inherit;
 }
 element-text {
@@ -148,5 +148,3 @@ element-text {
     vertical-align:              0.5;
     horizontal-align:            0.5;
 }
-
-
