@@ -64,6 +64,7 @@ install_stage=(
     ttf-firacode-nerd
     ttf-jetbrains-mono-nerd
     ttf-noto-nerd
+    ttf-google-sans
     noto-fonts-emoji
     geticons-git
     power-profiles-daemon
