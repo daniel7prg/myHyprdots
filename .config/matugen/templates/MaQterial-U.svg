@@ -4341,13 +4341,13 @@
   <path
      id="tooltip-normal"
      d="m371.77 578.05h48v48h-48z"
-     fill="{{colors.surface.default.hex}}" />
+     fill="{{colors.surface_container.default.hex}}" />
   <g
      id="tooltip-normal-left"
      transform="translate(249.52 -125.7)">
     <path
        d="m116.26 703.75h6v48h-6z"
-       fill="{{colors.surface.default.hex}}"
+       fill="{{colors.surface_container.default.hex}}"
        id="path253" />
   </g>
   <g
@@ -4355,7 +4355,7 @@
      transform="translate(249.52 -126.7)">
     <path
        d="m122.26 698.75c-3.3229 1e-3 -5.9977 2.6768-5.9977 6h6z"
-       fill="{{colors.surface.default.hex}}"
+       fill="{{colors.surface_container.default.hex}}"
        id="path254" />
   </g>
   <g
@@ -4363,7 +4363,7 @@
      transform="rotate(90 333.87 789.67)">
     <path
        d="m116.26 703.75h6v48h-6z"
-       fill="{{colors.surface.default.hex}}"
+       fill="{{colors.surface_container.default.hex}}"
        id="path255" />
   </g>
   <g
@@ -4371,7 +4371,7 @@
      transform="rotate(90 334.37 790.17)">
     <path
        d="m122.26 698.75c-3.3229 1e-3 -5.9977 2.6768-5.9977 6h6z"
-       fill="{{colors.surface.default.hex}}"
+       fill="{{colors.surface_container.default.hex}}"
        id="path256" />
   </g>
   <g
@@ -4379,7 +4379,7 @@
      transform="matrix(-1 0 0 1 542.03 -125.7)">
     <path
        d="m116.26 703.75h6v48h-6z"
-       fill="{{colors.surface.default.hex}}"
+       fill="{{colors.surface_container.default.hex}}"
        id="path257" />
   </g>
   <g
@@ -4387,7 +4387,7 @@
      transform="rotate(180 271.02 665.4)">
     <path
        d="m122.26 698.75c-3.3229 1e-3 -5.9977 2.6768-5.9977 6h6z"
-       fill="{{colors.surface.default.hex}}"
+       fill="{{colors.surface_container.default.hex}}"
        id="path258" />
   </g>
   <g
@@ -4395,7 +4395,7 @@
      transform="rotate(-90 208.17 540.14)">
     <path
        d="m116.26 703.75h6v48h-6z"
-       fill="{{colors.surface.default.hex}}"
+       fill="{{colors.surface_container.default.hex}}"
        id="path259" />
   </g>
   <g
@@ -4403,7 +4403,7 @@
      transform="rotate(-90 207.67 540.64)">
     <path
        d="m122.26 698.75c-3.3229 1e-3 -5.9977 2.6768-5.9977 6h6z"
-       fill="{{colors.surface.default.hex}}"
+       fill="{{colors.surface_container.default.hex}}"
        id="path260" />
   </g>
   <g
@@ -4416,7 +4416,7 @@
        id="g261">
       <path
          d="m190.36 252.46h50v10.5h-50z"
-         fill="{{colors.surface.default.hex}}"
+         fill="{{colors.surface_container.default.hex}}"
          id="path261" />
     </g>
     <g
@@ -4455,7 +4455,7 @@
          id="path262" />
       <path
          d="m9.0003 47.939a6 6 0 0 0-6 6h6z"
-         fill="{{colors.surface.default.hex}}"
+         fill="{{colors.surface_container.default.hex}}"
          id="path263" />
     </g>
   </g>
@@ -4469,7 +4469,7 @@
        id="g264">
       <path
          d="m246.98 259v50l-10.5 1e-5v-50z"
-         fill="{{colors.surface.default.hex}}"
+         fill="{{colors.surface_container.default.hex}}"
          id="path264" />
     </g>
     <g
@@ -4496,7 +4496,7 @@
        id="g266">
       <path
          d="m182.98 259v50l10.5 1e-5v-50z"
-         fill="{{colors.surface.default.hex}}"
+         fill="{{colors.surface_container.default.hex}}"
          id="path265" />
     </g>
     <g
@@ -4523,7 +4523,7 @@
        id="g268">
       <path
          d="m190.01 252.09h50v10.5h-50z"
-         fill="{{colors.surface.default.hex}}"
+         fill="{{colors.surface_container.default.hex}}"
          id="path267" />
     </g>
     <g
@@ -4596,7 +4596,7 @@
          id="path269" />
       <path
          d="m9.0003 47.939a6 6 0 0 0-6 6h6z"
-         fill="{{colors.surface.default.hex}}"
+         fill="{{colors.surface_container.default.hex}}"
          id="path270" />
     </g>
   </g>
@@ -4622,7 +4622,7 @@
          id="path271" />
       <path
          d="m9.0003 47.939a6 6 0 0 0-6 6h6z"
-         fill="{{colors.surface.default.hex}}"
+         fill="{{colors.surface_container.default.hex}}"
          id="path272" />
     </g>
   </g>
@@ -4648,7 +4648,7 @@
          id="path273" />
       <path
          d="m9.0003 47.939a6 6 0 0 0-6 6h6z"
-         fill="{{colors.surface.default.hex}}"
+         fill="{{colors.surface_container.default.hex}}"
          id="path274" />
     </g>
   </g>
