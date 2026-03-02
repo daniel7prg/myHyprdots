@@ -51,6 +51,8 @@ install_stage=(
     slurp
     thunar
     thunar-archive-plugin
+    tumbler 
+    ffmpegthumbnailer
     gvfs
     ntfs-3g
     file-roller
