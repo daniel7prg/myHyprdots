@@ -100,18 +100,18 @@
 @define-color accent_bg_color @primary;
 @define-color accent_fg_color @on_primary;
 @define-color accent_color @primary;
-@define-color destructive_bg_color @error;
+@define-color destructive_bg_color @error_container;
 @define-color destructive_fg_color @on_background;
-@define-color destructive_color @error;
+@define-color destructive_color @error_container;
 @define-color success_bg_color #81C995;
 @define-color success_fg_color rgba(0, 0, 0, 0.87);
 @define-color success_color #81C995;
 @define-color warning_bg_color @tertiary;
 @define-color warning_fg_color rgba(0, 0, 0, 0.87);
 @define-color warning_color @tertiary;
-@define-color error_bg_color @error;
+@define-color error_bg_color @error_container;
 @define-color error_fg_color @on_background;
-@define-color error_color @error;
+@define-color error_color @error_container;
 @define-color window_bg_color @background;
 @define-color window_fg_color @on_background;
 @define-color view_bg_color @surface_container_low;
@@ -298,7 +298,7 @@ label.osd {
 }
 
 .error {
-  color: @error;
+  color: @error_container;
 }
 
 window.assistant .sidebar {
@@ -497,25 +497,25 @@ entry.error {
   outline: 0 solid transparent;
   outline-offset: 4px;
   background-color: alpha(currentColor, 0.05);
-  color: @error;
+  color: @error_container;
 }
 
 entry.error selection {
-  color: @on_error;
-  background-color: @error;
+  color: @on_error_container;
+  background-color: @error_container;
 }
 
 entry.error:not(:disabled):not(:focus-within):hover, entry.error:drop(active) {
   background-color: alpha(currentColor, 0.08);
-  color: @error;
+  color: @error_container;
   outline: 2px solid alpha(currentColor, 0.08);
   outline-offset: -2px;
 }
 
 entry.error:focus-within {
   background-color: alpha(currentColor, 0.05);
-  color: @error;
-  outline-color: @error;
+  color: @error_container;
+  outline-color: @error_container;
   outline-width: 2px;
   outline-offset: -2px;
 }
@@ -533,7 +533,7 @@ entry.error > text > placeholder {
 }
 
 entry.error > text > block-cursor {
-  color: @error;
+  color: @error_container;
   background-color: @on_background;
 }
 
@@ -542,7 +542,7 @@ entry.error > image {
 }
 
 entry.error > image:hover, entry.error > image:active {
-  color: @error;
+  color: @error_container;
 }
 
 entry.error > image:disabled {
@@ -1064,8 +1064,8 @@ button.suggested-action.flat:checked {
 }
 
 button.destructive-action {
-  background-color: @error;
-  color: @on_error;
+  background-color: @error_container;
+  color: @on_error_container;
   box-shadow: none;
 }
 
@@ -1095,7 +1095,7 @@ button.destructive-action:focus {
 
 button.destructive-action.flat {
   background-color: transparent;
-  color: @error;
+  color: @error_container;
 }
 
 button.destructive-action.flat:disabled {
@@ -1240,8 +1240,8 @@ list > row button.image-button:not(.flat).suggested-action {
 
 
 list > row button.image-button:not(.flat).destructive-action {
-  background-color: @error;
-  color: @on_error;
+  background-color: @error_container;
+  color: @on_error_container;
 }
 
 /*********
@@ -4419,7 +4419,7 @@ row.button.suggested-action {
 }
 
 row.button.destructive-action {
-  color: @error;
+  color: @error_container;
 }
 
 /*****************
@@ -4668,7 +4668,7 @@ window.dialog.message.csd .dialog-action-area > button:not(:disabled) {
 }
 
 window.dialog.message.csd .dialog-action-area > button.destructive-action:not(:disabled) {
-  color: @error;
+  color: @error_container;
 }
 
 window.messagedialog .message-area separator {
@@ -4697,7 +4697,7 @@ window.messagedialog .response-area button.suggested:not(:disabled) {
 }
 
 window.messagedialog .response-area button.destructive:not(:disabled) {
-  color: @error;
+  color: @error_container;
 }
 
 window.messagedialog .response-area separator {
@@ -5102,8 +5102,8 @@ infobar.warning:hover > revealer > box {
 }
 
 infobar.error > revealer > box, infobar.error:backdrop > revealer > box {
-  background-color: @error;
-  color: @on_error;
+  background-color: @error_container;
+  color: @on_error_container;
 }
 
 infobar.error > revealer > box button, infobar.error > revealer > box button:hover, infobar.error > revealer > box button:focus, infobar.error > revealer > box button:active, infobar.error > revealer > box button:checked, infobar.error > revealer > box button.text-button:not(:disabled), infobar.error:backdrop > revealer > box button, infobar.error:backdrop > revealer > box button:hover, infobar.error:backdrop > revealer > box button:focus, infobar.error:backdrop > revealer > box button:active, infobar.error:backdrop > revealer > box button:checked, infobar.error:backdrop > revealer > box button.text-button:not(:disabled) {
@@ -7351,7 +7351,7 @@ button.destructive-action {
 }
 
 button.destructive-action, button.destructive-action:checked {
-  background-color: @error;
+  background-color: @error_container;
 }
 
 button.suggested-action {
@@ -7422,8 +7422,8 @@ menubutton.suggested-action {
 }
 
 menubutton.destructive-action {
-  background-color: @error;
-  color: @on_error;
+  background-color: @error_container;
+  color: @on_error_container;
 }
 
 menubutton.opaque {
@@ -7557,8 +7557,8 @@ splitbutton.suggested-action {
 }
 
 splitbutton.destructive-action {
-  background-color: @error;
-  color: @on_error;
+  background-color: @error_container;
+  color: @on_error_container;
 }
 
 splitbutton.opaque {
@@ -8594,7 +8594,7 @@ widgets main borders color on backdrop windows */
 /*
 these are pretty self explicative */
 @define-color warning_color @tertiary;
-@define-color error_color @error;
+@define-color error_color @error_container;
 @define-color success_color #81C995;
 /*
 these colors are exported for the window manager and shouldn't be used in applications,
