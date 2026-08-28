@@ -51,7 +51,7 @@ install_stage=(
     slurp
     thunar
     thunar-archive-plugin
-    udisks2
+    gnome-disk-utility
     tumbler 
     ffmpegthumbnailer
     gvfs
